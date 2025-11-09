@@ -1,0 +1,83 @@
+@props(['goal_name', 'current_savings_amt', 'goal_savings_amt'])
+
+<div class="goals-card">
+    <div class="goals-card-content">
+        <h2>{{ $goal_name }}</h2>
+        <p>₱{{ $current_savings_amt }} of ₱{{ $goal_savings_amt }}</p>
+        <div class="progress-container">
+            <div class="progress-bar"></div>
+        </div>
+    </div>
+    <div class="goals-card-button">
+        <button>Allocate Funds</button>
+    </div>
+    <div class="goals-card-kebab">
+        <a href=""><img src="/assets/kebab.png"></a>
+    </div>
+</div>
+
+<style>
+    .goals-card {
+        display: flex;
+        flex-direction: row;
+        background-color: white;
+        border: 3px solid black;
+        border-radius: 25px;
+        margin-bottom: 15px;
+    }
+
+    .goals-card-content {
+        width: 50%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-top: 15px;
+        margin-bottom: 25px;
+        margin-right: 15px;
+        margin-left: 30px;
+    }
+
+    .goals-card-content h2 {
+        margin-bottom: 0;
+    }
+
+    .goals-card-content p {
+        font-family: "Varela Round", sans-serif;
+        font-size: 24px;
+        letter-spacing: -1px;
+        color: #848484;
+        margin: 0;
+        margin-bottom: 10px;
+        
+    }
+
+    .goals-card-button {
+        width: 40%;
+        display: flex;
+        align-items: center;
+    }
+
+    .goals-card-button button {
+        width: 100%;
+        background-color: white;
+        border: 2px solid black;
+        border-radius: 10px;
+        font-family: "Varela Round", sans-serif;
+        font-size: 24px;
+        cursor: pointer;
+    }
+
+    .goals-card-kebab {
+        width: 10%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .goals-card-kebab img {
+        height: 25px;
+        width: auto;
+        transform: rotate(90deg);
+    }
+
+</style>

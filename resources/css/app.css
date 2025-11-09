@@ -1,0 +1,466 @@
+@import url('https://fonts.googleapis.com/css2?family=Tilt+Warp&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.3s forwards;
+}
+
+html {
+    height: 100%; 
+}
+
+h2 {
+    margin: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+  border-radius: 20px;
+  margin-right: 20px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #282828;
+  border-radius: 20px;
+  padding: 2px;
+}
+
+
+/*-------------Landing-------------*/
+
+.landing-body {
+    background-size: cover;
+    background-image: url('/public/assets/landing-bg.png');
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.landing-dev-btn-cont {
+    position: absolute;
+    top: 5%;
+    width: 100%;
+    height: 100px;
+}
+
+.landing-dev-btn-img {
+    position: absolute;
+    height: 100%;
+    right: 15%;
+}
+
+.landing-logo {
+    width: 60%;
+    height: auto;
+}
+
+.landing-button-cont {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 2.5%;
+}
+
+.landing-button-cont button {
+    width: 10%;
+    background-color: white;
+    border: none;
+    padding: 10px;
+    box-shadow: 0px 5px 3px rgba(0, 0, 0, 0.25);
+    color: #A68749;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 36px;
+    letter-spacing: -2.5px;
+    cursor: pointer;
+}
+
+/*-------------Login & Sign Up-------------*/
+.login-body, .signup-body {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.50);
+    z-index: 5;
+    display: none;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.6s linear;
+}
+
+.login-bg-cont, .signup-bg-cont {
+    width: 30%;
+    height: 85%;
+    position: absolute;
+    display: flex;
+    z-index: -5;
+}
+
+.login-bg, .signup-bg {
+    width: 100%;
+    height: 100%;
+}
+
+.login-x-btn, .signup-x-btn {
+    width: auto;
+    height: 7.5%;
+    top: 5%;
+    right: 34%;
+    position: absolute;
+    cursor: pointer;
+    z-index: 5 !important;
+}
+
+.login-main, .signup-main {
+    width: 30%;
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 7.5%;
+}
+
+.signup-main {
+    padding-top: 3.5%;
+}
+
+.login-main h2, .signup-main h2 {
+    margin: 0;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 56px;
+    font-weight: 200;
+    color: #494949;
+    letter-spacing: -2.5px;
+}
+
+.login-forgot-pass, .signup-forgot-pass {
+    font-family: "Varela Round", sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    color: #878787;
+}
+
+.login-hr, .signup-hr {
+    width: 80%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+.login-main form, .signup-main form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+}
+
+.login-main form input, .signup-main form input {
+    width: 120%;
+    background-color: #878787;
+    border: none;
+    border-radius: 25px;
+    padding: 10px;
+    padding-left: 20px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+}
+
+.login-main form input::placeholder, .signup-main form input::placeholder {
+    color: white;
+    font-family: "Varela Round", sans-serif;
+    font-weight: 600;
+}
+
+.login-main form button, .signup-main form button {
+    width: 130%;
+    background-color: #494949;
+    border: 3px #878787 solid;
+    border-radius: 25px;
+    padding: 10px;
+    margin-top: 10px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    font-weight: 600;
+    color: white;
+    text-align: center;
+    cursor: pointer; 
+}
+
+/*-------------OFW Dashboard-------------*/
+
+/*-↓↓-Wallet Card-↓↓-*/
+.ofw-body {
+    width: 100%;
+    height: 100%;
+    background-image: url('/public/assets/db-bg.png');
+    background-size: cover;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.dashboard-ofw-main {
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 25px;
+}
+
+.dashboard-ofw-main h2, .goals-ofw-main h2 {
+    width: 100%;
+    margin: 0;
+    margin-bottom: 10px;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 42px;
+    font-weight: 200;
+    color: #282828;
+    letter-spacing: -2px;
+}
+
+.dashboard-ofw-wallet-goals-cont {
+    display: flex;
+    flex-direction: row;
+    gap: 2.5%;
+}
+
+.dashboard-ofw-wallet-card {
+    width: 40%;
+    height: 30vh;
+    position: relative;
+    background-color: #CDA448;
+    border: 3.5px solid black;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.dashboard-ofw-wallet-card img {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    z-index: 0;
+}
+
+.dashboard-ofw-wallet-card-content {
+    width: auto;
+    height: 100%;
+    position: relative;
+    padding: 20px;
+    z-index: 1;
+}
+
+.dashboard-ofw-wallet-card-content h3 {
+    margin: 0;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 30px;
+    font-weight: 200;
+    color: #FFEBBD;
+    letter-spacing: -2px;
+}
+
+.dashboard-ofw-wallet-card-content h4 {
+    margin: 0;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 72px;
+    font-weight: 200;
+    color: white;
+    letter-spacing: -2px;
+    line-height: 56px;
+}
+
+.dashboard-ofw-wallet-card-content button {
+    width: 60%;
+    background-color: white;
+    margin-top: 15px;
+    border: 2px solid black;
+    border-radius: 10px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 24px;
+    letter-spacing: -1px;
+    cursor: pointer;
+}
+
+/*-↓↓-Goals and Investments Cards-↓↓-*/
+
+.dashboard-ofw-goals-card, .dashboard-ofw-investments-card {
+    width: 60%;
+    height: 30vh;
+    position: relative;
+    background-color: white;
+    border: 3.5px solid black;
+    border-radius: 25px;
+    overflow: hidden;
+}
+
+.dashboard-ofw-investments-card {
+    width: 75% !important;
+}
+
+.dashboard-saving-goals-redirect {
+  text-decoration: none;
+}
+
+.dashboard-ofw-goals-card img, .dashboard-ofw-investments-card img {
+    height: 100%;
+    position: absolute;
+    right: 0;
+    margin-right: 30px;
+    z-index: 0;
+}
+
+.dashboard-ofw-cards-arrow {
+    height: 100%;
+    width: 10%;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 0;
+}
+
+.dashboard-ofw-cards-arrow img {
+    width: auto;
+    height: 15% !important;
+}
+
+.dashboard-ofw-goals-card-content, .dashboard-ofw-investments-card-content {
+    width: auto;
+    height: 100%;
+    position: relative;
+    padding: 20px;
+    z-index: 1;
+}
+
+.dashboard-ofw-goals-card-content h3, .dashboard-ofw-investments-card-content h3 {
+    margin: 0;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 30px;
+    font-weight: 200;
+    color: #848484;
+    letter-spacing: -2px;
+}
+
+.dashboard-ofw-goals-card-content h4, .dashboard-ofw-investments-card-content h4 {
+    margin: 0;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 72px;
+    font-weight: 200;
+    color: #282828;
+    letter-spacing: -5px;
+    line-height: 56px;
+}
+
+.dashboard-ofw-goals-card-content h5, .dashboard-ofw-investments-card-content h5 {
+    margin: 0;
+    margin: 10px 0;
+    font-family: "Varela Round", sans-serif;
+    font-size: 24px;
+    color: #848484;
+}
+
+.progress-container {
+    width: 90%;
+    height: 20px;
+    background-color: #848484;
+    border-radius: 50px;
+}
+
+.progress-bar {
+    width: 70%;
+    height: 20px;
+    background-color: #282828;
+    border-radius: 50px;
+}
+
+.dashboard-ofw-investments-etc-cont {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2.5%;
+    gap: 2.5%;
+    
+}
+
+.dashboard-ofw-etc-cont {
+    width: 25%;
+    height: 30vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 2.5%;
+}
+
+.dashboard-ofw-etc-cards {
+    width: 100%;
+    height: 30%;
+    position: relative;
+    background-color: #EAE9E7;
+    border: 3.5px solid #282828;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.dashboard-ofw-etc-cards p {
+    font-family: "Varela Round", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: #282828;
+    margin-left: 25px;
+}
+
+.dashboard-ofw-etc-cards img {
+    width: auto;
+    height: 40%;
+    margin-right: 25px;
+}
+
+/*-------------OFW Saving Goals-------------*/
+.goals-ofw-main {
+    display: flex;
+    flex-direction: row;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 25px;
+    height: calc(100vh - 100px); 
+    overflow: hidden; 
+}
+
+.goals-ofw-content-cont {
+    width: 55%;
+    height: 100%; 
+    overflow-y: auto; 
+    overflow-x: hidden; 
+    padding-right: 10px; 
+}
+
+.goals-ofw-img-cont {
+    width: 45%;
+    height: 100%;
+    overflow: hidden; 
+}
+
+.goals-ofw-img-cont img {
+    width: 105%;
+    height: auto;
+}
