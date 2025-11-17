@@ -40,6 +40,12 @@ h2 {
   padding: 2px;
 }
 
+/* Scale when hovering */
+.landing-button-cont button:hover, .login-main form button:hover, .signup-main form button:hover, .login-x-btn:hover, .signup-x-btn:hover, .landing-dev-btn-img:hover, .dashboard-ofw-goals-card:hover, .dashboard-ofw-investments-card:hover, .dashboard-ofw-marketplace-card:hover, .dashboard-ofw-etc-cards:hover, .dashboard-ofw-wallet-card-content button:hover, .goals-card button:hover, .investment-card:hover, .bus-name button:hover, .project-card:hover, .project-view-x-btn:hover {
+    transform: scale(1.025);
+    transition: .2s;
+}
+
 
 /*-------------Landing-------------*/
 
@@ -227,9 +233,8 @@ h2 {
     margin-top: 25px;
 }
 
-.dashboard-ofw-main h2, .goals-ofw-main h2 {
+.dashboard-ofw-main h2, .goals-ofw-main h2, .invh-ofw-main h2, .market-ofw-main h2 {
     width: 100%;
-    margin: 0;
     margin-bottom: 10px;
     font-family: "Tilt Warp", sans-serif;
     font-size: 42px;
@@ -302,7 +307,7 @@ h2 {
 
 /*-↓↓-Goals and Investments Cards-↓↓-*/
 
-.dashboard-ofw-goals-card, .dashboard-ofw-investments-card {
+.dashboard-ofw-goals-card, .dashboard-ofw-investments-card, .dashboard-ofw-marketplace-card {
     width: 60%;
     height: 30vh;
     position: relative;
@@ -312,15 +317,16 @@ h2 {
     overflow: hidden;
 }
 
-.dashboard-ofw-investments-card {
-    width: 75% !important;
+.dashboard-ofw-investments-card, .dashboard-ofw-marketplace-card {
+    width: 50% !important;
 }
 
-.dashboard-saving-goals-redirect {
+
+.dashboard-card-anchor {
   text-decoration: none;
 }
 
-.dashboard-ofw-goals-card img, .dashboard-ofw-investments-card img {
+.dashboard-ofw-goals-card img, .dashboard-ofw-investments-card img, .dashboard-ofw-marketplace-card img {
     height: 100%;
     position: absolute;
     right: 0;
@@ -342,7 +348,7 @@ h2 {
     height: 15% !important;
 }
 
-.dashboard-ofw-goals-card-content, .dashboard-ofw-investments-card-content {
+.dashboard-ofw-goals-card-content, .dashboard-ofw-investments-card-content, .dashboard-ofw-marketplace-card-content {
     width: auto;
     height: 100%;
     position: relative;
@@ -350,7 +356,7 @@ h2 {
     z-index: 1;
 }
 
-.dashboard-ofw-goals-card-content h3, .dashboard-ofw-investments-card-content h3 {
+.dashboard-ofw-goals-card-content h3, .dashboard-ofw-investments-card-content h3, .dashboard-ofw-marketplace-card-content h3 {
     margin: 0;
     font-family: "Tilt Warp", sans-serif;
     font-size: 30px;
@@ -359,17 +365,17 @@ h2 {
     letter-spacing: -2px;
 }
 
-.dashboard-ofw-goals-card-content h4, .dashboard-ofw-investments-card-content h4 {
+.dashboard-ofw-goals-card-content h4, .dashboard-ofw-investments-card-content h4, .dashboard-ofw-marketplace-card-content h4 {
     margin: 0;
     font-family: "Tilt Warp", sans-serif;
-    font-size: 72px;
+    font-size: 54px;
     font-weight: 200;
     color: #282828;
-    letter-spacing: -5px;
+    letter-spacing: -3px;
     line-height: 56px;
 }
 
-.dashboard-ofw-goals-card-content h5, .dashboard-ofw-investments-card-content h5 {
+.dashboard-ofw-goals-card-content h5, .dashboard-ofw-investments-card-content h5, .dashboard-ofw-marketplace-card-content h5 {
     margin: 0;
     margin: 10px 0;
     font-family: "Varela Round", sans-serif;
@@ -391,52 +397,15 @@ h2 {
     border-radius: 50px;
 }
 
-.dashboard-ofw-investments-etc-cont {
+.dashboard-ofw-investments-marketplace-cont {
     display: flex;
     flex-direction: row;
     margin-top: 2.5%;
     gap: 2.5%;
-    
-}
-
-.dashboard-ofw-etc-cont {
-    width: 25%;
-    height: 30vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: 2.5%;
-}
-
-.dashboard-ofw-etc-cards {
-    width: 100%;
-    height: 30%;
-    position: relative;
-    background-color: #EAE9E7;
-    border: 3.5px solid #282828;
-    border-radius: 25px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.dashboard-ofw-etc-cards p {
-    font-family: "Varela Round", sans-serif;
-    font-size: 24px;
-    font-weight: 600;
-    color: #282828;
-    margin-left: 25px;
-}
-
-.dashboard-ofw-etc-cards img {
-    width: auto;
-    height: 40%;
-    margin-right: 25px;
 }
 
 /*-------------OFW Saving Goals-------------*/
-.goals-ofw-main {
+.goals-ofw-main, .invh-ofw-main, .market-ofw-main {
     display: flex;
     flex-direction: row;
     margin-left: 5%;
@@ -446,21 +415,154 @@ h2 {
     overflow: hidden; 
 }
 
-.goals-ofw-content-cont {
+.goals-ofw-content-cont, .invh-ofw-content-cont, .market-ofw-content-cont {
     width: 55%;
     height: 100%; 
     overflow-y: auto; 
     overflow-x: hidden; 
-    padding-right: 10px; 
+    padding-right: 50px;
+    padding-left: 15px; 
 }
 
-.goals-ofw-img-cont {
+
+.goals-ofw-img-cont, .invh-ofw-img-cont, .market-ofw-img-cont {
     width: 45%;
     height: 100%;
     overflow: hidden; 
+    display: flex;
+    justify-content: center;
 }
 
-.goals-ofw-img-cont img {
-    width: 105%;
+.goals-ofw-img-cont img, .invh-ofw-img-cont img {
+    width: auto;
+    height: 95%;
+}
+
+.market-ofw-img-cont img {
+    width: auto;
+    height: 97%;
+}
+
+/*-------------Business Dashboard-------------*/
+.bus-body {
+    width: 100%;
+    height: 100%;
+    background-image: url('/public/assets/db-bg.png');
+    background-size: cover;
+    padding: 0;
+    margin: 0;
+    overflow: hidden;
+}
+
+.bus-main {
+    display: flex;
+    flex-direction: row;
+    margin-left: 5%;
+    margin-right: 5%;
+    margin-top: 25px;
+    margin-bottom: 50px;
+    height: calc(120vh - 100px); 
+    overflow: hidden; 
+}
+
+
+.bus-profile-card-cont {
+    width: 45%;
+    height: 100%; 
+    padding-top: 3%;
+    padding-right: 50px;
+}
+
+.bus-posts-cont {
+    width: 55%;
+    height: 100%;
+    padding-right: 25px;
+    
+
+}
+
+.bus-tabs {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding-left: 25px;
+    
+}
+
+.bus-tabs h3 {
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 30px;
+    font-weight: 200;
+    color: #666666;
+    letter-spacing: -1.5px;
+    padding-bottom: 5px;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.tab-active {
+    color: #282828 !important;
+    border-bottom: 3px solid black;
+}
+
+.bus-projects, .bus-updates {
+    height: calc(95vh - 130px); 
+    padding-right: 25px; 
+    overflow-y: auto;
+    padding-left: 25px;
+}
+
+.bus-add-project-btn {
+    height: 100px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 30px;
+    background-color: rgba(0, 0, 0, 0.10);
+    border: 3px solid black;
+    border-style: dotted;
+    border-width: 5px;
+    border-radius: 25px;
+}
+
+.bus-add-project-btn img {
+    width: 40px;
+    height: auto;
+}
+
+.bus-add-update-cont {
+    width: 100%;
+    height: 150px;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.bus-add-update-cont textarea {
+    min-width: 100%;
+    min-height: 100%;
+    box-sizing: border-box;
+    background-color:rgba(0, 0, 0, 0.075);
+    border: 3px solid black;
+    border-style: dotted;
+    border-width: 5px;
+    border-radius: 25px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    padding: 20px;
+    position: absolute;
+    resize: none;
+}
+
+.bus-add-update-cont a {
+    width: 5%;
+    z-index: 5;
+    padding-right: 25px;
+}
+
+.bus-add-update-cont a img {
+    width: 100%;
     height: auto;
 }

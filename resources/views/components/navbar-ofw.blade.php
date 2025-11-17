@@ -1,15 +1,14 @@
 <div class="navbar-ofw">
     <div class="navbar-ofw-logo">
-        <img src="/assets/db-ofw-navbar-logo.png" />
+        <a href="{{ route('dashboard') }}"><img src="/assets/db-ofw-navbar-logo.png" /></a>
     </div>
     <div class="navbar-ofw-links">
-        <a href="">Saving Goals</a>
-        <a href="">Investments</a>
-        <a href="">Marketplace</a>
-        <a href="">Proposals</a>
+        <a href="{{ route('saving-goals') }}">Saving Goals</a>
+        <a href="{{ route('investment-history') }}">Investments</a>
+        <a href="{{ route('marketplace') }}">Marketplace</a>
     </div>
     <div class="navbar-ofw-buttons">
-        <a href=""><img src="/assets/db-ofw-navbar-profile.png" /></a>
+        <a href="{{ route('business-dashboard') }}"><img src="/assets/db-ofw-navbar-profile.png" /></a>
         <a href=""><img src="/assets/db-ofw-navbar-logout.png" /></a>
     </div>
 </div>
@@ -32,8 +31,14 @@
         justify-content: center;
     }
 
-    .navbar-ofw-logo img {
-        width: 40%;
+    .navbar-ofw-logo a {
+        width: 60%;
+        display: flex;
+        justify-content: center;
+    }
+
+    .navbar-ofw-logo a img {
+        width: 175px;
         height: auto;
     }
 
@@ -58,8 +63,17 @@
         gap: 25px;
     }
 
+    .navbar-ofw-buttons {
+        width: 25%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        gap: 50px;
+    }
+
     .navbar-ofw-buttons a img {
-        width: 60%;
+        width: 40px;
         height: auto;
+        display: block;
     }
 </style>

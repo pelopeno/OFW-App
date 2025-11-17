@@ -1,9 +1,9 @@
-@props(['goal_name', 'current_savings_amt', 'goal_savings_amt'])
+@props(['goal_name', 'goal_current_savings_amt', 'goal_target_savings_amt'])
 
 <div class="goals-card">
     <div class="goals-card-content">
         <h2>{{ $goal_name }}</h2>
-        <p>₱{{ $current_savings_amt }} of ₱{{ $goal_savings_amt }}</p>
+        <p>₱{{ $goal_current_savings_amt }} of ₱{{ $goal_target_savings_amt }}</p>
         <div class="progress-container">
             <div class="progress-bar"></div>
         </div>

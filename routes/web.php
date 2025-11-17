@@ -17,5 +17,19 @@ Route::middleware([
     Route::get('/saving-goals', function () {
         return view('saving-goals');
     })->name('saving-goals');
+    Route::get('/investment-history', function () {
+        return view('investment-history');
+    })->name('investment-history');
+    Route::get('/marketplace', function () {
+        return view('marketplace');
+    })->name('marketplace');
+
 });
+
+    Route::get('/business', function () {
+        return view('business.dashboard');
+    })->name('business-dashboard');
+    Route::get('/project', function () {
+        return view('project');
+    })->name('project');
 

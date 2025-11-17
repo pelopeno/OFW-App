@@ -24,7 +24,7 @@
             </div>
 
             <div class="dashboard-ofw-goals-card">
-                <a href="{{ route('saving-goals') }}" class="dashboard-saving-goals-redirect">
+                <a href="{{ route('saving-goals') }}" class="dashboard-card-anchor">
                     <img src="/assets/db-ofw-goals-card.png" />
                     <div class="dashboard-ofw-cards-arrow">
                         <img src="/assets/arrow.png" />
@@ -41,34 +41,33 @@
             </div>
         </div>
 
-        <div class="dashboard-ofw-investments-etc-cont">
+        <div class="dashboard-ofw-investments-marketplace-cont">
             <div class="dashboard-ofw-investments-card">
-                <img src="/assets/db-ofw-investments-card.png" />
-                <div class="dashboard-ofw-cards-arrow">
-                    <img src="/assets/arrow.png" />
-                </div>
-                <div class="dashboard-ofw-investments-card-content">
-                    <h3>Recent Investments</h3>
-                    <h4>Small Cafe Startup</h4>
-                    <h5>₱15,000 Allocated</h5>
-                </div>
+                <a href="{{ route('investment-history') }}" class="dashboard-card-anchor">
+                    <img src="/assets/db-ofw-investments-card.png" />
+                    <div class="dashboard-ofw-cards-arrow">
+                        <img src="/assets/arrow.png" />
+                    </div>
+                    <div class="dashboard-ofw-investments-card-content">
+                        <h3>Recent Investments</h3>
+                        <h4>Small Cafe Startup</h4>
+                        <h5>₱15,000 Allocated</h5>
+                    </div>
+                </a>
             </div>
 
-            <div class="dashboard-ofw-etc-cont">
-                <div class="dashboard-ofw-etc-cards">
-                    <p>Marketplace</p>
-                    <img src="/assets/arrow.png" />
-                </div>
-
-                <div class="dashboard-ofw-etc-cards">
-                    <p>Proposals</p>
-                    <img src="/assets/arrow.png" />
-                </div>
-
-                <div class="dashboard-ofw-etc-cards">
-                    <p>Help/Support</p>
-                    <img src="/assets/arrow.png" />
-                </div>
+            <div class="dashboard-ofw-marketplace-card">
+                <a href="{{ route('marketplace') }}" class="dashboard-card-anchor">
+                    <img src="/assets/db-ofw-marketplace-card.png" />
+                    <div class="dashboard-ofw-cards-arrow">
+                        <img src="/assets/arrow.png" />
+                    </div>
+                    <div class="dashboard-ofw-marketplace-card-content">
+                        <h3>Marketplace</h3>
+                        <h4>NEW: Makati Branch</h4>
+                        <h5>Project by Seeds and Scholars</h5>
+                    </div>
+                </a>
             </div>
         </div>
     </div>

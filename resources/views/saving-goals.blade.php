@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,20 +16,20 @@
             <h2>Saving Goals</h2>
             <x-saving-goals-card 
                 goal_name="House Renovation" 
-                current_savings_amt="50000" 
-                goal_savings_amt="100000"/>
+                goal_current_savings_amt="50000" 
+                goal_target_savings_amt="100000"/>
             <x-saving-goals-card 
                 goal_name="Boracay Trip" 
-                current_savings_amt="0" 
-                goal_savings_amt="100000"/>
+                goal_current_savings_amt="0" 
+                goal_target_savings_amt="100000"/>
             <x-saving-goals-card 
                 goal_name="New Phone" 
-                current_savings_amt="0" 
-                goal_savings_amt="15000"/>
+                goal_current_savings_amt="0" 
+                goal_target_savings_amt="15000"/>
             <x-saving-goals-card 
                 goal_name="Tuition" 
-                current_savings_amt="30000" 
-                goal_savings_amt="60000"/>
+                goal_current_savings_amt="30000" 
+                goal_target_savings_amt="60000"/>
         </div>
 
         <div class="goals-ofw-img-cont">
