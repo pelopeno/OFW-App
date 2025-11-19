@@ -23,7 +23,7 @@ html {
     height: 100%; 
 }
 
-h2 {
+h2, h3, h4, h5 {
     margin: 0;
 }
 
@@ -227,13 +227,13 @@ h2 {
     overflow: hidden;
 }
 
-.dashboard-ofw-main {
+.dashboard-ofw-main, .admin-main {
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 25px;
 }
 
-.dashboard-ofw-main h2, .goals-ofw-main h2, .invh-ofw-main h2, .market-ofw-main h2 {
+.dashboard-ofw-main h2, .goals-ofw-main h2, .invh-ofw-main h2, .market-ofw-main h2, .admin-main h2 {
     width: 100%;
     margin-bottom: 10px;
     font-family: "Tilt Warp", sans-serif;
@@ -544,7 +544,7 @@ h2 {
     min-width: 100%;
     min-height: 100%;
     box-sizing: border-box;
-    background-color:rgba(0, 0, 0, 0.075);
+    background-color:rgba(0, 0, 0, 0.1);
     border: 3px solid black;
     border-style: dotted;
     border-width: 5px;
@@ -565,4 +565,190 @@ h2 {
 .bus-add-update-cont a img {
     width: 100%;
     height: auto;
+}
+
+/*-------------Admin Dashboard-------------*/
+
+.admin-body {
+    width: 100%; 
+    background-image: url('/public/assets/db-bg.png');
+    background-size: cover;
+    padding: 0;
+    padding-bottom: 25px;
+    margin: 0;
+    overflow-x: hidden; 
+    overflow-y: auto;
+}
+
+.admin-overview {
+    width: 100%;
+    height: 20vh;
+    display: flex;
+    flex-direction: row;
+    gap: 25px;
+    margin-bottom: 25px;
+}
+
+.admin-total-users, .admin-active-projects, .admin-pending-projects {
+    width: 33%;
+    height: 100%;
+    background-color: white;
+    border-radius: 25px;
+    border: 3.5px solid black;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.admin-total-users h3, .admin-active-projects h3, .admin-pending-projects h3 {
+    font-family: "Varela Round", sans-serif;
+    font-size: 21px;
+    font-weight: 200;
+    letter-spacing: -1px;
+    color: #494949;
+}
+
+.admin-total-users h4, .admin-active-projects h4, .admin-pending-projects h4 {
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 54px;
+    font-weight: 200;
+    letter-spacing: -2px;
+    color: #282828;
+}
+
+.admin-total-users img, .admin-active-projects img, .admin-pending-projects img {
+    height: 100%;
+    position: absolute;
+    left: 0;
+    margin-right: 30px;
+    z-index: 0;
+}
+
+.admin-table-cont {
+    width: 100%;
+    height: auto;
+    background-color: white;
+    border-radius: 25px;
+    border: 3.5px solid black;
+    box-sizing: border-box;
+    padding: 25px;
+}
+
+.admin-table-cont p {
+    font-family: "Varela Round", sans-serif;
+    font-weight: 600;
+    font-size: 24px;
+    margin: 0;
+}
+
+.admin-table-cont table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: separate; 
+    border-spacing: 0 15px;
+}
+
+.admin-table-cont table tr th, .admin-table-cont table tr td {
+    font-family: "Varela Round", sans-serif;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    padding: 10px;
+} 
+
+.admin-th-row th:first-child {
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+}
+
+.admin-th-row th:last-child {
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.admin-th-row th {
+    background-color: #cfcfcf;
+}
+
+.dashboard-admin-disable-btn, .pa-admin-decline-btn, .pa-admin-approve-btn, .um-admin-activate-btn, .um-admin-archive-btn, .um-admin-disable-btn {
+    background-color: #AB3F4C;
+    border-radius: 10px;
+    border: 2px solid transparent;
+    font-family: "Varela Round", sans-serif;
+    color: white;
+    text-align: center;
+    width: 40%;
+    height: 25px;
+    cursor: pointer;
+}
+
+.pa-admin-approve-btn, .um-admin-activate-btn {
+    background-color: #edbe52;
+    color: black;
+}
+
+.um-admin-archive-btn {
+    background-color: #B4D1FF;
+    color: black;
+}
+
+.admin-users-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.admin-filter-btn {
+    font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    padding: 6px 14px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.15s ease-in-out;
+}
+
+.admin-filter-btn:hover {
+    background-color: #f4f4f4;
+}
+
+.admin-filter {
+    position: relative;
+}
+
+.admin-filter-dropdown {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    width: 160px;
+    padding: 8px 0;
+    display: none;
+    z-index: 10;
+}
+
+.admin-filter-dropdown.show {
+    display: block;
+}
+
+.admin-filter-dropdown a {
+    display: block;
+    padding: 10px 15px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 15px;
+    color: black;
+    text-decoration: none;
+    transition: 0.15s ease-in-out;
+}
+
+.admin-filter-dropdown a:hover {
+    background-color: #e7e7e7;
 }
