@@ -9,7 +9,12 @@
     </div>
     <div class="navbar-admin-buttons">
         <a href="{{ route('dashboard') }}"><img src="/assets/admin-navbar-profile.png" /></a>
-        <a href=""><img src="/assets/admin-navbar-logout.png" /></a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <img src="/assets/admin-navbar-logout.png">
+            </button>
+        </form>
     </div>
 </div>
 

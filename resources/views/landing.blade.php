@@ -48,6 +48,25 @@
     <!----------↑↑↑-Login-↑↑↑---------->
 
     <!---------↓↓↓-Sign Up-↓↓↓--------->
+
+    <div class="choose-type-body" id="chooseType" style="display:none;">
+        <img src="/assets/x-btn.png" class="signup-x-btn" onClick="toggleChooseType()" style="right: 24%"/>
+
+        <div class="choose-type-main">
+            <h2>Who are you signing up as?</h2>
+            <div class="choose-type-buttons-cont">
+                <div class="signup-ofw-button-cont">
+                    <button onclick="selectUserType('ofw')"> <img src="/assets/signup-ofw-btn.png" /> </button>
+                    <p>OFW</p>
+                </div>
+                <div class="signup-bus-button-cont">
+                    <button onclick="selectUserType('business_owner')"> <img src="/assets/signup-bus-btn.png" /> </button>
+                    <p>Business Owner</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="signup-body" id="signup">
         <div class="signup-bg-cont">
             <img src="/assets/ls-signup-bg.png" class="signup-bg" />
@@ -55,7 +74,7 @@
         <img src="/assets/x-btn.png" class="signup-x-btn" onClick="toggleSignup()" />
         <div class="signup-main">
             <h2>Sign-up</h2>
-            <a class="signup-forgot-pass" href="{{ route('login') }}">Already have an account?</a>
+            <p class="signup-type-display"> Signing up as: <span id="selectedTypeLabel"></span></p>
             <img src="assets/ls-hr.png" class="signup-hr" />
 
             @if($errors->any() && (request()->is('register') || old('name') !== null))
@@ -64,10 +83,14 @@
 
             <form method="POST" action="{{ route('register') }}">
                 @csrf
-                <input type="text" name="name" placeholder="Display Name" required autofocus autocomplete="name">
-                <input type="email" name="email" placeholder="Email" required autocomplete="username">
-                <input type="password" name="password" placeholder="Password" required autocomplete="new-password">
-                <input type="password" name="password_confirmation" placeholder="Confirm Password" required autocomplete="new-password">
+                <input type="hidden" id="user_type" name="user_type" value="">
+
+
+                <input type="text" name="name" placeholder="Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
+
                 <button type="submit">Sign up</button>
             </form>
         </div>
@@ -81,7 +104,7 @@
     <br>
     <div class="landing-button-cont">
         <button type="button" onClick="toggleLogin()">Login</button>
-        <button type="button" onClick="toggleSignup()">Sign-up</button>
+        <button type="button" onClick="toggleSignupChoice()">Sign-up</button>
     </div>
 
 </body>
@@ -89,7 +112,6 @@
 </html>
 
 <script>
-    // Show and Hide Login and Signup UI
     var login = document.getElementById('login');
     var loginVisibility = 1;
 
@@ -118,6 +140,34 @@
             signup.classList.remove('fade-out');
             signup.classList.add('fade-in');
         }
+    }
+
+    var chooseType = document.getElementById('chooseType');
+
+    function toggleChooseType() {
+        if (chooseType.style.display === 'flex') {
+            chooseType.classList.remove('fade-in');
+            chooseType.classList.add('fade-out');
+            setTimeout(() => chooseType.style.display = 'none', 300);
+        } else {
+            chooseType.style.display = 'flex';
+            chooseType.classList.remove('fade-out');
+            chooseType.classList.add('fade-in');
+        }
+    }
+
+    function toggleSignupChoice() {
+        toggleChooseType();
+    }
+
+    function selectUserType(type) {
+        document.getElementById('user_type').value = type;
+        document.getElementById('selectedTypeLabel').textContent =
+            type === 'ofw' ? 'OFW' : 'Business Owner';
+
+        toggleChooseType();
+
+        toggleSignup();
     }
 
     document.addEventListener('DOMContentLoaded', function() {

@@ -2,48 +2,91 @@
 @import url('https://fonts.googleapis.com/css2?family=Varela+Round&display=swap');
 
 @keyframes fadeIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes fadeOut {
-  from { opacity: 1; }
-  to { opacity: 0; }
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
 }
 
 .fade-in {
-  animation: fadeIn 0.3s forwards;
+    animation: fadeIn 0.3s forwards;
 }
 
 .fade-out {
-  animation: fadeOut 0.3s forwards;
+    animation: fadeOut 0.3s forwards;
 }
 
 html {
-    height: 100%; 
+    height: 100%;
 }
 
-h2, h3, h4, h5 {
+h2,
+h3,
+h4,
+h5 {
     margin: 0;
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  background-color: transparent;
-  border-radius: 20px;
-  margin-right: 20px;
+    width: 8px;
+    background-color: transparent;
+    border-radius: 20px;
+    margin-right: 20px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background-color: #282828;
-  border-radius: 20px;
-  padding: 2px;
+    background-color: #282828;
+    border-radius: 20px;
+    padding: 2px;
 }
 
 /* Scale when hovering */
-.landing-button-cont button:hover, .login-main form button:hover, .signup-main form button:hover, .login-x-btn:hover, .signup-x-btn:hover, .landing-dev-btn-img:hover, .dashboard-ofw-goals-card:hover, .dashboard-ofw-investments-card:hover, .dashboard-ofw-marketplace-card:hover, .dashboard-ofw-etc-cards:hover, .dashboard-ofw-wallet-card-content button:hover, .goals-card button:hover, .investment-card:hover, .bus-name button:hover, .project-card:hover, .project-view-x-btn:hover {
+.landing-button-cont button:hover,
+.login-main form button:hover,
+.signup-main form button:hover,
+.login-x-btn:hover,
+.signup-x-btn:hover,
+.landing-dev-btn-img:hover,
+.dashboard-ofw-goals-card:hover,
+.dashboard-ofw-investments-card:hover,
+.dashboard-ofw-marketplace-card:hover,
+.dashboard-ofw-etc-cards:hover,
+.dashboard-ofw-wallet-card-content button:hover,
+.goals-card button:hover,
+.investment-card:hover,
+.bus-name button:hover,
+.project-card:hover,
+.project-view-x-btn:hover,
+.signup-ofw-button-cont button:hover,
+.signup-bus-button-cont button:hover, .add-post-image:hover {
     transform: scale(1.025);
     transition: .2s;
+}
+
+.logout-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+}
+
+.logout-btn img {
+    width: 40px;
+    height: auto;
+    display: block;
 }
 
 
@@ -101,7 +144,9 @@ h2, h3, h4, h5 {
 }
 
 /*-------------Login & Sign Up-------------*/
-.login-body, .signup-body {
+.login-body,
+.signup-body,
+.choose-type-body {
     width: 100%;
     height: 100%;
     position: absolute;
@@ -112,9 +157,11 @@ h2, h3, h4, h5 {
     justify-content: center;
     align-items: center;
     transition: opacity 0.6s linear;
+    text-align: center;
 }
 
-.login-bg-cont, .signup-bg-cont {
+.login-bg-cont,
+.signup-bg-cont {
     width: 30%;
     height: 85%;
     position: absolute;
@@ -122,12 +169,14 @@ h2, h3, h4, h5 {
     z-index: -5;
 }
 
-.login-bg, .signup-bg {
+.login-bg,
+.signup-bg {
     width: 100%;
     height: 100%;
 }
 
-.login-x-btn, .signup-x-btn {
+.login-x-btn,
+.signup-x-btn {
     width: auto;
     height: 7.5%;
     top: 5%;
@@ -137,7 +186,8 @@ h2, h3, h4, h5 {
     z-index: 5 !important;
 }
 
-.login-main, .signup-main {
+.login-main,
+.signup-main {
     width: 30%;
     height: 85%;
     display: flex;
@@ -151,7 +201,8 @@ h2, h3, h4, h5 {
     padding-top: 3.5%;
 }
 
-.login-main h2, .signup-main h2 {
+.login-main h2,
+.signup-main h2 {
     margin: 0;
     font-family: "Tilt Warp", sans-serif;
     font-size: 56px;
@@ -160,27 +211,32 @@ h2, h3, h4, h5 {
     letter-spacing: -2.5px;
 }
 
-.login-forgot-pass, .signup-forgot-pass {
+.login-forgot-pass,
+.signup-type-display {
     font-family: "Varela Round", sans-serif;
     font-weight: 600;
     font-size: 18px;
     color: #878787;
+    margin: 0;
 }
 
-.login-hr, .signup-hr {
+.login-hr,
+.signup-hr {
     width: 80%;
     margin-top: 5px;
     margin-bottom: 15px;
 }
 
-.login-main form, .signup-main form {
+.login-main form,
+.signup-main form {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 12px;
 }
 
-.login-main form input, .signup-main form input {
+.login-main form input,
+.signup-main form input {
     width: 120%;
     background-color: #878787;
     border: none;
@@ -193,13 +249,15 @@ h2, h3, h4, h5 {
     color: white;
 }
 
-.login-main form input::placeholder, .signup-main form input::placeholder {
+.login-main form input::placeholder,
+.signup-main form input::placeholder {
     color: white;
     font-family: "Varela Round", sans-serif;
     font-weight: 600;
 }
 
-.login-main form button, .signup-main form button {
+.login-main form button,
+.signup-main form button {
     width: 130%;
     background-color: #494949;
     border: 3px #878787 solid;
@@ -211,7 +269,51 @@ h2, h3, h4, h5 {
     font-weight: 600;
     color: white;
     text-align: center;
-    cursor: pointer; 
+    cursor: pointer;
+}
+
+.choose-type-body h2 {
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 42px;
+    font-weight: 200;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.choose-type-buttons-cont {
+    width: 60%;
+    display: flex;
+    flex-direction: row;
+    gap: 100px;
+}
+
+.signup-ofw-button-cont button,
+.signup-bus-button-cont button {
+    background-color: transparent;
+    border: 0px;
+    cursor: pointer;
+}
+
+.signup-ofw-button-cont img,
+.signup-bus-button-cont img {
+    width: 300px;
+    height: auto;
+}
+
+.signup-ofw-button-cont,
+.signup-bus-button-cont {
+    display: flex;
+    flex-direction: column;
+    font-family: "Varela Round", sans-serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: white;
+}
+
+.signup-ofw-button-cont p,
+.signup-bus-button-cont p {
+    margin: 0;
+    text-shadow: 2px 2px 5px #000000;
 }
 
 /*-------------OFW Dashboard-------------*/
@@ -227,13 +329,18 @@ h2, h3, h4, h5 {
     overflow: hidden;
 }
 
-.dashboard-ofw-main, .admin-main {
+.dashboard-ofw-main,
+.admin-main {
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 25px;
 }
 
-.dashboard-ofw-main h2, .goals-ofw-main h2, .invh-ofw-main h2, .market-ofw-main h2, .admin-main h2 {
+.dashboard-ofw-main h2,
+.goals-ofw-main h2,
+.invh-ofw-main h2,
+.market-ofw-main h2,
+.admin-main h2 {
     width: 100%;
     margin-bottom: 10px;
     font-family: "Tilt Warp", sans-serif;
@@ -307,7 +414,9 @@ h2, h3, h4, h5 {
 
 /*-↓↓-Goals and Investments Cards-↓↓-*/
 
-.dashboard-ofw-goals-card, .dashboard-ofw-investments-card, .dashboard-ofw-marketplace-card {
+.dashboard-ofw-goals-card,
+.dashboard-ofw-investments-card,
+.dashboard-ofw-marketplace-card {
     width: 60%;
     height: 30vh;
     position: relative;
@@ -317,16 +426,19 @@ h2, h3, h4, h5 {
     overflow: hidden;
 }
 
-.dashboard-ofw-investments-card, .dashboard-ofw-marketplace-card {
+.dashboard-ofw-investments-card,
+.dashboard-ofw-marketplace-card {
     width: 50% !important;
 }
 
 
 .dashboard-card-anchor {
-  text-decoration: none;
+    text-decoration: none;
 }
 
-.dashboard-ofw-goals-card img, .dashboard-ofw-investments-card img, .dashboard-ofw-marketplace-card img {
+.dashboard-ofw-goals-card img,
+.dashboard-ofw-investments-card img,
+.dashboard-ofw-marketplace-card img {
     height: 100%;
     position: absolute;
     right: 0;
@@ -348,7 +460,9 @@ h2, h3, h4, h5 {
     height: 15% !important;
 }
 
-.dashboard-ofw-goals-card-content, .dashboard-ofw-investments-card-content, .dashboard-ofw-marketplace-card-content {
+.dashboard-ofw-goals-card-content,
+.dashboard-ofw-investments-card-content,
+.dashboard-ofw-marketplace-card-content {
     width: auto;
     height: 100%;
     position: relative;
@@ -356,7 +470,9 @@ h2, h3, h4, h5 {
     z-index: 1;
 }
 
-.dashboard-ofw-goals-card-content h3, .dashboard-ofw-investments-card-content h3, .dashboard-ofw-marketplace-card-content h3 {
+.dashboard-ofw-goals-card-content h3,
+.dashboard-ofw-investments-card-content h3,
+.dashboard-ofw-marketplace-card-content h3 {
     margin: 0;
     font-family: "Tilt Warp", sans-serif;
     font-size: 30px;
@@ -365,7 +481,9 @@ h2, h3, h4, h5 {
     letter-spacing: -2px;
 }
 
-.dashboard-ofw-goals-card-content h4, .dashboard-ofw-investments-card-content h4, .dashboard-ofw-marketplace-card-content h4 {
+.dashboard-ofw-goals-card-content h4,
+.dashboard-ofw-investments-card-content h4,
+.dashboard-ofw-marketplace-card-content h4 {
     margin: 0;
     font-family: "Tilt Warp", sans-serif;
     font-size: 54px;
@@ -375,7 +493,9 @@ h2, h3, h4, h5 {
     line-height: 56px;
 }
 
-.dashboard-ofw-goals-card-content h5, .dashboard-ofw-investments-card-content h5, .dashboard-ofw-marketplace-card-content h5 {
+.dashboard-ofw-goals-card-content h5,
+.dashboard-ofw-investments-card-content h5,
+.dashboard-ofw-marketplace-card-content h5 {
     margin: 0;
     margin: 10px 0;
     font-family: "Varela Round", sans-serif;
@@ -405,35 +525,42 @@ h2, h3, h4, h5 {
 }
 
 /*-------------OFW Saving Goals-------------*/
-.goals-ofw-main, .invh-ofw-main, .market-ofw-main {
+.goals-ofw-main,
+.invh-ofw-main,
+.market-ofw-main {
     display: flex;
     flex-direction: row;
     margin-left: 5%;
     margin-right: 5%;
     margin-top: 25px;
-    height: calc(100vh - 100px); 
-    overflow: hidden; 
+    height: calc(100vh - 100px);
+    overflow: hidden;
 }
 
-.goals-ofw-content-cont, .invh-ofw-content-cont, .market-ofw-content-cont {
+.goals-ofw-content-cont,
+.invh-ofw-content-cont,
+.market-ofw-content-cont {
     width: 55%;
-    height: 100%; 
-    overflow-y: auto; 
-    overflow-x: hidden; 
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
     padding-right: 50px;
-    padding-left: 15px; 
+    padding-left: 15px;
 }
 
 
-.goals-ofw-img-cont, .invh-ofw-img-cont, .market-ofw-img-cont {
+.goals-ofw-img-cont,
+.invh-ofw-img-cont,
+.market-ofw-img-cont {
     width: 45%;
     height: 100%;
-    overflow: hidden; 
+    overflow: hidden;
     display: flex;
     justify-content: center;
 }
 
-.goals-ofw-img-cont img, .invh-ofw-img-cont img {
+.goals-ofw-img-cont img,
+.invh-ofw-img-cont img {
     width: auto;
     height: 95%;
 }
@@ -461,14 +588,14 @@ h2, h3, h4, h5 {
     margin-right: 5%;
     margin-top: 25px;
     margin-bottom: 50px;
-    height: calc(120vh - 100px); 
-    overflow: hidden; 
+    height: calc(120vh - 100px);
+    overflow: hidden;
 }
 
 
 .bus-profile-card-cont {
     width: 45%;
-    height: 100%; 
+    height: 100%;
     padding-top: 3%;
     padding-right: 50px;
 }
@@ -477,7 +604,7 @@ h2, h3, h4, h5 {
     width: 55%;
     height: 100%;
     padding-right: 25px;
-    
+
 
 }
 
@@ -486,7 +613,7 @@ h2, h3, h4, h5 {
     flex-direction: row;
     gap: 20px;
     padding-left: 25px;
-    
+
 }
 
 .bus-tabs h3 {
@@ -505,9 +632,10 @@ h2, h3, h4, h5 {
     border-bottom: 3px solid black;
 }
 
-.bus-projects, .bus-updates {
-    height: calc(95vh - 130px); 
-    padding-right: 25px; 
+.bus-projects,
+.bus-updates {
+    height: calc(95vh - 130px);
+    padding-right: 25px;
     overflow-y: auto;
     padding-left: 25px;
 }
@@ -544,7 +672,7 @@ h2, h3, h4, h5 {
     min-width: 100%;
     min-height: 100%;
     box-sizing: border-box;
-    background-color:rgba(0, 0, 0, 0.1);
+    background-color: rgba(0, 0, 0, 0.1);
     border: 3px solid black;
     border-style: dotted;
     border-width: 5px;
@@ -567,16 +695,130 @@ h2, h3, h4, h5 {
     height: auto;
 }
 
+.add-project-main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    padding-top: 25px;
+}
+
+.add-project-header {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    height: 36px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.add-project-header h2 {
+    margin: 0;
+    font-family: "Varela Round", sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -1.5px;
+    margin-left: -25px;
+}
+
+.project-form {
+    width: 40%;
+    height: fit-content;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin: 30px;
+    margin-top: 0px;
+    gap: 20px;
+}
+
+.add-post-image {
+    width: 100%;
+    height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 15px;
+    border: 2px solid grey;
+    border-style: dotted;
+    border-width: 3px;
+    background-color: rgba(0, 0, 0, 0.1);
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    color: #484848;
+    cursor: pointer;
+}
+
+.project-title-input, .project-target-input {
+    width: 100%;
+    height: 50px;
+    box-sizing: border-box;
+    border-radius: 15px;
+    border: 2px solid grey;
+    border-style: dotted;
+    border-width: 3px;
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 30px;
+    font-weight: 200;
+    color: #282828;
+    letter-spacing: -1px;
+    padding: 0 10px;
+}
+
+.project-target-input {
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    font-weight: 200;
+    letter-spacing: 0px;
+    color: #282828;
+}
+
+.project-desc-input {
+    min-width: 100%;
+    min-height: 150px;
+    box-sizing: border-box;
+    border: 2px solid grey;
+    border-style: dotted;
+    border-width: 3px;
+    border-radius: 15px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    padding: 10px;
+    resize: none;
+    overflow: hidden;
+}
+
+.create-project-btn {
+    width: 30%;
+    background-color: #ab3f4c;
+    border: none;
+    border-radius: 15px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
 /*-------------Admin Dashboard-------------*/
 
 .admin-body {
-    width: 100%; 
+    width: 100%;
     background-image: url('/public/assets/db-bg.png');
     background-size: cover;
     padding: 0;
     padding-bottom: 25px;
     margin: 0;
-    overflow-x: hidden; 
+    overflow-x: hidden;
     overflow-y: auto;
 }
 
@@ -589,7 +831,9 @@ h2, h3, h4, h5 {
     margin-bottom: 25px;
 }
 
-.admin-total-users, .admin-active-projects, .admin-pending-projects {
+.admin-total-users,
+.admin-active-projects,
+.admin-pending-projects {
     width: 33%;
     height: 100%;
     background-color: white;
@@ -603,7 +847,9 @@ h2, h3, h4, h5 {
     overflow: hidden;
 }
 
-.admin-total-users h3, .admin-active-projects h3, .admin-pending-projects h3 {
+.admin-total-users h3,
+.admin-active-projects h3,
+.admin-pending-projects h3 {
     font-family: "Varela Round", sans-serif;
     font-size: 21px;
     font-weight: 200;
@@ -611,7 +857,9 @@ h2, h3, h4, h5 {
     color: #494949;
 }
 
-.admin-total-users h4, .admin-active-projects h4, .admin-pending-projects h4 {
+.admin-total-users h4,
+.admin-active-projects h4,
+.admin-pending-projects h4 {
     font-family: "Tilt Warp", sans-serif;
     font-size: 54px;
     font-weight: 200;
@@ -619,7 +867,9 @@ h2, h3, h4, h5 {
     color: #282828;
 }
 
-.admin-total-users img, .admin-active-projects img, .admin-pending-projects img {
+.admin-total-users img,
+.admin-active-projects img,
+.admin-pending-projects img {
     height: 100%;
     position: absolute;
     left: 0;
@@ -647,18 +897,19 @@ h2, h3, h4, h5 {
 .admin-table-cont table {
     width: 100%;
     table-layout: fixed;
-    border-collapse: separate; 
+    border-collapse: separate;
     border-spacing: 0 15px;
 }
 
-.admin-table-cont table tr th, .admin-table-cont table tr td {
+.admin-table-cont table tr th,
+.admin-table-cont table tr td {
     font-family: "Varela Round", sans-serif;
     text-align: center;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
     padding: 10px;
-} 
+}
 
 .admin-th-row th:first-child {
     border-top-left-radius: 15px;
@@ -674,7 +925,12 @@ h2, h3, h4, h5 {
     background-color: #cfcfcf;
 }
 
-.dashboard-admin-disable-btn, .pa-admin-decline-btn, .pa-admin-approve-btn, .um-admin-activate-btn, .um-admin-archive-btn, .um-admin-disable-btn {
+.dashboard-admin-disable-btn,
+.pa-admin-decline-btn,
+.pa-admin-approve-btn,
+.um-admin-activate-btn,
+.um-admin-archive-btn,
+.um-admin-disable-btn {
     background-color: #AB3F4C;
     border-radius: 10px;
     border: 2px solid transparent;
@@ -686,7 +942,8 @@ h2, h3, h4, h5 {
     cursor: pointer;
 }
 
-.pa-admin-approve-btn, .um-admin-activate-btn {
+.pa-admin-approve-btn,
+.um-admin-activate-btn {
     background-color: #edbe52;
     color: black;
 }

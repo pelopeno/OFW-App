@@ -9,7 +9,12 @@
     </div>
     <div class="navbar-ofw-buttons">
         <a href="{{ route('business-dashboard') }}"><img src="/assets/db-ofw-navbar-profile.png" /></a>
-        <a href=""><img src="/assets/db-ofw-navbar-logout.png" /></a>
+        <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <img src="/assets/db-ofw-navbar-logout.png">
+            </button>
+        </form>
     </div>
 </div>
 

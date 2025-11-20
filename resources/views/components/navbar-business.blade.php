@@ -7,7 +7,12 @@
     </div>
     <div class="navbar-bus-buttons">
         <a href="{{ route('dashboard') }}"><img src="/assets/bus-navbar-profile.png" /></a>
-        <a href=""><img src="/assets/bus-navbar-logout.png" /></a>
+       <form method="POST" action="{{ route('logout') }}">
+            @csrf
+            <button type="submit" class="logout-btn">
+                <img src="/assets/bus-navbar-logout.png">
+            </button>
+        </form>
     </div>
 </div>
 
