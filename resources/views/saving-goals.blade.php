@@ -14,6 +14,11 @@
     <div class="goals-ofw-main">
         <div class="goals-ofw-content-cont">
             <h2>Saving Goals</h2>
+             <a href="{{ route('add-goal') }}">
+                    <div class="ofw-add-goal-btn">
+                        <img src="/assets/plus.png">
+                    </div>
+                </a>
             <x-saving-goals-card 
                 goal_name="House Renovation" 
                 goal_current_savings_amt="50000" 

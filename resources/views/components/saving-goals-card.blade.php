@@ -9,7 +9,8 @@
         </div>
     </div>
     <div class="goals-card-button">
-        <button>Allocate Funds</button>
+        <a href="{{ route('allocate-funds') }}">Allocate Funds</a>
+        <a href="{{  route('withdraw-funds') }}">Withdraw Funds</a>
     </div>
     <div class="goals-card-kebab">
         <a href=""><img src="/assets/kebab.png"></a>
@@ -54,10 +55,13 @@
     .goals-card-button {
         width: 40%;
         display: flex;
+        flex-direction: column;
+        justify-content: center;
         align-items: center;
+        gap: 10px;
     }
 
-    .goals-card-button button {
+    .goals-card-button a {
         width: 100%;
         background-color: white;
         border: 2px solid black;
@@ -65,6 +69,9 @@
         font-family: "Varela Round", sans-serif;
         font-size: 24px;
         cursor: pointer;
+        text-align: center;
+        text-decoration: none;
+        color: #282828;
     }
 
     .goals-card-kebab {

@@ -8,6 +8,11 @@
         <div class="progress-container" style="width: 100%;">
             <div class="progress-bar"></div>
         </div>
+        
+        @if(auth()->check() && auth()->user()->user_type === 'ofw')
+            <a href="{{ route('donate-project') }}" class="donate-btn">Donate</a>
+        @endif
+        
         <hr class="dotted-hr" />
         <p class="project-view-desc">Café Kabayan has grown into a popular spot for students and professionals in Quezon City, thanks to its affordable meals and cozy atmosphere. However, due to limited seating and outdated equipment, the café struggles to accommodate peak-hour demand. Through this expansion project, we aim to renovate our space to add 20 more seats, upgrade our coffee machines to improve service efficiency, and launch an online ordering and delivery platform to reach customers beyond our immediate community. This expansion will not only increase revenue but also create new local job opportunities for baristas, kitchen staff, and delivery personnel.</p>
     </div>
@@ -80,6 +85,28 @@
         letter-spacing: -1px;
         color: #282828;
         margin: 10px 0;
+    }
+
+    .donate-btn {
+        display: block;
+        padding: 15px;
+        margin-top: 15px;
+        background-color: #A68749;
+        color: white;
+        border: transparent;
+        border-radius: 12px;
+        font-family: "Varela Round", sans-serif;
+        font-size: 18px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        text-align: center;
+        text-decoration: none;
+    }
+
+    .donate-btn:hover {
+        background-color: #404040;
+        transform: translateY(-2px);
     }
 
     .dotted-hr {

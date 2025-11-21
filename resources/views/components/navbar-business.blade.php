@@ -6,7 +6,6 @@
         <!--If may lalagay kayo na redirect links, lagay nalang dito similar sa ofw navbar-->
     </div>
     <div class="navbar-bus-buttons">
-        <a href="{{ route('dashboard') }}"><img src="/assets/bus-navbar-profile.png" /></a>
        <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">

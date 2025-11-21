@@ -30,24 +30,24 @@
 
             <!---------↓↓↓-Projects Tab-↓↓↓--------->
             <div class="bus-projects">
-                <a href="{{ route('add-project') }}">
+                <a href={{ route('add-project')}} class="add-project-exclusion-link">
                     <div class="bus-add-project-btn">
                         <img src="/assets/plus.png">
                     </div>
                 </a>
-                <a href="/project/1" class="project-card-link">
+                <a href="/project/1">
                     <x-business-project-card 
                         project_name="Café Kabayan Expansion" 
                         project_current_raised_amt="50000" 
                         project_target_raised_amt="200000" />
                 </a>
-                <a href="/project/2" class="project-card-link">
+                <a href="/project/2">
                     <x-business-project-card 
                         project_name="Dapitan Branch" 
                         project_current_raised_amt="10000" 
                         project_target_raised_amt="500000" />
                 </a>
-                <a href="/project/3" class="project-card-link">
+                <a href="/project/3">
                     <x-business-project-card 
                         project_name="Makati Branch" 
                         project_current_raised_amt="25000" 
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Overlay logic with History API
     const overlay = document.querySelector(".project-view-main");
-    const projectLinks = document.querySelectorAll(".project-card-link");
+    const projectLinks = document.querySelectorAll(".bus-projects a:not(.add-project-exclusion-link)");
     const closeBtn = document.querySelector(".project-view-x-btn");
     
 

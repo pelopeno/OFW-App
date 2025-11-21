@@ -161,14 +161,18 @@
     }
 
     function selectUserType(type) {
-        document.getElementById('user_type').value = type;
-        document.getElementById('selectedTypeLabel').textContent =
-            type === 'ofw' ? 'OFW' : 'Business Owner';
+    document.getElementById('user_type').value = type;
+    document.getElementById('selectedTypeLabel').textContent =
+        type === 'ofw' ? 'OFW' : 'Business Owner';
 
-        toggleChooseType();
-
-        toggleSignup();
+    const nameInput = document.querySelector('input[name="name"]');
+    if (nameInput) {
+        nameInput.placeholder = type === 'ofw' ? 'Display Name' : 'Business Name';
     }
+
+    toggleChooseType();
+    toggleSignup();
+}
 
     document.addEventListener('DOMContentLoaded', function() {
         var body = document.body;

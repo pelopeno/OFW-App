@@ -8,7 +8,6 @@
         <a href="{{ route('marketplace') }}">Marketplace</a>
     </div>
     <div class="navbar-ofw-buttons">
-        <a href="{{ route('business-dashboard') }}"><img src="/assets/db-ofw-navbar-profile.png" /></a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">

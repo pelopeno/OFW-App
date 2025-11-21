@@ -8,7 +8,6 @@
         <a href="{{ route('admin-user-management') }}">User Management</a>
     </div>
     <div class="navbar-admin-buttons">
-        <a href="{{ route('dashboard') }}"><img src="/assets/admin-navbar-profile.png" /></a>
         <form method="POST" action="{{ route('logout') }}">
             @csrf
             <button type="submit" class="logout-btn">

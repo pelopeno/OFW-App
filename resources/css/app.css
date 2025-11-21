@@ -65,13 +65,13 @@ h5 {
 .dashboard-ofw-marketplace-card:hover,
 .dashboard-ofw-etc-cards:hover,
 .dashboard-ofw-wallet-card-content button:hover,
-.goals-card button:hover,
+.goals-card-button a:hover,
 .investment-card:hover,
 .bus-name button:hover,
 .project-card:hover,
 .project-view-x-btn:hover,
 .signup-ofw-button-cont button:hover,
-.signup-bus-button-cont button:hover, .add-post-image:hover {
+.signup-bus-button-cont button:hover, .add-post-image:hover, .ofw-add-goal-btn:hover, .bus-add-project-btn:hover {
     transform: scale(1.025);
     transition: .2s;
 }
@@ -640,11 +640,12 @@ h5 {
     padding-left: 25px;
 }
 
-.bus-add-project-btn {
+.bus-add-project-btn, .ofw-add-goal-btn {
     height: 100px;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 5px;
     margin-bottom: 30px;
     background-color: rgba(0, 0, 0, 0.10);
     border: 3px solid black;
@@ -653,7 +654,11 @@ h5 {
     border-radius: 25px;
 }
 
-.bus-add-project-btn img {
+.ofw-add-goal-btn {
+    height: 125px;
+}
+
+.bus-add-project-btn img, .ofw-add-goal-btn img {
     width: 40px;
     height: auto;
 }
@@ -665,6 +670,7 @@ h5 {
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    margin-top: 5px;
     margin-bottom: 25px;
 }
 
@@ -695,7 +701,7 @@ h5 {
     height: auto;
 }
 
-.add-project-main {
+.add-project-main, .add-goal-main {
     width: 100%;
     height: 100%;
     display: flex;
@@ -705,7 +711,7 @@ h5 {
     padding-top: 25px;
 }
 
-.add-project-header {
+.add-project-header, .add-goal-header {
     width: 40%;
     display: flex;
     flex-direction: row;
@@ -714,7 +720,7 @@ h5 {
     margin-bottom: 10px;
 }
 
-.add-project-header h2 {
+.add-project-header h2, .add-goal-header h2 {
     margin: 0;
     font-family: "Varela Round", sans-serif;
     font-size: 36px;
@@ -723,7 +729,7 @@ h5 {
     margin-left: -25px;
 }
 
-.project-form {
+.project-form, .goal-form, .donate-form {
     width: 40%;
     height: fit-content;
     background-color: white;
@@ -755,7 +761,7 @@ h5 {
     cursor: pointer;
 }
 
-.project-title-input, .project-target-input {
+.project-title-input, .project-target-input, .goal-title-input, .goal-target-input, .goal-allocated-input, .goal-withdraw-input, .donate-input {
     width: 100%;
     height: 50px;
     box-sizing: border-box;
@@ -771,7 +777,7 @@ h5 {
     padding: 0 10px;
 }
 
-.project-target-input {
+.project-target-input, .goal-target-input, .goal-allocated-input, .goal-withdraw-input, .donate-input {
     font-family: "Varela Round", sans-serif;
     font-size: 18px;
     font-weight: 200;
@@ -794,7 +800,7 @@ h5 {
     overflow: hidden;
 }
 
-.create-project-btn {
+.create-project-btn, .create-goal-btn, .allocate-goal-btn, .withdraw-goal-btn {
     width: 30%;
     background-color: #ab3f4c;
     border: none;
@@ -809,6 +815,23 @@ h5 {
     align-self: flex-end;
 }
 
+.create-goal-btn, .allocate-goal-btn, .withdraw-goal-btn {
+    background-color: #A68749;
+}
+
+.goal-target-desc, .goal-allocated-desc, .goal-withdraw-desc,  .donate-desc  {
+    font-family: "Varela Round", sans-serif;
+    margin: 0;
+    margin-top: -15px;
+    color: #282828;
+}
+
+.input-label {
+    font-family: "Varela Round", sans-serif;
+    margin: 0;
+    margin-bottom: -15px;
+    color: #494949;
+}
 /*-------------Admin Dashboard-------------*/
 
 .admin-body {

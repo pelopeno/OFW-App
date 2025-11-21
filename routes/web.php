@@ -28,16 +28,25 @@ Route::middleware([
     Route::get('/marketplace', function () {
         return view('marketplace');
     })->name('marketplace');
-    Route::get('/profile', function () {
-        return view(view: 'profile');
-    })->name('profile');
+    Route::get('/add_goal', function () {
+        return view(view: 'add-goal');
+    })->name('add-goal');
+    Route::get('/insertGoalIDHere/allocate', function () {
+        return view(view: 'allocate-funds');
+    })->name('allocate-funds');
+    Route::get('/insertGoalIDHere/withdraw', function () {
+        return view(view: 'withdraw-funds');
+    })->name('withdraw-funds');
+    Route::get('/project/ProjectIdHere/donate', function () {
+        return view(view: 'donate-project');
+    })->name('donate-project');
 });
 
 // Routes exclusive to businesses
 Route::get('/business', function () {
     return view('business.dashboard');
 })->name('business-dashboard');
-Route::get('/business/add-project', function () {
+Route::get('/business/add_project', function () {
     return view('business.add-project');
 })->name('add-project');
 
