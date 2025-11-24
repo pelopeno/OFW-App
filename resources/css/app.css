@@ -1036,3 +1036,16 @@ h5 {
 .admin-filter-dropdown a:hover {
     background-color: #e7e7e7;
 }
+.progress-container {
+    height: 10px;
+    background-color: #e0e0e0;
+    border-radius: 5px;
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #A68749; /* Match your donate button color */
+    transition: width 0.3s ease;
+}

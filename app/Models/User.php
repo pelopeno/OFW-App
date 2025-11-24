@@ -75,4 +75,12 @@ class User extends Authenticatable
     {
         return $this->hasOne(Wallet::class);
     }
+    public function projects()
+    {
+        return $this->hasMany(Project::class);
+    }
+    public function investments()
+    {
+        return $this->hasMany(Investment::class);
+    }
 }

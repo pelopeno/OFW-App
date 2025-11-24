@@ -3,6 +3,8 @@
 use App\Http\Controllers\WalletController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
+use App\Http\Controllers\ProjectController;
+use App\Http\Controllers\BusinessDashboardController;
 use Illuminate\Support\Facades\Route;
 
 // Routes everyone can see
@@ -44,15 +46,18 @@ Route::middleware([
 
 // Routes exclusive to Business Users
 Route::middleware(['auth', 'role:business_owner'])->group(function () {
-    Route::get('/business', function () {
-        return view('business.dashboard');
-    })->name('business-dashboard');
+    Route::get('/business', [BusinessDashboardController::class, 'index'])
+        ->name('business-dashboard');
 
-    Route::get('/business/add_project', function () {
-        return view('business.add-project');
-    })->name('add-project');
+    Route::get('/business/add_project', [ProjectController::class, 'create'])
+        ->name('add-project');
+
+    Route::post('/business/store-project', [ProjectController::class, 'store'])
+        ->name('project.store');
+
+    Route::get('/project/{id}', [ProjectController::class, 'show'])
+        ->name('project.view');
 });
-
 
 // Routes exclusive to Admins
 Route::middleware(['auth', 'role:admin'])->group(function () {

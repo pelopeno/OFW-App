@@ -7,8 +7,7 @@ use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {
-    //
-     public function index()
+    public function index()
     {
         $user = Auth::user();
 
@@ -16,8 +15,8 @@ class DashboardController extends Controller
         $wallet = $user->wallet;
 
         // Latest saving goal
-        //$goal = $user->goals()->latest()->first();
+        $latestGoal = $user->goals()->latest()->first();
 
-        return view('dashboard', compact('wallet'));
+        return view('dashboard', compact('wallet', 'latestGoal'));
     }
 }
