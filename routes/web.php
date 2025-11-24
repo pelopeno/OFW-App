@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 // Routes everyone can see
 Route::get('/', function () {
     return view('landing');
-});
+})->name('landing');
 Route::get('/project', function () {
     return view('project');
 })->name('project');
@@ -15,6 +15,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    'role:ofw',
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
@@ -45,24 +46,33 @@ Route::middleware([
     })->name('add-funds');
 });
 
-// Routes exclusive to businesses
-Route::get('/business', function () {
-    return view('business.dashboard');
-})->name('business-dashboard');
-Route::get('/business/add_project', function () {
-    return view('business.add-project');
-})->name('add-project');
+// Routes exclusive to Business Users
+Route::middleware(['auth', 'role:business_owner'])->group(function () {
+    Route::get('/business', function () {
+        return view('business.dashboard');
+    })->name('business-dashboard');
 
-// Routes exclusive to admins
-Route::get('/admin', function () {
-    return view('admin.dashboard');
-})->name('admin-dashboard');
-Route::get('/admin/project_approval', function () {
-    return view('admin.project-approval');
-})->name('admin-project-approval');
-Route::get('/admin/monitoring', function () {
-    return view('admin.monitoring');
-})->name('admin-monitoring');
-Route::get('/admin/user_management', function () {
-    return view('admin.user-management');
-})->name('admin-user-management');
+    Route::get('/business/add_project', function () {
+        return view('business.add-project');
+    })->name('add-project');
+});
+
+
+// Routes exclusive to Admins
+Route::middleware(['auth', 'role:admin'])->group(function () {
+    Route::get('/admin', function () {
+        return view('admin.dashboard');
+    })->name('admin-dashboard');
+
+    Route::get('/admin/project_approval', function () {
+        return view('admin.project-approval');
+    })->name('admin-project-approval');
+
+    Route::get('/admin/monitoring', function () {
+        return view('admin.monitoring');
+    })->name('admin-monitoring');
+
+    Route::get('/admin/user_management', function () {
+        return view('admin.user-management');
+    })->name('admin-user-management');
+});
