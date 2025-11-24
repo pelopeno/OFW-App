@@ -40,6 +40,9 @@ Route::middleware([
     Route::get('/project/ProjectIdHere/donate', function () {
         return view(view: 'donate-project');
     })->name('donate-project');
+    Route::get('/add_funds', function () {
+        return view(view: 'add-funds');
+    })->name('add-funds');
 });
 
 // Routes exclusive to businesses

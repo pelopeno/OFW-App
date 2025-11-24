@@ -19,7 +19,7 @@
                 <div class="dashboard-ofw-wallet-card-content">
                     <h3>Wallet Balance</h3>
                     <h4>P50,000</h4>
-                    <button>Add Funds</button>
+                    <a href="{{ route('add-funds') }}">Add Funds</a>
                 </div>
             </div>
 
