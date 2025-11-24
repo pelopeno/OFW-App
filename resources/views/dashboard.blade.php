@@ -18,7 +18,7 @@
                 <img src="/assets/db-ofw-wallet-card.png" />
                 <div class="dashboard-ofw-wallet-card-content">
                     <h3>Wallet Balance</h3>
-                    <h4>P50,000</h4>
+                    <h4>P{{ number_format(auth()->user()->wallet->balance, 2) }}</h4>
                     <a href="{{ route('add-funds') }}">Add Funds</a>
                 </div>
             </div>

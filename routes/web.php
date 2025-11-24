@@ -1,5 +1,8 @@
 <?php
 
+use App\Http\Controllers\WalletController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\GoalController;
 use Illuminate\Support\Facades\Route;
 
 // Routes everyone can see
@@ -17,33 +20,26 @@ Route::middleware([
     'verified',
     'role:ofw',
 ])->group(function () {
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
-    Route::get('/saving_goals', function () {
-        return view('saving-goals');
-    })->name('saving-goals');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->name('dashboard');
+    Route::get('/saving_goals', [GoalController::class, 'showGoals'])->name('saving-goals');
     Route::get('/investment_history', function () {
         return view('investment-history');
     })->name('investment-history');
     Route::get('/marketplace', function () {
         return view('marketplace');
     })->name('marketplace');
-    Route::get('/add_goal', function () {
-        return view(view: 'add-goal');
-    })->name('add-goal');
-    Route::get('/insertGoalIDHere/allocate', function () {
-        return view(view: 'allocate-funds');
-    })->name('allocate-funds');
-    Route::get('/insertGoalIDHere/withdraw', function () {
-        return view(view: 'withdraw-funds');
-    })->name('withdraw-funds');
+    Route::get('/add_goal', [GoalController::class, 'create'])->name('add-goal');
+    Route::post('/store_goal', [GoalController::class, 'store'])->name('store-goal');
+    Route::get('/goals/{id}/allocate', [GoalController::class, 'showAllocateForm'])->name('allocate-funds');
+    Route::post('/goals/{id}/allocateFunds', [GoalController::class, 'allocateFunds'])->name('allocate-funds.post');
+    Route::get('/goals/{id}/withdraw', [GoalController::class, 'withdrawForm'])->name('withdraw-funds');
+    Route::post('/goals/{id}/withdrawFunds', [GoalController::class, 'withdrawFunds'])->name('withdraw-funds.post');
     Route::get('/project/ProjectIdHere/donate', function () {
         return view(view: 'donate-project');
     })->name('donate-project');
-    Route::get('/add_funds', function () {
-        return view(view: 'add-funds');
-    })->name('add-funds');
+    Route::get('/add_funds', [WalletController::class, 'showAddFunds'])->name('add-funds');
+    Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
 });
 
 // Routes exclusive to Business Users

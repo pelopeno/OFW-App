@@ -15,12 +15,14 @@
         <div class="add-goal-header" style="height: auto;">
             <h2 style="line-height: 32px;">Add Funds</h2>
         </div>
-        <form class="add-funds-form">
+        <form class="add-funds-form" method="POST" action="{{ route('wallet.add-funds') }}">
+            @csrf
             <label class="input-label">Amount to Add</label>
-            <input type="number" placeholder="Enter amount (₱)" class="add-funds-input" />
+            <input type="number" name= "amount" placeholder="Enter amount (₱)" class="add-funds-input" />
             <small class="add-funds-desc">The entered value will be added to your wallet balance. This cannot be undone.</small>
 
-            <button type="submit" class="add-funds-btn">Add</p>
+            <button type="submit" class="add-funds-btn">Add</button>
         </form>
     </div>
 </body>
+</html>

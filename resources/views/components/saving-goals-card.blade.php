@@ -1,16 +1,16 @@
-@props(['goal_name', 'goal_current_savings_amt', 'goal_target_savings_amt'])
+@props(['goal'])
 
 <div class="goals-card">
     <div class="goals-card-content">
-        <h2>{{ $goal_name }}</h2>
-        <p>₱{{ $goal_current_savings_amt }} of ₱{{ $goal_target_savings_amt }}</p>
+        <h2>{{ $goal->name }}</h2>
+        <p>₱{{ number_format($goal->current_amount, 2) }} of ₱{{ number_format($goal->target_amount, 2) }}</p>
         <div class="progress-container">
-            <div class="progress-bar"></div>
+            <div class="progress-bar" style="width: {{ $goal->target_amount > 0 ? ($goal->current_amount / $goal->target_amount) * 100 : 0 }}%"></div>
         </div>
     </div>
     <div class="goals-card-button">
-        <a href="{{ route('allocate-funds') }}">Allocate Funds</a>
-        <a href="{{  route('withdraw-funds') }}">Withdraw Funds</a>
+        <a href="{{ route('allocate-funds', $goal->id) }}">Allocate Funds</a>
+        <a href="{{ route('withdraw-funds', $goal->id) }}">Withdraw Funds</a>
     </div>
     <div class="goals-card-kebab">
         <a href=""><img src="/assets/kebab.png"></a>
@@ -49,7 +49,6 @@
         color: #848484;
         margin: 0;
         margin-bottom: 10px;
-        
     }
 
     .goals-card-button {
@@ -87,4 +86,17 @@
         transform: rotate(90deg);
     }
 
+    .progress-container {
+        width: 100%;
+        height: 10px;
+        background-color: #e0e0e0;
+        border-radius: 5px;
+        overflow: hidden;
+    }
+
+    .progress-bar {
+        height: 100%;
+        background-color: #4caf50;
+        transition: width 0.3s ease;
+    }
 </style>

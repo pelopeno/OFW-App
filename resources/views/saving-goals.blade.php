@@ -14,27 +14,17 @@
     <div class="goals-ofw-main">
         <div class="goals-ofw-content-cont">
             <h2>Saving Goals</h2>
-             <a href="{{ route('add-goal') }}">
-                    <div class="ofw-add-goal-btn">
-                        <img src="/assets/plus.png">
-                    </div>
-                </a>
-            <x-saving-goals-card 
-                goal_name="House Renovation" 
-                goal_current_savings_amt="50000" 
-                goal_target_savings_amt="100000"/>
-            <x-saving-goals-card 
-                goal_name="Boracay Trip" 
-                goal_current_savings_amt="0" 
-                goal_target_savings_amt="100000"/>
-            <x-saving-goals-card 
-                goal_name="New Phone" 
-                goal_current_savings_amt="0" 
-                goal_target_savings_amt="15000"/>
-            <x-saving-goals-card 
-                goal_name="Tuition" 
-                goal_current_savings_amt="30000" 
-                goal_target_savings_amt="60000"/>
+            <a href="{{ route('add-goal') }}">
+                <div class="ofw-add-goal-btn">
+                    <img src="/assets/plus.png">
+                </div>
+            </a>
+            
+            @forelse($goals as $goal)
+                <x-saving-goals-card :goal="$goal"/>
+            @empty
+                <p>No saving goals yet. Create your first goal!</p>
+            @endforelse
         </div>
 
         <div class="goals-ofw-img-cont">

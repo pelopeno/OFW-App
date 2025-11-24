@@ -15,15 +15,16 @@
         <div class="add-goal-header">
             <h2>Create Goal</h2>
         </div>
-        <form class="goal-form">
+        <form class="goal-form" method="POST" action="{{ route('store-goal') }}">
+            @csrf
             <label class="input-label">Name</label>
-            <input type="text" placeholder="e.g. Travel Savings" class="goal-title-input" />
+            <input type="text" name="name" placeholder="e.g. Travel Savings" class="goal-title-input" />
 
             <label class="input-label">Target Saving Amount</label>
-            <input type="number" placeholder="Enter amount (₱)" class="goal-target-input" />
+            <input type="number" name="target_amount" placeholder="Enter amount (₱)" class="goal-target-input" />
 
             <label class="input-label">Initial Investment</label>
-            <input type="number" placeholder="Enter amount (₱)" class="goal-target-input" />
+            <input type="number" name="current_amount" placeholder="Enter amount (₱)" class="goal-target-input" />
             <small class="goal-target-desc">The entered value will be deducted to your wallet balance.</small>
 
             <button type="submit" class="create-goal-btn">Create</p>

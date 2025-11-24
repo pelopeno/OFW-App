@@ -26,6 +26,7 @@ class FortifyServiceProvider extends ServiceProvider
     public function register(): void
     {
         //
+        //para hindi mag auto log
         $this->app->singleton(RegisterResponse::class, CustomRegisterResponse::class);
         $this->app->singleton(
             LoginResponseContract::class,

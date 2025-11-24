@@ -13,14 +13,37 @@
 
     <div class="add-goal-main">
         <div class="add-goal-header" style="height: auto;">
-            <h2 style="line-height: 32px;">Allocate Funds to: [GoalNameHere]</h2>
+            <h2 style="line-height: 32px;">
+                Allocate Funds to: {{ $goal->title ?? $goal->name }}
+            </h2>
         </div>
-        <form class="goal-form">
-            <label class="input-label">Amount to Allocate</label>
-            <input type="number" placeholder="Enter amount (₱)" class="goal-allocated-input" />
-            <small class="goal-allocated-desc">The entered value will be deducted to your wallet balance.</small>
 
-            <button type="submit" class="allocate-goal-btn">Allocate</p>
+        {{-- Error message --}}
+        @if ($errors->any())
+            <div class="error-message">{{ $errors->first() }}</div>
+        @endif
+
+        <form class="goal-form" method="POST" action="{{ route('allocate-funds.post', $goal->id) }}">
+            @csrf
+
+            <label class="input-label">Amount to Allocate</label>
+
+            <input 
+                type="number"
+                name="amount"
+                placeholder="Enter amount (₱)" 
+                class="goal-allocated-input"
+                min="1"
+                required
+            />
+
+            <small class="goal-allocated-desc">
+                The entered value will be deducted from your wallet balance.
+            </small>
+
+            <button type="submit" class="allocate-goal-btn">Allocate</button>
         </form>
     </div>
 </body>
+
+</html>

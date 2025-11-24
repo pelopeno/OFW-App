@@ -26,11 +26,17 @@ class CreateNewUser implements CreatesNewUsers
             'user_type' => ['required', 'in:ofw,business_owner'],
         ])->validate();
 
-        return User::create([
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
             'user_type' => $input['user_type'],
         ]);
+
+        $user->wallet()->create([
+            'balance' => 0,
+        ]);
+
+        return $user;
     }
 }
