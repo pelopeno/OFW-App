@@ -5,6 +5,9 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BusinessDashboardController;
+use App\Http\Controllers\BusinessProfileController;
+use App\Http\Controllers\BusinessUpdateController;
+use App\Http\Controllers\MarketplaceController;
 use Illuminate\Support\Facades\Route;
 
 // Routes everyone can see
@@ -28,9 +31,7 @@ Route::middleware([
     Route::get('/investment_history', function () {
         return view('investment-history');
     })->name('investment-history');
-    Route::get('/marketplace', function () {
-        return view('marketplace');
-    })->name('marketplace');
+    Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace');
     Route::get('/add_goal', [GoalController::class, 'create'])->name('add-goal');
     Route::post('/store_goal', [GoalController::class, 'store'])->name('store-goal');
     Route::get('/goals/{id}/allocate', [GoalController::class, 'showAllocateForm'])->name('allocate-funds');
@@ -42,6 +43,8 @@ Route::middleware([
     })->name('donate-project');
     Route::get('/add_funds', [WalletController::class, 'showAddFunds'])->name('add-funds');
     Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
+    Route::get('/withdraw_wallet', [WalletController::class, 'showWithdrawFunds'])->name('withdraw-wallet');
+    Route::post('/withdraw_wallet', [WalletController::class, 'withdrawWallet'])->name('wallet.withdraw-funds');
 });
 
 // Routes exclusive to Business Users
@@ -57,6 +60,29 @@ Route::middleware(['auth', 'role:business_owner'])->group(function () {
 
     Route::get('/project/{id}', [ProjectController::class, 'show'])
         ->name('project.view');
+
+    Route::get('/business/project/{id}/edit', [ProjectController::class, 'edit'])
+        ->name('project.edit');
+
+    Route::put('/business/project/{id}', [ProjectController::class, 'update'])
+        ->name('project.update');
+
+    Route::delete('/business/project/{id}', [ProjectController::class, 'destroy'])
+        ->name('project.destroy');
+
+    // Profile routes
+    Route::post('/business/profile/update', [BusinessProfileController::class, 'update'])
+        ->name('business.profile.update');
+
+    Route::post('/business/profile/picture', [BusinessProfileController::class, 'uploadProfilePicture'])
+        ->name('business.profile.picture');
+
+    // Updates routes
+    Route::post('/business/updates', [BusinessUpdateController::class, 'store'])
+        ->name('business.updates.store');
+
+    Route::delete('/business/updates/{id}', [BusinessUpdateController::class, 'destroy'])
+        ->name('business.updates.destroy');
 });
 
 // Routes exclusive to Admins

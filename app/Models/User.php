@@ -31,6 +31,8 @@ class User extends Authenticatable
         'email',
         'password',
         'user_type',
+        'business_description',
+        'profile_picture',
     ];
 
     /**
@@ -82,5 +84,10 @@ class User extends Authenticatable
     public function investments()
     {
         return $this->hasMany(Investment::class);
+    }
+
+    public function businessUpdates()
+    {
+        return $this->hasMany(BusinessUpdate::class);
     }
 }

@@ -30,7 +30,7 @@ class GoalController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|max:255',
             'target_amount' => 'required|numeric|min:1',
             'current_amount' => 'nullable|numeric|min:0',
         ]);
@@ -44,59 +44,82 @@ class GoalController extends Controller
 
         return redirect()->route('saving-goals')->with('success', 'Saving goal created!');
     }
+
     public function showAllocateForm($id)
     {
         $goal = Goal::findOrFail($id);
-        return view('allocate-funds', compact('goal'));
+        $wallet = Auth::user()->wallet;
+        
+        return view('allocate-funds', compact('goal', 'wallet'));
     }
 
     public function allocateFunds(Request $request, $id)
     {
-        // Logic to allocate funds to the goal
+        $wallet = Auth::user()->wallet;
+        
+        // Validate the input
         $request->validate([
-        'amount' => 'required|numeric|min:1'
-    ]);
+            'amount' => [
+                'required',
+                'numeric',
+                'min:0.01',
+                'max:' . $wallet->balance, // Cannot allocate more than wallet balance
+            ]
+        ], [
+            'amount.required' => 'Please enter an amount to allocate.',
+            'amount.numeric' => 'Amount must be a valid number.',
+            'amount.min' => 'Amount must be at least ₱0.01.',
+            'amount.max' => 'Insufficient wallet balance. Your balance is ₱' . number_format($wallet->balance, 2),
+        ]);
 
-    $wallet = Auth::user()->wallet;
+        $goal = Goal::findOrFail($id);
 
-    if ($request->amount > $wallet->balance) {
-        return back()->withErrors(['amount' => 'Insufficient wallet balance.']);
-    }
-    $wallet->balance -= $request->amount;
-    $wallet->save();
-    $goal = Goal::findOrFail($id);
-    $goal->current_amount += $request->amount;
-    $goal->save();
+        // Deduct from wallet
+        $wallet->balance -= $request->amount;
+        $wallet->save();
 
-    return redirect()->route('saving-goals')->with('success', 'Funds allocated successfully!');
+        // Add to goal
+        $goal->current_amount += $request->amount;
+        $goal->save();
 
+        return redirect()->route('saving-goals')->with('success', '₱' . number_format($request->amount, 2) . ' allocated to ' . $goal->name . ' successfully!');
     }
 
     public function withdrawForm($id)
     {
         $goal = Goal::findOrFail($id);
+        
         return view('withdraw-funds', compact('goal'));
     }
 
     public function withdrawFunds(Request $request, $id)
     {
-        $request->validate([
-            'amount' => 'required|numeric|min:1'
-        ]);
-
         $goal = Goal::findOrFail($id);
 
-        if ($request->amount > $goal->current_amount) {
-            return back()->withErrors(['amount' => 'Insufficient goal funds.']);
-        }
+        // Validate the input
+        $request->validate([
+            'amount' => [
+                'required',
+                'numeric',
+                'min:0.01',
+                'max:' . $goal->current_amount, // Cannot withdraw more than goal balance
+            ]
+        ], [
+            'amount.required' => 'Please enter an amount to withdraw.',
+            'amount.numeric' => 'Amount must be a valid number.',
+            'amount.min' => 'Amount must be at least ₱0.01.',
+            'amount.max' => 'Insufficient goal funds. Available balance is ₱' . number_format($goal->current_amount, 2),
+        ]);
 
+        // Deduct from goal
         $goal->current_amount -= $request->amount;
         $goal->save();
 
+        // Add to wallet
         $wallet = Auth::user()->wallet;
         $wallet->balance += $request->amount;
         $wallet->save();
 
-        return redirect()->route('saving-goals')->with('success', 'Funds withdrawn successfully!');
+        return redirect()->route('saving-goals')->with('success', '₱' . number_format($request->amount, 2) . ' withdrawn from ' . $goal->name . ' successfully!');
     }
 }

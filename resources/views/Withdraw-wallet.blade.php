@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allocate Funds</title>
+    <title>Withdraw Funds</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
@@ -13,12 +13,11 @@
 
     <div class="add-goal-main">
         <div class="add-goal-header" style="height: auto;">
-            <h2 style="line-height: 32px;">Allocate Funds to: {{ $goal->name }}</h2>
+            <h2 style="line-height: 32px;">Withdraw Funds from Wallet</h2>
         </div>
-        <form class="goal-form" method="POST" action="{{ route('allocate-funds.post', $goal->id) }}">
+        <form class="goal-form" method="POST" action="{{ route('wallet.withdraw-funds')}}">
             @csrf
             
-
             @if ($errors->any())
                 <div class="alert alert-danger" style="background-color: #f44336; color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
                     <ul style="margin: 0; padding-left: 20px;">
@@ -29,12 +28,12 @@
                 </div>
             @endif
 
-            <label class="input-label">Wallet Balance</label>
+            <label class="input-label">Available Balance</label>
             <div style="background-color: #f0f0f0; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-family: 'Varela Round', sans-serif; font-size: 18px; font-weight: 600; color: #282828;">
                 ₱{{ number_format($wallet->balance, 2) }}
             </div>
 
-            <label class="input-label">Amount to Allocate</label>
+            <label class="input-label">Amount to Withdraw</label>
             <input 
                 type="number" 
                 name="amount" 
@@ -42,12 +41,11 @@
                 class="goal-allocated-input" 
                 min="0.01" 
                 max="{{ $wallet->balance }}"
-
                 step="0.01" 
                 required />
             <small class="goal-allocated-desc">Maximum available: ₱{{ number_format($wallet->balance, 2) }}</small>
 
-            <button type="submit" class="allocate-goal-btn">Allocate Funds</button>
+            <button type="submit" class="withdraw-goal-btn">Withdraw</button>
         </form>
     </div>
 </body>

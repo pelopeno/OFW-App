@@ -71,7 +71,10 @@ h5 {
 .project-card:hover,
 .project-view-x-btn:hover,
 .signup-ofw-button-cont button:hover,
-.signup-bus-button-cont button:hover, .add-post-image:hover, .ofw-add-goal-btn:hover, .bus-add-project-btn:hover {
+.signup-bus-button-cont button:hover,
+.add-post-image:hover,
+.ofw-add-goal-btn:hover,
+.bus-add-project-btn:hover {
     transform: scale(1.025);
     transition: .2s;
 }
@@ -410,9 +413,9 @@ h5 {
     font-size: 24px;
     letter-spacing: -1px;
     cursor: pointer;
-    display: inline-block; 
-    text-decoration: none; 
-    text-align: center; 
+    display: inline-block;
+    text-decoration: none;
+    text-align: center;
     color: black;
 }
 
@@ -644,7 +647,8 @@ h5 {
     padding-left: 25px;
 }
 
-.bus-add-project-btn, .ofw-add-goal-btn {
+.bus-add-project-btn,
+.ofw-add-goal-btn {
     height: 100px;
     display: flex;
     justify-content: center;
@@ -662,7 +666,8 @@ h5 {
     height: 125px;
 }
 
-.bus-add-project-btn img, .ofw-add-goal-btn img {
+.bus-add-project-btn img,
+.ofw-add-goal-btn img {
     width: 40px;
     height: auto;
 }
@@ -705,7 +710,8 @@ h5 {
     height: auto;
 }
 
-.add-project-main, .add-goal-main {
+.add-project-main,
+.add-goal-main {
     width: 100%;
     height: 100%;
     display: flex;
@@ -715,7 +721,7 @@ h5 {
     padding-top: 25px;
 }
 
-.add-project-header, .add-goal-header {
+.add-goal-header {
     width: 40%;
     display: flex;
     flex-direction: row;
@@ -724,7 +730,17 @@ h5 {
     margin-bottom: 10px;
 }
 
-.add-project-header h2, .add-goal-header h2 {
+/* Hiniwalay ko to Daryl. Ginawa ko kasing modal */
+.add-project-header {
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    height: 36px;
+    justify-content: flex-start;
+    margin-bottom: 10px;
+}
+
+.add-goal-header h2 {
     margin: 0;
     font-family: "Varela Round", sans-serif;
     font-size: 36px;
@@ -733,8 +749,46 @@ h5 {
     margin-left: -25px;
 }
 
-.project-form, .goal-form, .donate-form, .add-funds-form {
+.add-project-header h2 {
+    margin: 0;
+    font-family: "Varela Round", sans-serif;
+    font-size: 36px;
+    font-weight: 600;
+    letter-spacing: -1.5px;
+}
+
+.goal-form,
+.donate-form,
+.add-funds-form {
     width: 40%;
+    height: fit-content;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin: 30px;
+    margin-top: 0px;
+    gap: 20px;
+}
+
+/* Hiniwalay ko to Daryl. Ginawa ko kasing modal */
+.project-form {
+    width:40%;
+    height: fit-content;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin: 30px;
+    margin-top: 0px;
+    gap: 20px;
+}
+
+.modal-project-form {
     height: fit-content;
     background-color: white;
     border: 3px solid black;
@@ -765,7 +819,15 @@ h5 {
     cursor: pointer;
 }
 
-.project-title-input, .project-target-input, .goal-title-input, .goal-target-input, .goal-allocated-input, .goal-withdraw-input, .donate-input, .add-funds-input {
+
+.project-title-input,
+.project-target-input,
+.goal-title-input,
+.goal-target-input,
+.goal-allocated-input,
+.goal-withdraw-input,
+.donate-input,
+.add-funds-input {
     width: 100%;
     height: 50px;
     box-sizing: border-box;
@@ -781,7 +843,12 @@ h5 {
     padding: 0 10px;
 }
 
-.project-target-input, .goal-target-input, .goal-allocated-input, .goal-withdraw-input, .donate-input, .add-funds-input {
+.project-target-input,
+.goal-target-input,
+.goal-allocated-input,
+.goal-withdraw-input,
+.donate-input,
+.add-funds-input {
     font-family: "Varela Round", sans-serif;
     font-size: 18px;
     font-weight: 200;
@@ -804,7 +871,11 @@ h5 {
     overflow: hidden;
 }
 
-.create-project-btn, .create-goal-btn, .allocate-goal-btn, .withdraw-goal-btn, .add-funds-btn {
+.create-project-btn,
+.create-goal-btn,
+.allocate-goal-btn,
+.withdraw-goal-btn,
+.add-funds-btn {
     width: 30%;
     background-color: #ab3f4c;
     border: none;
@@ -819,11 +890,18 @@ h5 {
     align-self: flex-end;
 }
 
-.create-goal-btn, .allocate-goal-btn, .withdraw-goal-btn, .add-funds-btn {
+.create-goal-btn,
+.allocate-goal-btn,
+.withdraw-goal-btn,
+.add-funds-btn {
     background-color: #A68749;
 }
 
-.goal-target-desc, .goal-allocated-desc, .goal-withdraw-desc,  .donate-desc, .add-funds-desc  {
+.goal-target-desc,
+.goal-allocated-desc,
+.goal-withdraw-desc,
+.donate-desc,
+.add-funds-desc {
     font-family: "Varela Round", sans-serif;
     margin: 0;
     margin-top: -15px;
@@ -836,6 +914,7 @@ h5 {
     margin-bottom: -15px;
     color: #494949;
 }
+
 /*-------------Admin Dashboard-------------*/
 
 .admin-body {
@@ -1036,6 +1115,7 @@ h5 {
 .admin-filter-dropdown a:hover {
     background-color: #e7e7e7;
 }
+
 .progress-container {
     height: 10px;
     background-color: #e0e0e0;
@@ -1046,6 +1126,230 @@ h5 {
 
 .progress-bar {
     height: 100%;
-    background-color: #A68749; /* Match your donate button color */
+    background-color: #A68749;
     transition: width 0.3s ease;
+}
+
+/* Modal Styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    overflow-y: scroll;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+}
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.modal-content {
+    background-color: white;
+    border-radius: 25px;
+    border: 3px solid black;
+    padding: 40px;
+    max-width: 600px;
+    width: 90%;
+    height: fit-content;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    margin: 30px;
+}
+
+.modal-overlay.show .modal-content {
+    transform: scale(1);
+}
+
+.modal-close {
+    position: absolute;
+    right: -15px;
+    top: -20px;
+    z-index: 6;
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #282828;
+    line-height: 1;
+    padding: 0;
+    width: auto;
+    height: auto;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.modal-close img {
+    width: 60px;
+    height: auto;
+    display: block;
+}
+
+.modal-close:hover {
+    transform: rotate(90deg) scale(1.1);
+}
+
+/* Profile Picture Upload */
+.profile-picture-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.profile-picture-upload img {
+    width: 150px;
+    height: 150px;
+    border-radius: 15px;
+    border: 3px solid black;
+    object-fit: cover;
+    margin-bottom: 15px;
+    transition: transform 0.2s ease;
+}
+
+.upload-btn {
+    background-color: #A68749;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 10px 20px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.upload-btn:hover {
+    transform: scale(1.05);
+    background-color: #8f7440;
+}
+
+/* Success Toast */
+.success-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #4CAF50;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.success-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Business Update Card */
+.bus-update-card {
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 25px;
+    padding: 20px;
+    margin-bottom: 15px;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.bus-update-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.bus-update-header h3 {
+    font-family: "Tilt Warp", sans-serif;
+    font-size: 24px;
+    font-weight: 200;
+    color: #282828;
+    letter-spacing: -0.5px;
+    margin: 0;
+}
+
+.bus-update-header span {
+    font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    color: #666666;
+}
+
+.bus-update-card p {
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    color: black;
+    line-height: 24px;
+    margin: 0;
+}
+
+.delete-update-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background: none;
+    border: none;
+    font-size: 32px;
+    color: #666666;
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.delete-update-btn:hover {
+    color: #ff4444;
+    transform: rotate(90deg) scale(1.2);
+}
+
+/* Business Project Card with Edit/Delete */
+.project-card-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.project-edit-btn,
+.project-delete-btn {
+    padding: 8px 16px;
+    border-radius: 8px;
+    border: 2px solid black;
+    font-family: "Varela Round", sans-serif;
+    font-size: 14px;
+    cursor: pointer;
+    transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.project-edit-btn {
+    background-color: #A68749;
+    color: white;
+}
+
+.project-edit-btn:hover {
+    transform: scale(1.05);
+    background-color: #8f7440;
+}
+
+.project-delete-btn {
+    background-color: white;
+    color: #ff4444;
+}
+
+.project-delete-btn:hover {
+    transform: scale(1.05);
+    background-color: #ff4444;
+    color: white;
 }
