@@ -5,6 +5,8 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\GoalController;
 use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BusinessDashboardController;
+use App\Http\Controllers\BusinessProfileController;
+use App\Http\Controllers\BusinessUpdateController;
 use Illuminate\Support\Facades\Route;
 
 // Routes everyone can see
@@ -57,6 +59,29 @@ Route::middleware(['auth', 'role:business_owner'])->group(function () {
 
     Route::get('/project/{id}', [ProjectController::class, 'show'])
         ->name('project.view');
+
+    Route::get('/business/project/{id}/edit', [ProjectController::class, 'edit'])
+        ->name('project.edit');
+
+    Route::put('/business/project/{id}', [ProjectController::class, 'update'])
+        ->name('project.update');
+
+    Route::delete('/business/project/{id}', [ProjectController::class, 'destroy'])
+        ->name('project.destroy');
+
+    // Profile routes
+    Route::post('/business/profile/update', [BusinessProfileController::class, 'update'])
+        ->name('business.profile.update');
+
+    Route::post('/business/profile/picture', [BusinessProfileController::class, 'uploadProfilePicture'])
+        ->name('business.profile.picture');
+
+    // Updates routes
+    Route::post('/business/updates', [BusinessUpdateController::class, 'store'])
+        ->name('business.updates.store');
+
+    Route::delete('/business/updates/{id}', [BusinessUpdateController::class, 'destroy'])
+        ->name('business.updates.destroy');
 });
 
 // Routes exclusive to Admins

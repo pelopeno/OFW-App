@@ -1,34 +1,69 @@
-@props(['project_name', 'project_current_raised_amt', 'project_target_raised_amt', 'project_author' => null])
+@props(['project_name', 'project_current_raised_amt', 'project_target_raised_amt', 'project_author' => null, 'project_id' => null, 'is_business_dashboard' => false])
 
-<a href="{{ route('project') }}" style="text-decoration: none;">
 <div class="project-card">
-    <div class="project-card-content">
-        <h2>{{ $project_name }}</h2>
-        
-        @if(request()->is('marketplace') || request()->is('marketplace/*'))
-            <p>Project by {{ $project_author }}</p>
-        @else
-            <p>₱{{ $project_current_raised_amt }} of ₱{{ $project_target_raised_amt }}</p>
-            <div class="progress-container">
-                <div class="progress-bar"></div>
+    @if($is_business_dashboard)
+        <a href="/project/{{ $project_id }}" class="project-card-clickable">
+            <div class="project-card-content">
+                <h2>{{ $project_name }}</h2>
+                <p>₱{{ number_format($project_current_raised_amt, 2) }} of ₱{{ number_format($project_target_raised_amt, 2) }}</p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: {{ min(($project_current_raised_amt / $project_target_raised_amt) * 100, 100) }}%"></div>
+                </div>
             </div>
-        @endif
-    </div>
-    <div class="project-card-arrow">
-        <img src="/assets/arrow.png" />
-    </div>
+            <div class="project-card-arrow">
+                <img src="/assets/arrow.png" />
+            </div>
+        </a>
+        <div class="project-card-actions">
+            <a href="{{ route('project.edit', $project_id) }}" class="project-edit-btn">Edit</a>
+            <form action="{{ route('project.destroy', $project_id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this project?');">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="project-delete-btn">Delete</button>
+            </form>
+        </div>
+    @else
+        <div class="project-card-content">
+            <h2>{{ $project_name }}</h2>
+            
+            @if(request()->is('marketplace') || request()->is('marketplace/*'))
+                <p>Project by {{ $project_author }}</p>
+            @else
+                <p>₱{{ number_format($project_current_raised_amt, 2) }} of ₱{{ number_format($project_target_raised_amt, 2) }}</p>
+                <div class="progress-container">
+                    <div class="progress-bar" style="width: {{ min(($project_current_raised_amt / $project_target_raised_amt) * 100, 100) }}%"></div>
+                </div>
+            @endif
+        </div>
+        <div class="project-card-arrow">
+            <img src="/assets/arrow.png" />
+        </div>
+    @endif
 </div>
-</a>
 
 
 <style>
     .project-card {
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         background-color: white;
         border: 3px solid black;
         border-radius: 25px;
         margin-bottom: 15px;
+        position: relative;
+    }
+
+    .project-card-clickable {
+        display: flex;
+        flex-direction: row;
+        text-decoration: none;
+        color: inherit;
+        flex: 1;
+    }
+
+    .project-card-clickable:hover .project-card-content h2 {
+        color: #A93D3D;
+        transition: color 0.3s ease;
     }
 
     .project-card-content {
@@ -72,5 +107,43 @@
     .project-card-arrow img {
         height: 25px;
         width: auto;
+    }
+
+    .project-card-actions {
+        display: flex;
+        gap: 10px;
+        padding: 0 30px 20px 30px;
+        justify-content: flex-start;
+    }
+
+    .project-edit-btn, .project-delete-btn {
+        padding: 8px 20px;
+        border-radius: 10px;
+        font-family: "Varela Round", sans-serif;
+        font-size: 16px;
+        border: 2px solid #282828;
+        cursor: pointer;
+        transition: all 0.3s ease;
+    }
+
+    .project-edit-btn {
+        background-color: #D4A574;
+        color: #282828;
+        text-decoration: none;
+    }
+
+    .project-edit-btn:hover {
+        background-color: #C89456;
+        transform: scale(1.05);
+    }
+
+    .project-delete-btn {
+        background-color: #E57373;
+        color: white;
+    }
+
+    .project-delete-btn:hover {
+        background-color: #D32F2F;
+        transform: scale(1.05);
     }
 </style>

@@ -1,25 +1,14 @@
-@props(['business_name', 'update_date_posted', 'update_content'])
+@props(['business_name', 'update_date_posted', 'update_content', 'update_id' => null])
 
-<div class="update-card">
-    <div class="update-pfp-cont">
-        <img src="/assets/pfp-default.png" />
+<div class="bus-update-card" @if($update_id) data-update-id="{{ $update_id }}" @endif>
+    <div class="bus-update-header">
+        <h3>{{ $business_name }}</h3>
+        <span>{{ $update_date_posted}}</span>
+        @if($update_id)
+        <button class="delete-update-btn" onclick="deleteUpdate({{ $update_id }})">×</button>
+        @endif
     </div>
-
-    <div class="update-content-cont">
-        <div class="update-info">
-            <div class="update-name-date">
-                <h3>{{ $business_name }}</h3>
-                <p>{{ $update_date_posted}}</p>
-            </div>
-            <a href=""><img src="/assets/kebab.png"></a>
-        </div>
-
-        <div class="update-desc">
-            <p>
-                {{ $update_content }}
-            </p>
-        </div>
-    </div>
+    <p>{{ $update_content }}</p>
 </div>
 
 <style>

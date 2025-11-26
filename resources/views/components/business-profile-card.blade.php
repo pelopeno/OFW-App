@@ -1,8 +1,8 @@
-@props(['business_name', 'business_description'])
+@props(['business_name', 'business_description', 'profile_picture'])
 
 <div class="bus-profile-card">
     <div class="bus-profile-header">
-        <div class="bus-pfp"> <img src="/assets/pfp-default.png" /> </div>
+        <div class="bus-pfp"> <img src="{{ $profile_picture }}" /> </div>
         <div class="bus-name">
             <h2>{{ $business_name }}</h2> <button>Edit Profile</button>
         </div>
@@ -26,7 +26,6 @@
         display: flex;
         flex-direction: row;
         margin-bottom: 15px;
-        margin-top: -60px;
     }
 
     .bus-pfp {
