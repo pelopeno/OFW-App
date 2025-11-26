@@ -13,35 +13,41 @@
 
     <div class="add-goal-main">
         <div class="add-goal-header" style="height: auto;">
-            <h2 style="line-height: 32px;">
-                Allocate Funds to: {{ $goal->title ?? $goal->name }}
-            </h2>
+            <h2 style="line-height: 32px;">Allocate Funds to: {{ $goal->name }}</h2>
         </div>
-
-        {{-- Error message --}}
-        @if ($errors->any())
-            <div class="error-message">{{ $errors->first() }}</div>
-        @endif
-
         <form class="goal-form" method="POST" action="{{ route('allocate-funds.post', $goal->id) }}">
             @csrf
+            
+
+            @if ($errors->any())
+                <div class="alert alert-danger" style="background-color: #f44336; color: white; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+                    <ul style="margin: 0; padding-left: 20px;">
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
+            <label class="input-label">Wallet Balance</label>
+            <div style="background-color: #f0f0f0; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-family: 'Varela Round', sans-serif; font-size: 18px; font-weight: 600; color: #282828;">
+                ₱{{ number_format($wallet->balance, 2) }}
+            </div>
 
             <label class="input-label">Amount to Allocate</label>
-
             <input 
-                type="number"
-                name="amount"
+                type="number" 
+                name="amount" 
                 placeholder="Enter amount (₱)" 
-                class="goal-allocated-input"
-                min="1"
-                required
-            />
+                class="goal-allocated-input" 
+                min="0.01" 
+                max="{{ $wallet->balance }}"
 
-            <small class="goal-allocated-desc">
-                The entered value will be deducted from your wallet balance.
-            </small>
+                step="0.01" 
+                required />
+            <small class="goal-allocated-desc">Maximum available: ₱{{ number_format($wallet->balance, 2) }}</small>
 
-            <button type="submit" class="allocate-goal-btn">Allocate</button>
+            <button type="submit" class="allocate-goal-btn">Allocate Funds</button>
         </form>
     </div>
 </body>

@@ -27,7 +27,7 @@
             <input type="number" name="current_amount" placeholder="Enter amount (₱)" class="goal-target-input" />
             <small class="goal-target-desc">The entered value will be deducted to your wallet balance.</small>
 
-            <button type="submit" class="create-goal-btn">Create</p>
+            <button type="submit" class="create-goal-btn">Create</button>
         </form>
     </div>
 </body>

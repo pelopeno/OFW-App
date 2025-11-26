@@ -31,11 +31,19 @@
                     </div>
                     <div class="dashboard-ofw-goals-card-content">
                         <h3>Saving Goals</h3>
-                        <h4>House Renovation</h4>
-                        <h5>₱50,000 of ₱100,000</h5>
+                        @if($latestGoal)
+                        <h4>{{ $latestGoal->name }}</h4>
+                        <h5>₱{{ number_format($latestGoal->current_amount, 2) }} of ₱{{ number_format($latestGoal->target_amount, 2) }}</h5>
                         <div class="progress-container">
-                            <div class="progress-bar"></div>
+                            <div class="progress-bar" style="width: {{ $latestGoal->target_amount > 0 ? ($latestGoal->current_amount / $latestGoal->target_amount) * 100 : 0 }}%"></div>
                         </div>
+                        @else
+                        <h4>No goals yet</h4>
+                        <h5>Create your first saving goal!</h5>
+                        <div class="progress-container">
+                            <div class="progress-bar" style="width: 0%"></div>
+                        </div>
+                        @endif
                     </div>
                 </a>
             </div>
@@ -64,8 +72,12 @@
                     </div>
                     <div class="dashboard-ofw-marketplace-card-content">
                         <h3>Marketplace</h3>
-                        <h4>NEW: Makati Branch</h4>
-                        <h5>Project by Seeds and Scholars</h5>
+                        @if($projects)
+                        <h4>NEW: {{ $projects->title }}</h4>
+                        <h5>Project by {{ $projects->user->name }}</h5>
+                        @else
+                        <h4>No projects available</h4>
+                        @endif
                     </div>
                 </a>
             </div>

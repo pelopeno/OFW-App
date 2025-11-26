@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Project;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 
@@ -17,6 +18,8 @@ class DashboardController extends Controller
         // Latest saving goal
         $latestGoal = $user->goals()->latest()->first();
 
-        return view('dashboard', compact('wallet', 'latestGoal'));
+        $projects = Project::latest()->first();
+
+        return view('dashboard', compact('wallet', 'latestGoal', 'projects'));
     }
 }

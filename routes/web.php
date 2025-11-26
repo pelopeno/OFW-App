@@ -7,6 +7,7 @@ use App\Http\Controllers\ProjectController;
 use App\Http\Controllers\BusinessDashboardController;
 use App\Http\Controllers\BusinessProfileController;
 use App\Http\Controllers\BusinessUpdateController;
+use App\Http\Controllers\MarketplaceController;
 use Illuminate\Support\Facades\Route;
 
 // Routes everyone can see
@@ -30,9 +31,7 @@ Route::middleware([
     Route::get('/investment_history', function () {
         return view('investment-history');
     })->name('investment-history');
-    Route::get('/marketplace', function () {
-        return view('marketplace');
-    })->name('marketplace');
+    Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace');
     Route::get('/add_goal', [GoalController::class, 'create'])->name('add-goal');
     Route::post('/store_goal', [GoalController::class, 'store'])->name('store-goal');
     Route::get('/goals/{id}/allocate', [GoalController::class, 'showAllocateForm'])->name('allocate-funds');
