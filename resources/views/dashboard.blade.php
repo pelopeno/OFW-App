@@ -20,6 +20,7 @@
                     <h3>Wallet Balance</h3>
                     <h4>P{{ number_format(auth()->user()->wallet->balance, 2) }}</h4>
                     <a href="{{ route('add-funds') }}">Add Funds</a>
+                    <a href="{{route('withdraw-wallet')}}">Withdraw Funds</a>
                 </div>
             </div>
 

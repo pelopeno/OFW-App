@@ -43,6 +43,8 @@ Route::middleware([
     })->name('donate-project');
     Route::get('/add_funds', [WalletController::class, 'showAddFunds'])->name('add-funds');
     Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
+    Route::get('/withdraw_wallet', [WalletController::class, 'showWithdrawFunds'])->name('withdraw-wallet');
+    Route::post('/withdraw_wallet', [WalletController::class, 'withdrawWallet'])->name('wallet.withdraw-funds');
 });
 
 // Routes exclusive to Business Users
