@@ -23,20 +23,22 @@
             </form>
         </div>
     @else
-        <div class="project-card-content">
-            <h2>{{ $project_name }}</h2>
-            
-            @if(request()->is('marketplace') || request()->is('marketplace/*'))
-                <p>Project by {{ $project_author }}</p>
-            @else
-                <p>₱{{ number_format($project_current_raised_amt, 2) }} of ₱{{ number_format($project_target_raised_amt, 2) }}</p>
-                <div class="progress-container">
-                    <div class="progress-bar" style="width: {{ min(($project_current_raised_amt / $project_target_raised_amt) * 100, 100) }}%"></div>
-                </div>
-            @endif
-        </div>
-        <div class="project-card-arrow">
-            <img src="/assets/arrow.png" />
+        <div class="project-card-row">
+            <div class="project-card-content">
+                <h2>{{ $project_name }}</h2>
+                
+                @if(request()->is('marketplace') || request()->is('marketplace/*'))
+                    <p>Project by {{ $project_author }}</p>
+                @else
+                    <p>₱{{ number_format($project_current_raised_amt, 2) }} of ₱{{ number_format($project_target_raised_amt, 2) }}</p>
+                    <div class="progress-container">
+                        <div class="progress-bar" style="width: {{ min(($project_current_raised_amt / $project_target_raised_amt) * 100, 100) }}%"></div>
+                    </div>
+                @endif
+            </div>
+            <div class="project-card-arrow">
+                <img src="/assets/arrow.png" />
+            </div>
         </div>
     @endif
 </div>
@@ -58,6 +60,12 @@
         flex-direction: row;
         text-decoration: none;
         color: inherit;
+        flex: 1;
+    }
+
+    .project-card-row {
+        display: flex;
+        flex-direction: row;
         flex: 1;
     }
 

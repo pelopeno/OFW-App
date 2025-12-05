@@ -101,4 +101,43 @@ class ProjectController extends Controller
 
         return redirect()->route('business-dashboard')->with('success', 'Project deleted successfully!');
     }
+
+    public function donate(Request $request, $id)
+    {
+        $request->validate([
+            'amount' => 'required|numeric|min:1',
+        ], [
+            'amount.required' => 'Please enter an amount to donate.',
+            'amount.numeric' => 'Amount must be a valid number.',
+            'amount.min' => 'Minimum donation is ₱1.',
+        ]);
+
+        $project = Project::findOrFail($id);
+        $wallet = Auth::user()->wallet;
+
+        // Check if wallet has sufficient balance
+        if ($request->amount > $wallet->balance) {
+            return back()->withErrors([
+                'amount' => 'Insufficient wallet balance. Your current balance is ₱' 
+                    . number_format($wallet->balance, 2),
+            ]);
+        }
+
+        // Deduct from wallet
+        $wallet->balance -= $request->amount;
+        $wallet->save();
+
+        // Add to project
+        $project->current_amount += $request->amount;
+        $project->save();
+
+        // Log wallet transaction
+        $wallet->transactions()->create([
+            'type' => 'deduct',
+            'amount' => $request->amount,
+            'description' => "Donated to project: {$project->title}",
+        ]);
+
+        return redirect()->route('marketplace')->with('success', 'Thank you for your donation!');
+    }
 }
