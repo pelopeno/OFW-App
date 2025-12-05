@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class WalletController extends Controller
 {
-    //
+    //wala na 'to since naka modal na
     public function showAddFunds()
     {
         return view('add-funds');
@@ -40,6 +40,7 @@ class WalletController extends Controller
         return redirect()->route('dashboard')->with('success', 'Funds added successfully!');
     }
 
+    //wala na 'to since naka modal na
     public function showWithdrawFunds()
     {
         $wallet = Auth::user()->wallet;
@@ -51,14 +52,22 @@ class WalletController extends Controller
     {
         $request->validate([
             'amount' => 'required|numeric|min:500|max:50000',
+            'password' => 'required',
         ], [
             'amount.required' => 'Enter the amount you want to withdraw.',
             'amount.numeric'  => 'Amount must be a valid number.',
             'amount.min'      => 'Minimum withdrawal is ₱500.',
             'amount.max'      => 'Maximum withdrawal per transaction is ₱50,000.',
+            'password.required' => 'Please enter your password to confirm.',
         ]);
 
-        $wallet = Auth::user()->wallet;
+        $user = Auth::user();
+        if (!password_verify($request->password, $user->password)) {
+            return back()->withErrors([
+                'password' => 'The provided password is incorrect.',
+            ]);
+        }
+        $wallet = $user->wallet;
 
         if ($request->amount > $wallet->balance) {
             return back()->withErrors([

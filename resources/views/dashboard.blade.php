@@ -143,8 +143,14 @@
                     max="{{ auth()->user()->wallet->balance }}"
                     step="0.01" 
                     required />
-                <small class="add-funds-desc">Maximum available: ₱{{ number_format(auth()->user()->wallet->balance, 2) }}</small>
-
+                <label class="input-label">Enter Password to Confirm</label>
+                <input 
+                    type="password" 
+                    name="password" 
+                    placeholder="Enter your password"
+                    class="goal-allocated-input"
+                    required />
+                <small class="goal-allocated-desc">For your security, please confirm your password.</small>
                 <button type="submit" class="add-funds-btn">Withdraw</button>
             </form>
         </div>
