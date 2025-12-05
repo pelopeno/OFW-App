@@ -9,8 +9,13 @@
         </div>
     </div>
     <div class="goals-card-button">
-        <a href="{{ route('allocate-funds', $goal->id) }}">Allocate Funds</a>
-        <a href="{{ route('withdraw-funds', $goal->id) }}">Withdraw Funds</a>
+        <a href="#" class="allocate-funds-btn" 
+           data-goal-id="{{ $goal->id }}" 
+           data-goal-name="{{ $goal->name }}">Allocate Funds</a>
+        <a href="#" class="withdraw-funds-btn" 
+           data-goal-id="{{ $goal->id }}" 
+           data-goal-name="{{ $goal->name }}"
+           data-current-amount="{{ $goal->current_amount }}">Withdraw Funds</a>
     </div>
     <div class="goals-card-kebab">
         <a href=""><img src="/assets/kebab.png"></a>

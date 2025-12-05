@@ -4,12 +4,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Home - Pundar</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
 <body class="ofw-body">
     <x-navbar-ofw />
+
+    <!-- Success Message Toast -->
+    <div id="successToast" class="success-toast">
+        <span id="successMessage"></span>
+    </div>
+
+    <!-- Error Message Toast -->
+    <div id="errorToast" class="error-toast">
+        <span id="errorMessage"></span>
+    </div>
 
     <div class="dashboard-ofw-main">
         <h2>Dashboard</h2>
@@ -19,8 +30,8 @@
                 <div class="dashboard-ofw-wallet-card-content">
                     <h3>Wallet Balance</h3>
                     <h4>P{{ number_format(auth()->user()->wallet->balance, 2) }}</h4>
-                    <a href="{{ route('add-funds') }}">Add Funds</a>
-                    <a href="{{route('withdraw-wallet')}}">Withdraw Funds</a>
+                    <a href="#" id="addFundsBtn">Add Funds</a>
+                    <a href="#" id="withdrawWalletBtn">Withdraw Funds</a>
                 </div>
             </div>
 
@@ -84,6 +95,123 @@
             </div>
         </div>
     </div>
+
+    <!-- Add Funds Modal -->
+    <div id="addFundsModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeAddFundsModal">
+                <img src="/assets/x-btn.png" alt="Close">
+            </button>
+            <div class="add-goal-header">
+                <h2>Add Funds to Wallet</h2>
+            </div>
+            <form class="add-funds-form" method="POST" action="{{ route('wallet.add-funds') }}">
+                @csrf
+                <label class="input-label">Amount to Add</label>
+                <input type="number" name="amount" placeholder="Enter amount (₱)" class="add-funds-input" min="0.01" step="0.01" required />
+                <small class="add-funds-desc">Enter the amount you want to add to your wallet.</small>
+
+                <button type="submit" class="add-funds-btn">Add Funds</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Withdraw Wallet Modal -->
+    <div id="withdrawWalletModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeWithdrawWalletModal">
+                <img src="/assets/x-btn.png" alt="Close">
+            </button>
+            <div class="add-goal-header">
+                <h2>Withdraw Funds from Wallet</h2>
+            </div>
+            <form class="add-funds-form" method="POST" action="{{ route('wallet.withdraw-funds') }}">
+                @csrf
+
+                <label class="input-label">Available Balance</label>
+                <div style="background-color: #f0f0f0; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-family: 'Varela Round', sans-serif; font-size: 18px; font-weight: 600; color: #282828;">
+                    ₱{{ number_format(auth()->user()->wallet->balance, 2) }}
+                </div>
+
+                <label class="input-label">Amount to Withdraw</label>
+                <input 
+                    type="number" 
+                    name="amount" 
+                    placeholder="Enter amount (₱)" 
+                    class="add-funds-input" 
+                    min="0.01" 
+                    max="{{ auth()->user()->wallet->balance }}"
+                    step="0.01" 
+                    required />
+                <small class="add-funds-desc">Maximum available: ₱{{ number_format(auth()->user()->wallet->balance, 2) }}</small>
+
+                <button type="submit" class="add-funds-btn">Withdraw</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const addFundsModal = document.getElementById('addFundsModal');
+            const withdrawWalletModal = document.getElementById('withdrawWalletModal');
+            const successToast = document.getElementById('successToast');
+            const errorToast = document.getElementById('errorToast');
+
+            // Add Funds Modal
+            document.getElementById('addFundsBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                addFundsModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+
+            document.getElementById('closeAddFundsModal').addEventListener('click', () => {
+                addFundsModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Withdraw Wallet Modal
+            document.getElementById('withdrawWalletBtn').addEventListener('click', (e) => {
+                e.preventDefault();
+                withdrawWalletModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            });
+
+            document.getElementById('closeWithdrawWalletModal').addEventListener('click', () => {
+                withdrawWalletModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close modals on outside click
+            [addFundsModal, withdrawWalletModal].forEach(modal => {
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        modal.classList.remove('show');
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+
+            // Show success message if exists
+            @if(session('success'))
+                successToast.querySelector('#successMessage').textContent = '{{ session('success') }}';
+                successToast.classList.add('show');
+                setTimeout(() => {
+                    successToast.classList.remove('show');
+                }, 3000);
+            @endif
+
+            // Show error message if exists
+            @if($errors->any())
+                errorToast.querySelector('#errorMessage').textContent = '{{ $errors->first() }}';
+                errorToast.classList.add('show');
+                withdrawWalletModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+                setTimeout(() => {
+                    errorToast.classList.remove('show');
+                }, 5000);
+            @endif
+        });
+    </script>
 
 </body>
 
