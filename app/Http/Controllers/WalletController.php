@@ -16,11 +16,11 @@ class WalletController extends Controller
     public function addFunds(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:1|max:100000',
+            'amount' => 'required|numeric|min:500|max:100000',
         ], [
             'amount.required' => 'Enter the amount you want to Deposit.',
             'amount.numeric'  => 'Amount must be a valid number.',
-            'amount.min'      => 'Minimum deposit is ₱1.',
+            'amount.min'      => 'Minimum deposit is ₱500.',
             'amount.max'      => 'Maximum deposit per transaction is ₱100,000.',
         ]);
 
@@ -50,11 +50,11 @@ class WalletController extends Controller
     public function withdrawWallet(Request $request)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:1|max:50000',
+            'amount' => 'required|numeric|min:500|max:50000',
         ], [
             'amount.required' => 'Enter the amount you want to withdraw.',
             'amount.numeric'  => 'Amount must be a valid number.',
-            'amount.min'      => 'Minimum withdrawal is ₱1.',
+            'amount.min'      => 'Minimum withdrawal is ₱500.',
             'amount.max'      => 'Maximum withdrawal per transaction is ₱50,000.',
         ]);
 
