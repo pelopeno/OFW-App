@@ -8,6 +8,11 @@ use App\Http\Controllers\BusinessDashboardController;
 use App\Http\Controllers\BusinessProfileController;
 use App\Http\Controllers\BusinessUpdateController;
 use App\Http\Controllers\MarketplaceController;
+use App\Http\Controllers\Admin\UserManagementController;
+use App\Http\Controllers\ProjectApprovalController;
+use App\Http\Controllers\AdminDashboardController;
+use App\Http\Controllers\Admin\MonitoringController;
+
 use Illuminate\Support\Facades\Route;
 
 // Routes everyone can see
@@ -102,4 +107,32 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::get('/admin/user_management', function () {
         return view('admin.user-management');
     })->name('admin-user-management');
+
+    Route::get('/admin/user_management', 
+    [UserManagementController::class, 'index']
+)->name('admin-user-management');
+
+    Route::post('/admin/user/{id}/disable', 
+        [UserManagementController::class, 'disable'])->name('admin.disable');
+
+    Route::post('/admin/user/{id}/activate', 
+        [UserManagementController::class, 'activate'])->name('admin.activate');
+
+    Route::post('/admin/user/{id}/archive', 
+        [UserManagementController::class, 'archive'])->name('admin.archive');
+        
+         Route::get('/admin/project_approval', [ProjectApprovalController::class, 'index'])
+        ->name('admin.project-approval');
+
+    // Approve a project
+    Route::post('/admin/project/{id}/approve', [ProjectApprovalController::class, 'approve'])
+        ->name('admin.project.approve');
+
+    // Decline a project
+    Route::post('/admin/project/{id}/decline', [ProjectApprovalController::class, 'decline'])
+        ->name('admin.project.decline');
+
+   Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+    Route::post('/admin/project/{id}/disable', [AdminDashboardController::class, 'disableProject'])->name('admin.project.disable');
+     Route::get('/admin/monitoring', [MonitoringController::class, 'index'])->name('admin-monitoring');
 });
