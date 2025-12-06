@@ -1,19 +1,24 @@
-@props(['project_name', 'invested_amt'])
+@props(['project_name', 'invested_amt', 'image' => '/assets/default-project-pic.png'])
 
-<a href="{{ route('project') }}" style="text-decoration: none;">
-    <div class="investment-card">
-        <div class="investment-card-pfp">
-            <img src="/assets/pfp-default.png" />
-        </div>
-        <div class="investment-card-content">
-            <h2>{{ $project_name }}</h2>
-            <p>₱{{ $invested_amt }} Allocated</p>
-        </div>
-        <div class="investment-card-arrow">
-            <img src="/assets/arrow.png" />
-        </div>
+@php
+    $image = $image ? (str_starts_with($image, 'http') || str_starts_with($image, '/') 
+        ? $image 
+        : asset($image)) 
+        : asset('/assets/default-project-pic.png');
+@endphp
+
+<div class="investment-card">
+    <div class="investment-card-pfp">
+        <img src="{{ asset($image) }}" alt="{{ $project_name }} image" />
     </div>
-</a>
+    <div class="investment-card-content">
+        <h2>{{ $project_name }}</h2>
+        <p>₱{{ $invested_amt }} Allocated</p>
+    </div>
+    <div class="investment-card-arrow">
+        <img src="/assets/arrow.png" />
+    </div>
+</div>
 
 <style>
     .investment-card {

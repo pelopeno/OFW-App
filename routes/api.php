@@ -12,3 +12,19 @@ Route::get('/project/{id}', function ($id) {
     $project = \App\Models\Project::with('user')->findOrFail($id);
     return response()->json($project);
 });
+
+Route::get('/project/{id}/updates', function ($id) {
+    $updates = \App\Models\BusinessUpdate::where('project_id', $id)
+        ->orderBy('created_at', 'desc')
+        ->get()
+        ->map(function ($update) {
+            return [
+                'id' => $update->id,
+                'content' => $update->content,
+                'image' => $update->image,
+                'created_at' => $update->created_at->diffForHumans(),
+            ];
+        });
+    
+    return response()->json(['updates' => $updates]);
+});

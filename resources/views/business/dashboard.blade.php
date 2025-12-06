@@ -13,6 +13,7 @@
 <body class="bus-body">
     <div>
         @include('project')
+        @include('business.update-view')
     </div>
     <x-navbar-business />
 
@@ -62,12 +63,13 @@
             </div>
             <!---------↑↑↑-Projects Tab-↑↑↑--------->
 
-            <!---------↓↓↓-Updates Tab-↓↓↓--------->
+            <!---------↓↓↓-Updates Tab-↓↓↓------->
             <div class="bus-updates" style="display: none;">
-                <div class="bus-add-update-cont">
-                    <textarea id="updateContent" placeholder="Write a new update" maxlength="1000"></textarea>
-                    <a href="#" id="postUpdateBtn"><img src="/assets/send.png" /></a>
-                </div>
+                <a href="#" class="add-project-exclusion-link" id="addUpdateBtn">
+                    <div class="bus-add-project-btn">
+                        <img src="/assets/plus.png">
+                    </div>
+                </a>
 
                 <div id="updatesContainer">
                     @forelse($updates as $update)
@@ -75,7 +77,8 @@
                         business_name="{{ Auth::user()->name }}"
                         update_date_posted="{{ $update->created_at->diffForHumans() }}"
                         update_content="{{ $update->content }}"
-                        update_id="{{ $update->id }}" />
+                        update_id="{{ $update->id }}"
+                        update_image="{{ $update->image }}" />
                     @empty
                     <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">No updates yet. Share your first update with your supporters!</p>
                     @endforelse
@@ -118,6 +121,47 @@
                     oninput="autoResize(this)" required></textarea>
 
                 <button type="submit" class="create-project-btn">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Update Modal -->
+    <div id="createUpdateModal" class="modal-overlay">
+        <div class="modal-content add-project-modal">
+            <button class="modal-close" id="closeCreateUpdateModal">
+                <img src="/assets/x-btn.png" alt="Close">
+            </button>
+            <div class="add-project-header">
+                <h2>Create Update</h2>
+            </div>
+            <form class="modal-project-form" id="createUpdateForm" enctype="multipart/form-data">
+                @csrf
+
+                <label class="input-label">Select Project</label>
+                <select name="project_id" id="updateProjectSelect" class="project-title-input" required>
+                    <option value="">Choose a project...</option>
+                    @foreach($projects as $project)
+                        <option value="{{ $project->id }}">{{ $project->title }}</option>
+                    @endforeach
+                </select>
+
+                <label class="input-label">Attachment</label>
+                <label class="add-post-image" id="updateImageUploadLabel">
+                    <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
+                        <path d="M13 4H8C6.89543 4 6 4.89543 6 6V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V9M13 4L18 9M13 4V8C13 8.55228 13.4477 9 14 9H18" stroke="#282828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                    </svg>
+                    <span id="updateFileName">Choose an image</span>
+                    <input type="file" name="image" id="updateImage" style="display: none;" accept="image/*" required>
+                </label>
+
+                <label class="input-label">Update Message</label>
+                <textarea id="updateContentModal" name="content" class="project-desc-input"
+                    placeholder="Share an update with your supporters..."
+                    oninput="autoResize(this)" 
+                    maxlength="1000" 
+                    required></textarea>
+
+                <button type="submit" class="create-project-btn">Post Update</button>
             </form>
         </div>
     </div>

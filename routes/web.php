@@ -19,9 +19,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landing');
 })->name('landing');
-Route::get('/project', function () {
-    return view('project');
-})->name('project');
 
 // Routes exclusive to OFWs
 Route::middleware([
@@ -33,9 +30,7 @@ Route::middleware([
     Route::get('/dashboard', [DashboardController::class, 'index'])
     ->name('dashboard');
     Route::get('/saving_goals', [GoalController::class, 'showGoals'])->name('saving-goals');
-    Route::get('/investment_history', function () {
-        return view('investment-history');
-    })->name('investment-history');
+    Route::get('/investment_history', [InvestmentHistoryController::class, 'index'])->name('investment-history');
     Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace');
     Route::get('/add_goal', [GoalController::class, 'create'])->name('add-goal');
     Route::post('/store_goal', [GoalController::class, 'store'])->name('store-goal');
@@ -43,13 +38,11 @@ Route::middleware([
     Route::post('/goals/{id}/allocateFunds', [GoalController::class, 'allocateFunds'])->name('allocate-funds.post');
     Route::get('/goals/{id}/withdraw', [GoalController::class, 'withdrawForm'])->name('withdraw-funds');
     Route::post('/goals/{id}/withdrawFunds', [GoalController::class, 'withdrawFunds'])->name('withdraw-funds.post');
-    Route::get('/project/ProjectIdHere/donate', function () {
-        return view(view: 'donate-project');
-    })->name('donate-project');
+    Route::post('/project/{id}/donate', [ProjectController::class, 'donate'])->name('donate-project.post');
     Route::get('/add_funds', [WalletController::class, 'showAddFunds'])->name('add-funds');
     Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
-    Route::get('/withdraw_wallet', [WalletController::class, 'showWithdrawFunds'])->name('withdraw-wallet');
     Route::post('/withdraw_wallet', [WalletController::class, 'withdrawWallet'])->name('wallet.withdraw-funds');
+    Route::get('/transaction_history', [WalletController::class, 'transactionHistory'])->name('history');
 });
 
 // Routes exclusive to Business Users
@@ -88,6 +81,10 @@ Route::middleware(['auth', 'role:business_owner'])->group(function () {
 
     Route::delete('/business/updates/{id}', [BusinessUpdateController::class, 'destroy'])
         ->name('business.updates.destroy');
+
+    // Capital Contributions route
+    Route::get('/business/contributions', [BusinessDashboardController::class, 'showContributions'])
+        ->name('contributions');
 });
 
 // Routes exclusive to Admins

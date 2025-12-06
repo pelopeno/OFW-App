@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pundar: An OFW Micro-Investment & Savings Platform</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- SweetAlert2 CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="landing-body"
@@ -37,10 +40,10 @@
             </div>
             @endsession
 
-            <form method="POST" action="{{ route('login') }}">
+            <form id="loginForm" method="POST" action="{{ route('login') }}">
                 @csrf
-                <input type="email" name="email" placeholder="Email" required autofocus autocomplete="username">
-                <input type="password" name="password" placeholder="Password" required autocomplete="current-password">
+                <input type="email" id="login_email" name="email" placeholder="Email" autofocus>
+                <input type="password" id="login_password" name="password" placeholder="Password">
                 <button type="submit">Log in</button>
             </form>
         </div>
@@ -56,11 +59,11 @@
             <h2>Who are you signing up as?</h2>
             <div class="choose-type-buttons-cont">
                 <div class="signup-ofw-button-cont">
-                    <button onclick="selectUserType('ofw')"> <img src="/assets/signup-ofw-btn.png" /> </button>
+                    <button type="button" onclick="selectUserType('ofw')"> <img src="/assets/signup-ofw-btn.png" /> </button>
                     <p>OFW</p>
                 </div>
                 <div class="signup-bus-button-cont">
-                    <button onclick="selectUserType('business_owner')"> <img src="/assets/signup-bus-btn.png" /> </button>
+                    <button type="button" onclick="selectUserType('business_owner')"> <img src="/assets/signup-bus-btn.png" /> </button>
                     <p>Business Owner</p>
                 </div>
             </div>
@@ -78,19 +81,18 @@
             <img src="assets/ls-hr.png" class="signup-hr" />
 
             @if($errors->any() && (request()->is('register') || old('name') !== null))
-            <x-validation-errors class="mb-4" />
+            <div id="validation-errors-alert"></div>
             @endif
 
-            <form method="POST" action="{{ route('register') }}">
+            <form id="signupForm" method="POST" action="{{ route('register') }}">
                 @csrf
                 <input type="hidden" id="user_type" name="user_type" value="">
 
-
-                <input type="text" name="name" placeholder="Name" required>
-                <input type="email" name="email" placeholder="Email" required>
-                <input type="password" name="password" placeholder="Password" required>
-                <input type="password" name="password_confirmation" placeholder="Confirm Password" required>
-
+                <input type="text" id="name" name="name" placeholder="Name" value="{{ old('name') }}">
+                <input type="email" id="email" name="email" placeholder="Email" value="{{ old('email') }}" autocomplete="off">
+                <input type="password" id="password" name="password" placeholder="Password" autocomplete="off">
+                <input type="password" id="password_confirmation" name="password_confirmation" placeholder="Confirm Password" autocomplete="off">
+    
                 <button type="submit">Sign up</button>
             </form>
         </div>
@@ -161,19 +163,187 @@
     }
 
     function selectUserType(type) {
-    document.getElementById('user_type').value = type;
-    document.getElementById('selectedTypeLabel').textContent =
-        type === 'ofw' ? 'OFW' : 'Business Owner';
+        document.getElementById('user_type').value = type;
+        document.getElementById('selectedTypeLabel').textContent =
+            type === 'ofw' ? 'OFW' : 'Business Owner';
 
-    const nameInput = document.querySelector('input[name="name"]');
-    if (nameInput) {
-        nameInput.placeholder = type === 'ofw' ? 'Display Name' : 'Business Name';
+        const nameInput = document.querySelector('input[name="name"]');
+        if (nameInput) {
+            nameInput.placeholder = type === 'ofw' ? 'Display Name' : 'Business Name';
+        }
+
+        toggleChooseType();
+        toggleSignup();
     }
 
-    toggleChooseType();
-    toggleSignup();
-}
+    // SweetAlert2 Form Validation
+    document.getElementById('signupForm').addEventListener('submit', function(e) {
+        e.preventDefault();
 
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const passwordConfirmation = document.getElementById('password_confirmation').value;
+        const userType = document.getElementById('user_type').value;
+
+        // Validate name
+        if (!name) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Name Required',
+                text: 'Please enter your name.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        if (name.length < 3) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Name Too Short',
+                text: 'Name must be at least 3 characters long.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Email Required',
+                text: 'Please enter your email address.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Email',
+                text: 'Please enter a valid email address.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        // Validate password
+        if (!password) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Password Required',
+                text: 'Please enter a password.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        if (password.length < 8) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Password Too Short',
+                text: 'Password must be at least 8 characters long.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        // Validate password confirmation
+        if (password !== passwordConfirmation) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Passwords Do Not Match',
+                text: 'Password and confirmation password must match.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        // Validate user type
+        if (!userType) {
+            Swal.fire({
+                icon: 'error',
+                title: 'User Type Required',
+                text: 'Please select whether you are an OFW or Business Owner.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        // All client-side validations passed, show loading and submit
+        Swal.fire({
+            icon: 'info',
+            title: 'Creating Account',
+            text: 'Please wait...',
+            confirmButtonColor: '#A68749',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+                // Submit the form after showing the loading alert
+                document.getElementById('signupForm').submit();
+            }
+        });
+    });
+
+    // SweetAlert2 Form Validation for Login
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('login_email').value.trim();
+        const password = document.getElementById('login_password').value;
+
+        // Validate email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!email) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Email Required',
+                text: 'Please enter your email address.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        if (!emailRegex.test(email)) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Invalid Email',
+                text: 'Please enter a valid email address.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        // Validate password
+        if (!password) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Password Required',
+                text: 'Please enter your password.',
+                confirmButtonColor: '#A68749',
+            });
+            return;
+        }
+
+        // All validations passed, show loading and submit
+        Swal.fire({
+            icon: 'info',
+            title: 'Logging In',
+            text: 'Please wait...',
+            confirmButtonColor: '#A68749',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            didOpen: () => {
+                Swal.showLoading();
+                document.getElementById('loginForm').submit();
+            }
+        });
+    });
+
+    // Show server-side errors with SweetAlert
     document.addEventListener('DOMContentLoaded', function() {
         var body = document.body;
         var hasErrors = body.getAttribute('data-has-errors') === '1';
@@ -181,12 +351,28 @@
         var isRegisterError = body.getAttribute('data-is-register-error') === '1';
         var hasStatus = body.getAttribute('data-has-status') === '1';
 
-        if (hasErrors && isLoginError) {
-            login.style.display = 'flex';
-            login.classList.add('fade-in');
-        } else if (hasErrors && isRegisterError) {
+        if (hasErrors && isRegisterError) {
+            // Show server-side validation errors with SweetAlert
+            @if($errors->any() && (request()->is('register') || old('name') !== null))
+            let errorMessages = '<ul style="text-align: left;">';
+            @foreach($errors->all() as $error)
+                errorMessages += '<li>{{ $error }}</li>';
+            @endforeach
+            errorMessages += '</ul>';
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Validation Error',
+                html: errorMessages,
+                confirmButtonColor: '#A68749',
+            });
+
             signup.style.display = 'flex';
             signup.classList.add('fade-in');
+            @endif
+        } else if (hasErrors && isLoginError) {
+            login.style.display = 'flex';
+            login.classList.add('fade-in');
         }
 
         if (hasStatus) {

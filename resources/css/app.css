@@ -68,7 +68,6 @@ h5 {
 .goals-card-button a:hover,
 .investment-card:hover,
 .bus-name button:hover,
-.project-card:hover,
 .project-view-x-btn:hover,
 .signup-ofw-button-cont button:hover,
 .signup-bus-button-cont button:hover,
@@ -77,6 +76,23 @@ h5 {
 .bus-add-project-btn:hover {
     transform: scale(1.025);
     transition: .2s;
+}
+
+/* Marketplace project links */
+.project-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.project-link:hover .project-card {
+    transform: scale(1.025);
+    transition: .2s;
+}
+
+.project-link:hover .project-card h2 {
+    color: #A93D3D;
+    transition: color 0.3s ease;
 }
 
 .logout-btn {
@@ -522,6 +538,7 @@ h5 {
     height: 20px;
     background-color: #282828;
     border-radius: 50px;
+    transition: width 1.5s ease-in-out;
 }
 
 .dashboard-ofw-investments-marketplace-cont {
@@ -722,12 +739,12 @@ h5 {
 }
 
 .add-goal-header {
-    width: 40%;
+    width: 100%;
     display: flex;
     flex-direction: row;
     height: 36px;
     justify-content: flex-start;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 /* Hiniwalay ko to Daryl. Ginawa ko kasing modal */
@@ -746,7 +763,7 @@ h5 {
     font-size: 36px;
     font-weight: 600;
     letter-spacing: -1.5px;
-    margin-left: -25px;
+   
 }
 
 .add-project-header h2 {
@@ -757,10 +774,8 @@ h5 {
     letter-spacing: -1.5px;
 }
 
-.goal-form,
-.donate-form,
-.add-funds-form {
-    width: 40%;
+.donate-form {
+    width: 80%;
     height: fit-content;
     background-color: white;
     border: 3px solid black;
@@ -774,6 +789,34 @@ h5 {
 }
 
 /* Hiniwalay ko to Daryl. Ginawa ko kasing modal */
+.goal-form {
+    width:80%;
+    height: fit-content;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin: 30px;
+    margin-top: 0px;
+    gap: 20px;
+}
+
+.add-funds-form {
+    width:80%;
+    height: fit-content;
+    background-color: white;
+    border: 3px solid black;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    padding: 25px;
+    margin: 30px;
+    margin-top: 0px;
+    gap: 20px;
+}
+
 .project-form {
     width:40%;
     height: fit-content;
@@ -888,7 +931,10 @@ h5 {
     justify-content: center;
     cursor: pointer;
     align-self: flex-end;
+    padding-bottom: 5px;
+    padding-top: 5px;
 }
+
 
 .create-goal-btn,
 .allocate-goal-btn,
@@ -1256,6 +1302,30 @@ h5 {
     transform: translateY(0);
 }
 
+/* Error Toast */
+.error-toast {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #f44336;
+    color: white;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-family: "Varela Round", sans-serif;
+    font-size: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 2000;
+    opacity: 0;
+    transform: translateY(-20px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    pointer-events: none;
+}
+
+.error-toast.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 /* Business Update Card */
 .bus-update-card {
     background-color: white;
@@ -1353,3 +1423,16 @@ h5 {
     background-color: #ff4444;
     color: white;
 }
+
+.transactions-table th {
+    text-align: left;
+}
+
+.transactions-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+
+.transactions-table tr:hover {
+    background-color: #f1f1f1;
+}
+
