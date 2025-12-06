@@ -335,6 +335,14 @@ h5 {
     text-shadow: 2px 2px 5px #000000;
 }
 
+.status-login-signup {
+    font-family: "Varela Round", sans-serif;
+    font-size: 18px;
+    margin-bottom: 12px;
+    color: green;
+
+}
+
 /*-------------OFW Dashboard-------------*/
 
 /*-↓↓-Wallet Card-↓↓-*/

@@ -17,6 +17,7 @@ use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use App\Http\Responses\LoginResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use App\Http\Responses\CustomRegisterResponse;
+use Laravel\Fortify\Contracts\PasswordResetResponse; 
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -45,6 +46,31 @@ class FortifyServiceProvider extends ServiceProvider
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
 
+        Fortify::loginView(function () {
+        return view('landing');
+    });
+
+    
+    Fortify::requestPasswordResetLinkView(function () {
+        return view('auth.forgot-password'); 
+    });
+
+    Fortify::resetPasswordView(function ($request) {
+        return view('auth.reset-password', ['request' => $request]);
+    });
+
+    $this->app->instance(
+        PasswordResetResponse::class,
+        new class implements PasswordResetResponse
+        {
+            public function toResponse($request)
+            {
+                return redirect()->route('landing')->with('status', __(
+                    'Your password has been successfully reset!'
+                ));
+            }
+        }
+    );
         RateLimiter::for('login', function (Request $request) {
             $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())) . '|' . $request->ip());
 

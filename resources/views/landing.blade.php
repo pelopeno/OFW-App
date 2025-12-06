@@ -35,7 +35,7 @@
             @endif
 
             @session('status')
-            <div class="mb-4 font-medium text-sm text-green-600">
+            <div class="status-login-signup" class=>
                 {{ $value }}
             </div>
             @endsession
