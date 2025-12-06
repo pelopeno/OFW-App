@@ -41,7 +41,6 @@ Route::middleware([
     Route::post('/project/{id}/donate', [ProjectController::class, 'donate'])->name('donate-project.post');
     Route::get('/add_funds', [WalletController::class, 'showAddFunds'])->name('add-funds');
     Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
-    Route::get('/withdraw_wallet', [WalletController::class, 'showWithdrawFunds'])->name('withdraw-wallet');
     Route::post('/withdraw_wallet', [WalletController::class, 'withdrawWallet'])->name('wallet.withdraw-funds');
 });
 
