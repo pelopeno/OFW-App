@@ -137,6 +137,14 @@
             <form class="modal-project-form" id="createUpdateForm" enctype="multipart/form-data">
                 @csrf
 
+                <label class="input-label">Select Project</label>
+                <select name="project_id" id="updateProjectSelect" class="project-title-input" required>
+                    <option value="">Choose a project...</option>
+                    @foreach($projects as $project)
+                        <option value="{{ $project->id }}">{{ $project->title }}</option>
+                    @endforeach
+                </select>
+
                 <label class="input-label">Attachment</label>
                 <label class="add-post-image" id="updateImageUploadLabel">
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">

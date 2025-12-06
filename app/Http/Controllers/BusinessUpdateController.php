@@ -14,6 +14,7 @@ class BusinessUpdateController extends Controller
         $request->validate([
             'content' => 'required|string|max:1000',
             'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'project_id' => 'required|exists:projects,id',
         ]);
 
         $imagePath = null;
@@ -23,6 +24,7 @@ class BusinessUpdateController extends Controller
 
         $update = BusinessUpdate::create([
             'user_id' => Auth::id(),
+            'project_id' => $request->project_id,
             'content' => $request->content,
             'image' => $imagePath,
         ]);
@@ -34,6 +36,7 @@ class BusinessUpdateController extends Controller
                 'id' => $update->id,
                 'content' => $update->content,
                 'image' => $imagePath,
+                'project_id' => $update->project_id,
                 'created_at' => $update->created_at->diffForHumans(),
             ]
         ]);
