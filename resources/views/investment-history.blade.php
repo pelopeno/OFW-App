@@ -1,3 +1,7 @@
+@php
+    $isInvestmentPage = true;
+@endphp
+
 <!DOCTYPE html>
 <html lang="en">
 

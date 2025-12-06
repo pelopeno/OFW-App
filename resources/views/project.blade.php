@@ -25,7 +25,7 @@
                 <div class="progress-bar" id="projectProgress"></div>
             </div>
 
-            @if(auth()->check() && auth()->user()->user_type === 'ofw')
+            @if(auth()->check() && auth()->user()->user_type === 'ofw' && empty($isInvestmentPage))
             <button class="donate-btn" id="openDonateModal">Donate</button>
             @endif
 
