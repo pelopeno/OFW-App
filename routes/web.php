@@ -77,6 +77,10 @@ Route::middleware(['auth', 'role:business_owner'])->group(function () {
 
     Route::delete('/business/updates/{id}', [BusinessUpdateController::class, 'destroy'])
         ->name('business.updates.destroy');
+
+    // Capital Contributions route
+    Route::get('/business/contributions', [BusinessDashboardController::class, 'showContributions'])
+        ->name('contributions');
 });
 
 // Routes exclusive to Admins
