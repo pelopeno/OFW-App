@@ -1,19 +1,17 @@
 @props(['project_name', 'invested_amt'])
 
-<a href="{{ route('project') }}" style="text-decoration: none;">
-    <div class="investment-card">
-        <div class="investment-card-pfp">
-            <img src="/assets/pfp-default.png" />
-        </div>
-        <div class="investment-card-content">
-            <h2>{{ $project_name }}</h2>
-            <p>₱{{ $invested_amt }} Allocated</p>
-        </div>
-        <div class="investment-card-arrow">
-            <img src="/assets/arrow.png" />
-        </div>
+<div class="investment-card">
+    <div class="investment-card-pfp">
+        <img src="/assets/pfp-default.png" />
     </div>
-</a>
+    <div class="investment-card-content">
+        <h2>{{ $project_name }}</h2>
+        <p>₱{{ $invested_amt }} Allocated</p>
+    </div>
+    <div class="investment-card-arrow">
+        <img src="/assets/arrow.png" />
+    </div>
+</div>
 
 <style>
     .investment-card {

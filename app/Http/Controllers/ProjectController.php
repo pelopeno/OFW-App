@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
+use App\Models\Investment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -105,11 +106,11 @@ class ProjectController extends Controller
     public function donate(Request $request, $id)
     {
         $request->validate([
-            'amount' => 'required|numeric|min:1',
+            'amount' => 'required|numeric|min:100',
         ], [
-            'amount.required' => 'Please enter an amount to donate.',
+            'amount.required' => 'Please enter an amount to invest.',
             'amount.numeric' => 'Amount must be a valid number.',
-            'amount.min' => 'Minimum donation is ₱1.',
+            'amount.min' => 'Minimum investment is ₱100.',
         ]);
 
         $project = Project::findOrFail($id);
@@ -123,6 +124,13 @@ class ProjectController extends Controller
             ]);
         }
 
+        if($request->amount + $project->current_amount > $project->target_amount){
+            return redirect()->route('marketplace')->withErrors([
+                'amount' => 'Investment exceeds project target amount. The maximum you can invest is ₱' 
+                    . number_format($project->target_amount - $project->current_amount, 2),
+            ]);
+
+        }
         // Deduct from wallet
         $wallet->balance -= $request->amount;
         $wallet->save();
@@ -135,7 +143,13 @@ class ProjectController extends Controller
         $wallet->transactions()->create([
             'type' => 'deduct',
             'amount' => $request->amount,
-            'description' => "Donated to project: {$project->title}",
+            'description' => "Invested to project: {$project->title}",
+        ]);
+
+        Investment::create([
+            'user_id' => Auth::id(),
+            'project_id' => $project->id,
+            'amount' => $request->amount,
         ]);
 
         return redirect()->route('marketplace')->with('success', 'Thank you for your donation!');
