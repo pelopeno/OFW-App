@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Project extends Model
 {
-    //
     use HasFactory;
+
 
     protected $fillable = [
         'user_id',
+        'project_name',
         'title',
         'description',
         'image',
@@ -24,6 +25,7 @@ class Project extends Model
     {
         return $this->belongsTo(User::class);
     }
+
     public function investments()
     {
         return $this->hasMany(Investment::class);

@@ -34,115 +34,91 @@
                 </div>
             </div>
 
-            <table>
-                <tr class="admin-th-row">
-                    <th>USER ID</th>
-                    <th>NAME</th>
-                    <th>EMAIL</th>
-                    <th>STATUS</th>
-                    <th>ROLE</th>
-                    <th>ACTIONS</th>
-                </tr>
+          <table>
+    <tr class="admin-th-row">
+        <th>USER ID</th>
+        <th>NAME</th>
+        <th>EMAIL</th>
+        <th>STATUS</th>
+        <th>ROLE</th>
+        <th>ACTIONS</th>
+    </tr>
 
-                <tr>
-                    <td>24</td>
-                    <td>Ram Jiro Aba</td>
-                    <td>ramjiro.aba@gmail.com</td>
-                    <td>Disabled</td>
-                    <td>OFW</td>
-                    <td>
-                        <button class="um-admin-archive-btn">Archive</button>
+    @foreach ($users as $user)
+        <tr data-status="{{ $user->status }}" data-role="{{ $user->role }}">
+            <td>{{ $user->id }}</td>
+            <td>{{ $user->name }}</td>
+            <td>{{ $user->email }}</td>
+            <td>{{ $user->status }}</td>
+            <td>{{ $user->user_type }}</td>
+            <td>
+                <form action="{{ route('admin.archive', $user->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    <button class="um-admin-archive-btn">Archive</button>
+                </form>
+
+                @if ($user->status === 'Active')
+                    <form action="{{ route('admin.disable', $user->id) }}" method="POST" style="display:inline;">
+                        @csrf
+                        <button class="um-admin-disable-btn">Disable</button>
+                    </form>
+                @else
+                    <form action="{{ route('admin.activate', $user->id) }}" method="POST" style="display:inline;">
+                        @csrf
                         <button class="um-admin-activate-btn">Activate</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>23</td>
-                    <td>Daryl Doctora</td>
-                    <td>darylchristien.doctora@gmail.com</td>
-                    <td>Active</td>
-                    <td>OFW</td>
-                    <td>
-                        <button class="um-admin-archive-btn">Archive</button>
-                        <button class="um-admin-disable-btn">Disable</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>22</td>
-                    <td>Luis Erpelo</td>
-                    <td>luischristian.erpelo@gmail.com</td>
-                    <td>Active</td>
-                    <td>Business Owner</td>
-                    <td>
-                        <button class="um-admin-archive-btn">Archive</button>
-                        <button class="um-admin-disable-btn">Disable</button>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>21</td>
-                    <td>Jerome Manalo</td>
-                    <td>jerome.manalo@gmail.com</td>
-                    <td>Active</td>
-                    <td>Admin</td>
-                    <td>
-                        <button class="um-admin-archive-btn">Archive</button>
-                        <button class="um-admin-disable-btn">Disable</button>
-                    </td>
-                </tr>
-
-            </table>
+                    </form>
+                @endif
+            </td>
+        </tr>
+    @endforeach
+</table>
         </div>
 </body>
 
 </html>
 
 <script>
-    // if Status=Disabled, show Activate button, else Disable button
-    document.querySelectorAll(".admin-table-cont tr").forEach(row => {
-        const status = row.querySelector(".status");
-        const actionBtn = row.querySelector(".um-admin-action-btn");
+    // ===============================
+    // FILTER DROPDOWN FUNCTIONALITY
+    // ===============================
 
-        if (status && actionBtn) {
-            if (status.textContent.trim() === "Disabled") {
-                actionBtn.textContent = "Activate";
-                actionBtn.className = "um-admin-activate-btn";
-            } else {
-                actionBtn.textContent = "Disable";
-                actionBtn.className = "um-admin-disable-btn";
-            }
-        }
-    });
-
-    // Dropdown Stuff
     const filterBtn = document.querySelector(".admin-filter-btn");
     const dropdown = document.querySelector(".admin-filter-dropdown");
+    const rows = document.querySelectorAll(".admin-table-cont table tr:not(.admin-th-row)"); 
 
-
+    // Show / hide dropdown
     filterBtn.addEventListener("click", (e) => {
         e.stopPropagation();
         dropdown.classList.toggle("show");
     });
 
-
-    dropdown.addEventListener("click", (e) => {
-        if (e.target.tagName === 'A') {
+    // Click a filter option
+    dropdown.querySelectorAll("a").forEach(option => {
+        option.addEventListener("click", (e) => {
             e.preventDefault();
             dropdown.classList.remove("show");
-            console.log("Filter selected:", e.target.dataset.filter);
-        }
+
+            const filter = option.textContent.trim();
+
+            rows.forEach(row => {
+                const status = row.dataset.status;
+                const role = row.dataset.role;
+
+                if (filter === "All") {
+                    row.style.display = "";
+                } 
+                else if (filter === "Active" || filter === "Disabled") {
+                    row.style.display = (status === filter) ? "" : "none";
+                }
+                else if (["OFW", "Business Owner", "Admin"].includes(filter)) {
+                    row.style.display = (role === filter) ? "" : "none";
+                }
+            });
+        });
     });
 
-
+    // Click outside to close dropdown
     document.addEventListener("click", () => {
         dropdown.classList.remove("show");
-    });
-
-
-    dropdown.addEventListener("click", (e) => {
-        if (e.target !== dropdown.querySelector('a')) {
-            e.stopPropagation();
-        }
     });
 </script>
