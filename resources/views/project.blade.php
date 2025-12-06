@@ -1,23 +1,97 @@
 <div class="project-view-main" style="display: none;">
-    <a href="" class="project-view-x-btn"><img src="/assets/x-btn.png"/></a>
+    <a href="#" class="project-view-x-btn"><img src="/assets/x-btn.png"/></a>
     <div class="project-view-card">
-        <h2>Cafe Kabayan Expansion</h2>
-        <p class="project-view-author">Project by Cafe Kabayan</p>
-        <img src="/assets/cafe-img-sample.png" class="project-view-image" />
-        <p class="project-view-raised-amount">P50000 of P200000 Raised</p>
+        <h2 id="projectTitle">Cafe Kabayan Expansion</h2>
+        <p class="project-view-author" id="projectAuthor">Project by Cafe Kabayan</p>
+        <img src="/assets/cafe-img-sample.png" class="project-view-image" id="projectImage" />
+        <p class="project-view-raised-amount" id="projectRaised">P50000 of P200000 Raised</p>
         <div class="progress-container" style="width: 100%;">
-            <div class="progress-bar"></div>
+            <div class="progress-bar" id="projectProgress"></div>
         </div>
         
         @if(auth()->check() && auth()->user()->user_type === 'ofw')
-            <a href="{{ route('donate-project') }}" class="donate-btn">Donate</a>
+            <button class="donate-btn" id="openDonateModal">Donate</button>
         @endif
         
         <hr class="dotted-hr" />
-        <p class="project-view-desc">Café Kabayan has grown into a popular spot for students and professionals in Quezon City, thanks to its affordable meals and cozy atmosphere. However, due to limited seating and outdated equipment, the café struggles to accommodate peak-hour demand. Through this expansion project, we aim to renovate our space to add 20 more seats, upgrade our coffee machines to improve service efficiency, and launch an online ordering and delivery platform to reach customers beyond our immediate community. This expansion will not only increase revenue but also create new local job opportunities for baristas, kitchen staff, and delivery personnel.</p>
+        <p class="project-view-desc" id="projectDescription">Café Kabayan has grown into a popular spot for students and professionals in Quezon City, thanks to its affordable meals and cozy atmosphere. However, due to limited seating and outdated equipment, the café struggles to accommodate peak-hour demand. Through this expansion project, we aim to renovate our space to add 20 more seats, upgrade our coffee machines to improve service efficiency, and launch an online ordering and delivery platform to reach customers beyond our immediate community. This expansion will not only increase revenue but also create new local job opportunities for baristas, kitchen staff, and delivery personnel.</p>
     </div>
 
 </div>
+
+<script>
+// Global function to load project data
+window.loadProjectData = function(projectId) {
+    fetch(`/api/project/${projectId}`)
+        .then(response => response.json())
+        .then(data => {
+            document.getElementById('projectTitle').textContent = data.title;
+            document.getElementById('projectAuthor').textContent = `Project by ${data.user.name}`;
+            document.getElementById('projectImage').src = `/storage/${data.image}`;
+            document.getElementById('projectRaised').textContent = `₱${Number(data.current_amount).toLocaleString()} of ₱${Number(data.target_amount).toLocaleString()} Raised`;
+            
+            const progressPercent = Math.min((data.current_amount / data.target_amount) * 100, 100);
+            const progressBar = document.getElementById('projectProgress');
+            
+            // Reset progress bar to 0
+            progressBar.style.width = '0%';
+            
+            setTimeout(() => {
+                progressBar.style.width = `${progressPercent}%`;
+            }, 500);
+            
+            document.getElementById('projectDescription').textContent = data.description;
+            
+            const donateBtn = document.getElementById('openDonateModal');
+            if (donateBtn) {
+                donateBtn.setAttribute('data-project-id', data.id);
+                donateBtn.setAttribute('data-project-title', data.title);
+            }
+        })
+        .catch(error => console.error('Error loading project:', error));
+};
+
+// Initialize project overlay close functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const overlay = document.querySelector('.project-view-main');
+    const closeBtn = document.querySelector('.project-view-x-btn');
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (overlay) {
+                overlay.style.display = 'none';
+            }
+            // Update URL based on current page
+            if (window.location.pathname.includes('/business')) {
+                window.history.pushState({}, '', '/business');
+            } else if (window.location.pathname.includes('/marketplace')) {
+                window.history.pushState({}, '', '/marketplace');
+            } else {
+                window.history.pushState({}, '', '/dashboard');
+            }
+        });
+    }
+    
+    // Handle browser back/forward
+    window.addEventListener('popstate', () => {
+        if (window.location.pathname.startsWith('/project/')) {
+            const projectId = window.location.pathname.split('/').pop();
+            window.loadProjectData(projectId);
+            if (overlay) overlay.style.display = 'flex';
+        } else {
+            if (overlay) overlay.style.display = 'none';
+        }
+    });
+    
+    // Check if we're on a project page on load
+    if (window.location.pathname.startsWith('/project/')) {
+        const projectId = window.location.pathname.split('/').pop();
+        window.loadProjectData(projectId);
+        if (overlay) overlay.style.display = 'flex';
+    }
+});
+</script>
 
 <style>
     .project-view-main {
