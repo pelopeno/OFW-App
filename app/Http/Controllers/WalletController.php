@@ -89,4 +89,12 @@ class WalletController extends Controller
 
         return redirect()->route('dashboard')->with('success', 'Funds withdrawn successfully!');
     }
+
+    public function transactionHistory()
+    {
+        $wallet = Auth::user()->wallet;
+        $transactions = $wallet->transactions()->orderBy('created_at', 'desc')->paginate(10);
+
+        return view('transaction-history', compact('transactions'));
+    }
 }

@@ -1,8 +1,15 @@
-@props(['project_name', 'invested_amt'])
+@props(['project_name', 'invested_amt', 'image' => '/assets/default-project-pic.png'])
+
+@php
+    $image = $image ? (str_starts_with($image, 'http') || str_starts_with($image, '/') 
+        ? $image 
+        : asset($image)) 
+        : asset('/assets/default-project-pic.png');
+@endphp
 
 <div class="investment-card">
     <div class="investment-card-pfp">
-        <img src="/assets/pfp-default.png" />
+        <img src="{{ asset($image) }}" alt="{{ $project_name }} image" />
     </div>
     <div class="investment-card-content">
         <h2>{{ $project_name }}</h2>

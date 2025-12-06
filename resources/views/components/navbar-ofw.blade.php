@@ -6,6 +6,7 @@
         <a href="{{ route('saving-goals') }}">Saving Goals</a>
         <a href="{{ route('investment-history') }}">Investments</a>
         <a href="{{ route('marketplace') }}">Marketplace</a>
+        <a href="{{ route('history') }}">Transactions</a>
     </div>
     <div class="navbar-ofw-buttons">
         <form method="POST" action="{{ route('logout') }}">
