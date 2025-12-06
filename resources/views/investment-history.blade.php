@@ -18,29 +18,18 @@
         <div class="invh-ofw-content-cont">
             <h2>Investment History</h2>
 
-            <a href="/project/1" style="text-decoration: none; color: inherit;">
+            @forelse($investments as $investment)
+            <a href="/project/{{ $investment->project->id }}" style="text-decoration: none; color: inherit;">
                 <x-investment-card 
-                    project_name="Small Cafe Startup" 
-                    invested_amt="15000"/>
+                    project_name="{{ $investment->project->title }}" 
+                    invested_amt="{{ $investment->amount }}"/>
             </a>
-
-            <a href="/project/2" style="text-decoration: none; color: inherit;">
-                <x-investment-card 
-                    project_name="Dapitan Branch" 
-                    invested_amt="10000"/>
-            </a>
-
-            <a href="/project/3" style="text-decoration: none; color: inherit;">
-                <x-investment-card 
-                    project_name="Cafe Kabayan Extension" 
-                    invested_amt="10000"/>
-            </a>
-
-            <a href="/project/4" style="text-decoration: none; color: inherit;">
-                <x-investment-card 
-                    project_name="Seeds & Scholars Startup" 
-                    invested_amt="99999"/>
-            </a>
+            @empty
+            <div style="text-align: center; padding: 50px; color: #737373; font-family: 'Varela Round', sans-serif;">
+                <p style="font-size: 18px;">You haven't made any investments yet.</p>
+                <p>Explore the marketplace to find projects to invest in!</p>
+            </div>
+            @endforelse
         </div>
 
         <div class="invh-ofw-img-cont">

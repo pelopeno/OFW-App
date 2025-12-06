@@ -69,9 +69,14 @@
                         <img src="/assets/arrow.png" />
                     </div>
                     <div class="dashboard-ofw-investments-card-content">
+                        @if($latestInvestment)
                         <h3>Recent Investments</h3>
-                        <h4>Small Cafe Startup</h4>
-                        <h5>₱15,000 Allocated</h5>
+                        <h4>{{ $latestInvestment->project->title }}</h4>
+                        <h5>₱{{ number_format($latestInvestment->amount, 2) }} Allocated</h5>
+                        @else
+                        <h3>No Investments Yet</h3>
+                        <h4>Start investing in projects today!</h4>
+                        @endif
                     </div>
                 </a>
             </div>

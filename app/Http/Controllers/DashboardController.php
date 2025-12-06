@@ -20,6 +20,8 @@ class DashboardController extends Controller
 
         $projects = Project::latest()->first();
 
-        return view('dashboard', compact('wallet', 'latestGoal', 'projects'));
+        $latestInvestment = $user->investments()->with('project')->latest()->first();
+
+        return view('dashboard', compact('wallet', 'latestGoal', 'projects', 'latestInvestment'));
     }
 }

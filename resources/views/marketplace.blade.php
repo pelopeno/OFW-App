@@ -56,15 +56,15 @@
                 <img src="/assets/x-btn.png" alt="Close">
             </button>
             <div class="add-goal-header">
-                <h2 id="donateProjectTitle">Donate to Project</h2>
+                <h2 id="donateProjectTitle">Invest to Project</h2>
             </div>
             <form class="donate-form" id="donateForm" method="POST">
                 @csrf
-                <label class="input-label">Amount to Donate</label>
+                <label class="input-label">Amount to Invest</label>
                 <input type="number" name="amount" placeholder="Enter amount (₱)" class="donate-input" min="1" step="0.01" required />
                 <small class="donate-desc">The entered value will be deducted from your wallet balance.</small>
 
-                <button type="submit" class="withdraw-goal-btn">Donate</button>
+                <button type="submit" class="withdraw-goal-btn">Invest</button>
             </form>
         </div>
     </div>
@@ -105,7 +105,6 @@ document.addEventListener("DOMContentLoaded", function () {
             
             document.getElementById('donateProjectTitle').textContent = `Donate to: ${projectTitle}`;
             document.getElementById('donateForm').action = `/project/${projectId}/donate`;
-            
             donateModal.classList.add('show');
             document.body.style.overflow = 'hidden';
         }
