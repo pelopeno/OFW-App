@@ -4,7 +4,10 @@
     </div>
     <div class="navbar-admin-links">
         <a href="{{ route('admin-monitoring') }}">Monitoring</a>
-        <a href="{{ route('admin-project-approval') }}">Project Approval</a>
+        
+        <a href="{{ route('admin.project-approval') }}">Project Approval</a>
+
+
         <a href="{{ route('admin-user-management') }}">User Management</a>
     </div>
     <div class="navbar-admin-buttons">
