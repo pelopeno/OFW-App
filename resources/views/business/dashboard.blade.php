@@ -51,9 +51,10 @@
                 @forelse($projects as $project)
                 <div class="project-card-wrapper">
                     <x-business-project-card
-                        project_name="{{ $project->title }}"
+                        project_name="{{ $project->title }}" 
                         project_current_raised_amt="{{ $project->current_amount }}"
                         project_target_raised_amt="{{ $project->target_amount }}"
+                        project_status="{{ $project->status }}"
                         project_id="{{ $project->id }}"
                         is_business_dashboard="true" />
                 </div>

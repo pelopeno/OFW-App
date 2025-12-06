@@ -17,6 +17,9 @@ use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 use App\Http\Responses\LoginResponse;
 use Laravel\Fortify\Contracts\RegisterResponse;
 use App\Http\Responses\CustomRegisterResponse;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -55,5 +58,20 @@ class FortifyServiceProvider extends ServiceProvider
             return Limit::perMinute(5)->by($request->session()->get('login.id'));
         });
         
+        Fortify::authenticateUsing(function (Request $request) {
+            $user = User::where('email', $request->email)->first();
+            
+            if ($user && Hash::check($request->password, $user->password)) {
+                // Check if user status is active
+                if (strtolower($user->status) !== 'active') {
+                    throw ValidationException::withMessages([
+                        'email' => ['Your account is ' . strtolower($user->status) . '. Please contact support.'],
+                    ]);
+                }
+                return $user;
+            }
+            
+            return null;
+        });
     }
 }

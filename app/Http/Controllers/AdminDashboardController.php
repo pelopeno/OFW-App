@@ -12,7 +12,7 @@ class AdminDashboardController extends Controller
 public function index()
 {
     
-        $totalUsers = User::count();
+    $totalUsers = User::count();
     $activeProjects = Project::where('status', 'active')->count();
     $pendingProjects = Project::where('status', 'pending')->count();
 

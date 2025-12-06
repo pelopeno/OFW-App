@@ -109,6 +109,12 @@
         <button type="button" onClick="toggleSignupChoice()">Sign-up</button>
     </div>
 
+    @if(session('error'))
+    <div class="error-message" style="color: #d32f2f; margin-bottom: 15px; text-align: center; font-weight: 500;">
+        {{ session('error') }}
+    </div>
+    @endif
+    
 </body>
 
 </html>
@@ -353,23 +359,19 @@
 
         if (hasErrors && isRegisterError) {
             // Show server-side validation errors with SweetAlert
-            @if($errors->any() && (request()->is('register') || old('name') !== null))
-            let errorMessages = '<ul style="text-align: left;">';
-            @foreach($errors->all() as $error)
-                errorMessages += '<li>{{ $error }}</li>';
-            @endforeach
-            errorMessages += '</ul>';
+            let errorMessages = `{!! $errors->any() && (request()->is('register') || old('name') !== null) ? '<ul style="text-align: left;">' . collect($errors->all())->map(fn($error) => '<li>' . e($error) . '</li>')->join('') . '</ul>' : '' !!}`;
 
-            Swal.fire({
-                icon: 'error',
-                title: 'Validation Error',
-                html: errorMessages,
-                confirmButtonColor: '#A68749',
-            });
+            if (errorMessages) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Validation Error',
+                    html: errorMessages,
+                    confirmButtonColor: '#A68749',
+                });
 
-            signup.style.display = 'flex';
-            signup.classList.add('fade-in');
-            @endif
+                signup.style.display = 'flex';
+                signup.classList.add('fade-in');
+            }
         } else if (hasErrors && isLoginError) {
             login.style.display = 'flex';
             login.classList.add('fade-in');
@@ -380,4 +382,17 @@
             login.classList.add('fade-in');
         }
     });
+
+    // Show login error with SweetAlert
+    if ('{!! session('error') !!}') {
+        Swal.fire({
+            icon: 'error',
+            title: 'Login Failed',
+            text: '{!! session('error') !!}',
+            confirmButtonColor: '#A68749',
+        }).then(() => {
+            login.style.display = 'flex';
+            login.classList.add('fade-in');
+        });
+    }
 </script>

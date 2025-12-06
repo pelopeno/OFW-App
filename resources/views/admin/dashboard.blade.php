@@ -41,15 +41,15 @@
     <table>
         <tr class="admin-th-row">
             <th>PROJECT NAME</th>
-            <th>AUTHOR</th>
+            <th>OWNER</th>
             <th>DESCRIPTION</th>
             <th>ACTIONS</th>
         </tr>
 
         @forelse ($projects as $project)
             <tr>
-                <td>{{ $project->project_name }}</td>
-                <td>{{ $project->author ?? 'N/A' }}</td>
+                <td>{{ $project->title }}</td>
+                <td>{{ $project->user->name ?? 'N/A' }}</td>
                 <td>{{ Str::limit($project->description, 150) }}</td>
 
                 <td>

@@ -50,7 +50,7 @@
             <td>{{ $user->name }}</td>
             <td>{{ $user->email }}</td>
             <td>{{ $user->status }}</td>
-            <td>{{ $user->role }}</td>
+            <td>{{ $user->user_type }}</td>
             <td>
                 <form action="{{ route('admin.archive', $user->id) }}" method="POST" style="display:inline;">
                     @csrf
