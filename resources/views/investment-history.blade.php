@@ -1,5 +1,5 @@
 @php
-    $isInvestmentPage = true;
+$isInvestmentPage = true;
 @endphp
 
 <!DOCTYPE html>
@@ -16,7 +16,7 @@
     <div id="project-overlay">
         @include('project')
     </div>
-    <x-navbar-ofw/>
+    <x-navbar-ofw />
 
     <div class="invh-ofw-main">
         <div class="invh-ofw-content-cont">
@@ -24,12 +24,13 @@
 
             @forelse($investments as $investment)
             @if($investment->project)
-            <a href="/project/{{ $investment->project->id }}" 
-               style="text-decoration: none; color: inherit;" 
-               data-project-id="{{ $investment->project->id }}">
-                <x-investment-card 
-                    project_name="{{ $investment->project->title }}" 
-                    invested_amt="{{ $investment->amount }}"/>
+            <a href="/project/{{ $investment->project->id }}"
+                style="text-decoration: none; color: inherit;"
+                data-project-id="{{ $investment->project->id }}">
+                <x-investment-card
+                    image="{{ $investment->project->image ? asset('storage/'.$investment->project->image) : '/assets/default-project-pic.png' }}"
+                    project_name="{{ $investment->project->title }}"
+                    invested_amt="{{ $investment->amount }}" />
             </a>
             @else
             <div style="padding: 20px; background: #fff3cd; border: 2px solid #ffc107; border-radius: 10px; margin-bottom: 15px;">
@@ -47,101 +48,104 @@
         </div>
 
         <div class="invh-ofw-img-cont">
-            <img src="/assets/ih-ofw-img.png"/>
+            <img src="/assets/ih-ofw-img.png" />
         </div>
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const overlay = document.querySelector(".project-view-main");
-        const investmentLinks = document.querySelectorAll(".invh-ofw-content-cont a[data-project-id]");
-        const closeBtn = document.querySelector(".project-view-x-btn");
+        document.addEventListener("DOMContentLoaded", function() {
+            const overlay = document.querySelector(".project-view-main");
+            const investmentLinks = document.querySelectorAll(".invh-ofw-content-cont a[data-project-id]");
+            const closeBtn = document.querySelector(".project-view-x-btn");
 
-        console.log('Investment page loaded');
-        console.log('Overlay found:', !!overlay);
-        console.log('Investment links found:', investmentLinks.length);
-        console.log('loadProjectData available:', typeof window.loadProjectData);
-        
-        // Debug: Log each link
-        investmentLinks.forEach((link, index) => {
-            console.log(`Link ${index}:`, {
-                href: link.getAttribute('href'),
-                dataProjectId: link.getAttribute('data-project-id'),
-                html: link.outerHTML.substring(0, 200)
+            console.log('Investment page loaded');
+            console.log('Overlay found:', !!overlay);
+            console.log('Investment links found:', investmentLinks.length);
+            console.log('loadProjectData available:', typeof window.loadProjectData);
+
+            // Debug: Log each link
+            investmentLinks.forEach((link, index) => {
+                console.log(`Link ${index}:`, {
+                    href: link.getAttribute('href'),
+                    dataProjectId: link.getAttribute('data-project-id'),
+                    html: link.outerHTML.substring(0, 200)
+                });
             });
-        });
 
-        if (overlay) overlay.style.display = "none";
+            if (overlay) overlay.style.display = "none";
 
-        // When investment card is clicked
-        investmentLinks.forEach(link => {
-            link.addEventListener("click", e => {
-                e.preventDefault();
-                
-                console.log('Investment card clicked!');
-                
-                // Get project ID from data attribute
-                const projectId = link.getAttribute("data-project-id");
-                console.log('Project ID:', projectId);
+            // When investment card is clicked
+            investmentLinks.forEach(link => {
+                link.addEventListener("click", e => {
+                    e.preventDefault();
 
-                // Load project data
-                if (typeof window.loadProjectData === 'function' && projectId) {
-                    console.log('Loading project data...');
-                    window.loadProjectData(projectId);
-                    
-                    // Show overlay
-                    if (overlay) {
-                        console.log('Showing overlay');
-                        overlay.style.display = "flex";
+                    console.log('Investment card clicked!');
+
+                    // Get project ID from data attribute
+                    const projectId = link.getAttribute("data-project-id");
+                    console.log('Project ID:', projectId);
+
+                    // Load project data
+                    if (typeof window.loadProjectData === 'function' && projectId) {
+                        console.log('Loading project data...');
+                        window.loadProjectData(projectId);
+
+                        // Show overlay
+                        if (overlay) {
+                            console.log('Showing overlay');
+                            overlay.style.display = "flex";
+                        } else {
+                            console.error('Overlay element not found!');
+                        }
+
+                        // Update URL without reloading
+                        window.history.pushState({
+                            overlay: true
+                        }, "", `/project/${projectId}`);
                     } else {
-                        console.error('Overlay element not found!');
+                        console.error('Cannot load project:', {
+                            hasLoadFunction: typeof window.loadProjectData === 'function',
+                            projectId: projectId
+                        });
                     }
-                    
-                    // Update URL without reloading
-                    window.history.pushState({overlay: true}, "", `/project/${projectId}`);
-                } else {
-                    console.error('Cannot load project:', {
-                        hasLoadFunction: typeof window.loadProjectData === 'function',
-                        projectId: projectId
-                    });
-                }
+                });
             });
-        });
 
-        // Close overlay
-        if (closeBtn) {
-            closeBtn.addEventListener("click", e => {
-                e.preventDefault();
-                if (overlay) overlay.style.display = "none";
-                window.history.pushState({}, "", "/investment-history");
-            });
-        }
-
-        // Show overlay if already on /project/{id}
-        if (window.location.pathname.startsWith("/project/")) {
-            const projectId = window.location.pathname.split("/").pop();
-            
-            if (typeof window.loadProjectData === 'function' && projectId) {
-                window.loadProjectData(projectId);
-                if (overlay) overlay.style.display = "flex";
+            // Close overlay
+            if (closeBtn) {
+                closeBtn.addEventListener("click", e => {
+                    e.preventDefault();
+                    if (overlay) overlay.style.display = "none";
+                    window.history.pushState({}, "", "/investment-history");
+                });
             }
-        }
 
-        // Handle back/forward navigation
-        window.addEventListener("popstate", () => {
+            // Show overlay if already on /project/{id}
             if (window.location.pathname.startsWith("/project/")) {
                 const projectId = window.location.pathname.split("/").pop();
-                
+
                 if (typeof window.loadProjectData === 'function' && projectId) {
                     window.loadProjectData(projectId);
                     if (overlay) overlay.style.display = "flex";
                 }
-            } else {
-                if (overlay) overlay.style.display = "none";
             }
+
+            // Handle back/forward navigation
+            window.addEventListener("popstate", () => {
+                if (window.location.pathname.startsWith("/project/")) {
+                    const projectId = window.location.pathname.split("/").pop();
+
+                    if (typeof window.loadProjectData === 'function' && projectId) {
+                        window.loadProjectData(projectId);
+                        if (overlay) overlay.style.display = "flex";
+                    }
+                } else {
+                    if (overlay) overlay.style.display = "none";
+                }
+            });
         });
-    });
     </script>
 
 </body>
+
 </html>

@@ -38,6 +38,7 @@ Route::middleware([
     Route::get('/add_funds', [WalletController::class, 'showAddFunds'])->name('add-funds');
     Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
     Route::post('/withdraw_wallet', [WalletController::class, 'withdrawWallet'])->name('wallet.withdraw-funds');
+    Route::get('/transaction_history', [WalletController::class, 'transactionHistory'])->name('history');
 });
 
 // Routes exclusive to Business Users
