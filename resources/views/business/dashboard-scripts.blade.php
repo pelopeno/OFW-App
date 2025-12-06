@@ -232,6 +232,12 @@
             
             const content = document.getElementById('updateContentModal').value.trim();
             const imageFile = document.getElementById('updateImage').files[0];
+            const projectId = document.getElementById('updateProjectSelect').value;
+            
+            if (!projectId) {
+                alert('Please select a project');
+                return;
+            }
             
             if (!content) {
                 alert('Please write something before posting');
@@ -252,6 +258,7 @@
             const formData = new FormData();
             formData.append('content', content);
             formData.append('image', imageFile);
+            formData.append('project_id', projectId);
 
             fetch('{{ route("business.updates.store") }}', {
                 method: 'POST',
@@ -268,6 +275,7 @@
                     document.getElementById('updateContentModal').style.height = 'auto';
                     document.getElementById('updateImage').value = '';
                     document.getElementById('updateFileName').textContent = 'Choose an image';
+                    document.getElementById('updateProjectSelect').value = '';
                     updateImageUploadLabel.style.borderColor = '';
                     addUpdateToList(data.update);
                     createUpdateModal.classList.remove('show');
@@ -333,7 +341,12 @@
             link.addEventListener("click", e => {
                 e.preventDefault();
                 const projectId = link.getAttribute("href").split("/").pop();
-                loadProjectData(projectId);
+                // Use the global loadProjectData function if it exists
+                if (typeof window.loadProjectData === 'function') {
+                    window.loadProjectData(projectId);
+                } else {
+                    loadProjectData(projectId);
+                }
                 if (overlay) overlay.style.display = "flex";
                 window.history.pushState({ overlay: true }, "", link.getAttribute("href"));
             });
