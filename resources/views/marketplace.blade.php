@@ -14,6 +14,16 @@
     </div>
     <x-navbar-ofw/>
 
+    <!-- Success Message Toast -->
+    <div id="successToast" class="success-toast">
+        <span id="successMessage"></span>
+    </div>
+
+    <!-- Error Message Toast -->
+    <div id="errorToast" class="error-toast">
+        <span id="errorMessage"></span>
+    </div>
+
     <div class="market-ofw-main">
         <div class="market-ofw-content-cont">
             <h2>Marketplace</h2>
@@ -38,35 +48,37 @@
             <img src="/assets/mp-ofw-img.png"/>
         </div>
     </div>
+
+    <!-- Donate Modal -->
+    <div id="donateModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeDonateModal">
+                <img src="/assets/x-btn.png" alt="Close">
+            </button>
+            <div class="add-goal-header">
+                <h2 id="donateProjectTitle">Donate to Project</h2>
+            </div>
+            <form class="donate-form" id="donateForm" method="POST">
+                @csrf
+                <label class="input-label">Amount to Donate</label>
+                <input type="number" name="amount" placeholder="Enter amount (₱)" class="donate-input" min="1" step="0.01" required />
+                <small class="donate-desc">The entered value will be deducted from your wallet balance.</small>
+
+                <button type="submit" class="withdraw-goal-btn">Donate</button>
+            </form>
+        </div>
+    </div>
 </body>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    // Overlay logic with History API and AJAX
     const overlay = document.querySelector(".project-view-main");
     const projectLinks = document.querySelectorAll(".market-ofw-content-cont a.project-link");
-    const closeBtn = document.querySelector(".project-view-x-btn");
+    const donateModal = document.getElementById('donateModal');
+    const successToast = document.getElementById('successToast');
+    const errorToast = document.getElementById('errorToast');
 
     if (overlay) overlay.style.display = "none";
-
-    // Function to load project dynamically
-    function loadProjectPreview(projectId) {
-        fetch(`/project/${projectId}`, {
-            headers: {
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-        })
-        .then(response => {
-            if (!response.ok) throw new Error('Network response was not ok');
-            return response.json();
-        })
-        .then(data => {
-            window.loadProject(projectId);
-        })
-        .catch(error => {
-            console.error('Error loading project:', error);
-        });
-    }
 
     // When project is clicked
     projectLinks.forEach(link => {
@@ -75,57 +87,62 @@ document.addEventListener("DOMContentLoaded", function () {
             const projectId = link.getAttribute("data-project-id");
             const url = link.getAttribute("href");
 
-            // Show overlay
+            // Load project data and show overlay
+            window.loadProjectData(projectId);
             if (overlay) overlay.style.display = "flex";
-
-            // Load project data
-            loadProjectPreview(projectId);
-
-            // Update URL without reload
-            window.history.pushState({overlay: true, projectId}, "", url);
+            
+            // Update URL
+            window.history.pushState({ overlay: true }, "", url);
         });
     });
 
-    // Close overlay
-    if (closeBtn) {
-        closeBtn.addEventListener("click", e => {
+    // Donate Modal Functionality
+    document.addEventListener('click', function(e) {
+        if (e.target && e.target.id === 'openDonateModal') {
             e.preventDefault();
-            if (overlay) overlay.style.display = "none";
-            window.history.pushState({}, "", "/marketplace");
-        });
-    }
-
-    // Close overlay when clicking outside
-    if (overlay) {
-        overlay.addEventListener("click", function(e) {
-            if (e.target === overlay) {
-                overlay.style.display = "none";
-                window.history.pushState({}, "", "/marketplace");
-            }
-        });
-    }
-
-    // On page load: show overlay if directly at /project/{id}
-    if (window.location.pathname.startsWith("/project/")) {
-        const projectId = window.location.pathname.split('/').pop();
-        if (overlay) {
-            overlay.style.display = "flex";
-            loadProjectPreview(projectId);
-        }
-    }
-
-    // Handle browser back/forward
-    window.addEventListener("popstate", (event) => {
-        if (window.location.pathname.startsWith("/project/")) {
-            const projectId = window.location.pathname.split('/').pop();
-            if (overlay) {
-                overlay.style.display = "flex";
-                loadProjectPreview(projectId);
-            }
-        } else if (window.location.pathname === "/marketplace") {
-            if (overlay) overlay.style.display = "none";
+            const projectId = e.target.getAttribute('data-project-id');
+            const projectTitle = e.target.getAttribute('data-project-title');
+            
+            document.getElementById('donateProjectTitle').textContent = `Donate to: ${projectTitle}`;
+            document.getElementById('donateForm').action = `/project/${projectId}/donate`;
+            
+            donateModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
         }
     });
+
+    document.getElementById('closeDonateModal').addEventListener('click', () => {
+        donateModal.classList.remove('show');
+        document.body.style.overflow = 'auto';
+    });
+
+    // Close modal on outside click
+    donateModal.addEventListener('click', (e) => {
+        if (e.target === donateModal) {
+            donateModal.classList.remove('show');
+            document.body.style.overflow = 'auto';
+        }
+    });
+
+    // Show success message if exists
+    @if(session('success'))
+        successToast.querySelector('#successMessage').textContent = '{{ session('success') }}';
+        successToast.classList.add('show');
+        setTimeout(() => {
+            successToast.classList.remove('show');
+        }, 3000);
+    @endif
+
+    // Show error message if exists
+    @if($errors->any())
+        errorToast.querySelector('#errorMessage').textContent = '{{ $errors->first() }}';
+        errorToast.classList.add('show');
+        donateModal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => {
+            errorToast.classList.remove('show');
+        }, 5000);
+    @endif
 });
 </script>
 

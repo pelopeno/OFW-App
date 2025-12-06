@@ -68,7 +68,6 @@ h5 {
 .goals-card-button a:hover,
 .investment-card:hover,
 .bus-name button:hover,
-.project-card:hover,
 .project-view-x-btn:hover,
 .signup-ofw-button-cont button:hover,
 .signup-bus-button-cont button:hover,
@@ -77,6 +76,23 @@ h5 {
 .bus-add-project-btn:hover {
     transform: scale(1.025);
     transition: .2s;
+}
+
+/* Marketplace project links */
+.project-link {
+    text-decoration: none;
+    color: inherit;
+    display: block;
+}
+
+.project-link:hover .project-card {
+    transform: scale(1.025);
+    transition: .2s;
+}
+
+.project-link:hover .project-card h2 {
+    color: #A93D3D;
+    transition: color 0.3s ease;
 }
 
 .logout-btn {
@@ -522,6 +538,7 @@ h5 {
     height: 20px;
     background-color: #282828;
     border-radius: 50px;
+    transition: width 1.5s ease-in-out;
 }
 
 .dashboard-ofw-investments-marketplace-cont {
@@ -758,7 +775,7 @@ h5 {
 }
 
 .donate-form {
-    width: 40%;
+    width: 80%;
     height: fit-content;
     background-color: white;
     border: 3px solid black;

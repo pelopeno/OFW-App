@@ -156,10 +156,31 @@
         </div>
     </div>
 
+    <!-- Donate Modal -->
+    <div id="donateModal" class="modal-overlay">
+        <div class="modal-content">
+            <button class="modal-close" id="closeDonateModal">
+                <img src="/assets/x-btn.png" alt="Close">
+            </button>
+            <div class="add-goal-header">
+                <h2 id="donateProjectTitle">Donate to Project</h2>
+            </div>
+            <form class="donate-form" id="donateForm" method="POST">
+                @csrf
+                <label class="input-label">Amount to Donate</label>
+                <input type="number" name="amount" placeholder="Enter amount (₱)" class="donate-input" min="1" step="0.01" required />
+                <small class="donate-desc">The entered value will be deducted from your wallet balance.</small>
+
+                <button type="submit" class="withdraw-goal-btn">Donate</button>
+            </form>
+        </div>
+    </div>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const addFundsModal = document.getElementById('addFundsModal');
             const withdrawWalletModal = document.getElementById('withdrawWalletModal');
+            const donateModal = document.getElementById('donateModal');
             const successToast = document.getElementById('successToast');
             const errorToast = document.getElementById('errorToast');
 
@@ -187,38 +208,66 @@
                 document.body.style.overflow = 'auto';
             });
 
+            // Donate Modal
+            document.addEventListener('click', function(e) {
+                if (e.target && e.target.id === 'openDonateModal') {
+                    e.preventDefault();
+                    const projectId = e.target.getAttribute('data-project-id');
+                    const projectTitle = e.target.getAttribute('data-project-title');
+                    
+                    document.getElementById('donateProjectTitle').textContent = `Donate to: ${projectTitle}`;
+                    document.getElementById('donateForm').action = `/project/${projectId}/donate`;
+                    
+                    donateModal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+
+            document.getElementById('closeDonateModal').addEventListener('click', () => {
+                donateModal.classList.remove('show');
+                document.body.style.overflow = 'auto';
+            });
+
             // Close modals on outside click
-            [addFundsModal, withdrawWalletModal].forEach(modal => {
+            [addFundsModal, withdrawWalletModal, donateModal].forEach(modal => {
                 modal.addEventListener('click', (e) => {
                     if (e.target === modal) {
                         modal.classList.remove('show');
-                        document.body.style.overflow = 'auto';
-                    }
-                });
+                    document.body.style.overflow = 'auto';
+                }
             });
-
-            // Show success message if exists
-            @if(session('success'))
-                successToast.querySelector('#successMessage').textContent = '{{ session('success') }}';
-                successToast.classList.add('show');
-                setTimeout(() => {
-                    successToast.classList.remove('show');
-                }, 3000);
-            @endif
-
-            // Show error message if exists
-            @if($errors->any())
-                errorToast.querySelector('#errorMessage').textContent = '{{ $errors->first() }}';
-                errorToast.classList.add('show');
-                withdrawWalletModal.classList.add('show');
-                document.body.style.overflow = 'hidden';
-                setTimeout(() => {
-                    errorToast.classList.remove('show');
-                }, 5000);
-            @endif
         });
+    });
     </script>
 
+    @if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const successToast = document.querySelector('.success-toast');
+            successToast.querySelector('#successMessage').textContent = '{{ session('success') }}';
+            successToast.classList.add('show');
+            setTimeout(() => {
+                successToast.classList.remove('show');
+            }, 3000);
+        });
+    </script>
+    @endif
+
+    @if($errors->any())
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const errorToast = document.querySelector('.error-toast');
+            const withdrawWalletModal = document.getElementById('withdrawWalletModal');
+            errorToast.querySelector('#errorMessage').textContent = '{{ $errors->first() }}';
+            errorToast.classList.add('show');
+            withdrawWalletModal.classList.add('show');
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                errorToast.classList.remove('show');
+            }, 5000);
+        });
+    </script>
+    @endif
 </body>
 
 </html>

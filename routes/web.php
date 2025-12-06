@@ -38,9 +38,8 @@ Route::middleware([
     Route::post('/goals/{id}/allocateFunds', [GoalController::class, 'allocateFunds'])->name('allocate-funds.post');
     Route::get('/goals/{id}/withdraw', [GoalController::class, 'withdrawForm'])->name('withdraw-funds');
     Route::post('/goals/{id}/withdrawFunds', [GoalController::class, 'withdrawFunds'])->name('withdraw-funds.post');
-    Route::get('/project/ProjectIdHere/donate', function () {
-        return view(view: 'donate-project');
-    })->name('donate-project');
+    Route::post('/project/{id}/donate', [ProjectController::class, 'donate'])->name('donate-project.post');
+    Route::get('/add_funds', [WalletController::class, 'showAddFunds'])->name('add-funds');
     Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
     Route::post('/withdraw_wallet', [WalletController::class, 'withdrawWallet'])->name('wallet.withdraw-funds');
 });
