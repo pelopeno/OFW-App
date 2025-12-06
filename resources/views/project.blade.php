@@ -1,6 +1,13 @@
 <div class="project-view-main" style="display: none;">
     <a href="#" class="project-view-x-btn"><img src="/assets/x-btn.png" /></a>
     <div class="project-view-card">
+        <!-- Scroll hint indicator -->
+        <div class="scroll-hint" id="scrollHint">
+            <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M7 13l5 5 5-5M7 6l5 5 5-5"/>
+            </svg>
+        </div>
+        
         <h2 id="projectTitle">Cafe Kabayan Expansion</h2>
         <p class="project-view-author" id="projectAuthor">Project by Cafe Kabayan</p>
 
@@ -133,6 +140,48 @@
     document.addEventListener('DOMContentLoaded', function() {
         const overlay = document.querySelector('.project-view-main');
         const closeBtn = document.querySelector('.project-view-x-btn');
+        const projectCard = document.querySelector('.project-view-card');
+        const scrollHint = document.getElementById('scrollHint');
+
+        // Scroll hint functionality
+        if (projectCard && scrollHint) {
+            // Check if content is scrollable and show/hide hint
+            const checkScrollable = () => {
+                const isScrollable = projectCard.scrollHeight > projectCard.clientHeight;
+                if (isScrollable) {
+                    scrollHint.style.display = 'flex';
+                    // Auto-hide after 3 seconds
+                    setTimeout(() => {
+                        scrollHint.classList.add('fade-out');
+                    }, 3000);
+                } else {
+                    scrollHint.style.display = 'none';
+                }
+            };
+
+            // Click hint to scroll down
+            scrollHint.addEventListener('click', () => {
+                projectCard.scrollTo({
+                    top: projectCard.scrollHeight,
+                    behavior: 'smooth'
+                });
+                scrollHint.classList.add('fade-out');
+            });
+
+            // Hide hint when user scrolls
+            projectCard.addEventListener('scroll', () => {
+                if (projectCard.scrollTop > 50) {
+                    scrollHint.classList.add('fade-out');
+                }
+            });
+
+            // Check scrollable on content load
+            const observer = new MutationObserver(checkScrollable);
+            observer.observe(projectCard, { childList: true, subtree: true });
+            
+            // Initial check
+            setTimeout(checkScrollable, 100);
+        }
 
         // Tab switching
         const tabButtons = document.querySelectorAll('.project-tab-btn');
@@ -240,10 +289,54 @@
         overflow-y: auto;
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* IE and Edge */
+        scroll-behavior: smooth;
     }
 
     .project-view-card::-webkit-scrollbar {
         display: none; /* Chrome, Safari, Opera */
+    }
+
+    /* Scroll hint indicator */
+    .scroll-hint {
+        position: absolute;
+        bottom: 20px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        background: rgba(166, 135, 73, 0.9);
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        animation: bounceHint 2s infinite;
+        cursor: pointer;
+        transition: opacity 0.5s ease, transform 0.3s ease;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .scroll-hint:hover {
+        background: rgba(64, 64, 64, 0.9);
+        transform: translateX(-50%) scale(1.1);
+    }
+
+    .scroll-hint.fade-out {
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    @keyframes bounceHint {
+        0%, 20%, 50%, 80%, 100% {
+            transform: translateX(-50%) translateY(0);
+        }
+        40% {
+            transform: translateX(-50%) translateY(-10px);
+        }
+        60% {
+            transform: translateX(-50%) translateY(-5px);
+        }
     }
 
     .project-view-x-btn {
@@ -251,11 +344,21 @@
         right: 27%;
         top: 0;
         z-index: 6;
+        transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .project-view-x-btn:hover {
+        transform: scale(1.1) rotate(90deg);
+    }
+
+    .project-view-x-btn:active {
+        transform: scale(0.95) rotate(90deg);
     }
 
     .project-view-x-btn img {
         width: 60px;
         height: auto;
+        filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.3));
     }
 
     .project-view-card h2 {
@@ -294,6 +397,23 @@
         cursor: pointer;
         transition: all 0.3s ease;
         margin-bottom: -2px;
+        position: relative;
+    }
+
+    .project-tab-btn::after {
+        content: '';
+        position: absolute;
+        bottom: -2px;
+        left: 50%;
+        transform: translateX(-50%) scaleX(0);
+        width: 100%;
+        height: 3px;
+        background: #A68749;
+        transition: transform 0.3s ease;
+    }
+
+    .project-tab-btn:hover::after {
+        transform: translateX(-50%) scaleX(0.5);
     }
 
     .project-tab-btn.active {
@@ -301,8 +421,17 @@
         border-bottom-color: #A68749;
     }
 
+    .project-tab-btn.active::after {
+        transform: translateX(-50%) scaleX(1);
+    }
+
     .project-tab-btn:hover {
         color: #282828;
+        transform: translateY(-2px);
+    }
+
+    .project-tab-btn:active {
+        transform: translateY(0);
     }
 
     .project-tab-content {
@@ -335,6 +464,13 @@
         border: 3px solid black;
         border-radius: 15px;
         margin-bottom: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .project-update-image:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .project-update-date {
@@ -361,6 +497,13 @@
         border: 3px solid black;
         border-radius: 15px;
         margin-bottom: 10px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        cursor: pointer;
+    }
+
+    .project-view-image:hover {
+        transform: scale(1.02);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
     }
 
     .project-view-raised-amount {
