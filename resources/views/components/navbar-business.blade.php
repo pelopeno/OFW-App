@@ -4,6 +4,7 @@
     </div>
     <div class="navbar-bus-links">
         <!--If may lalagay kayo na redirect links, lagay nalang dito similar sa ofw navbar-->
+        <a href="{{ route('contributions') }}">Captial Contributions</a>
     </div>
     <div class="navbar-bus-buttons">
        <form method="POST" action="{{ route('logout') }}">
