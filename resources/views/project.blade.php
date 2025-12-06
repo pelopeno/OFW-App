@@ -104,7 +104,10 @@
             })
             .then(data => {
                 console.log('Updates data:', data);
-                if (data.updates && data.updates.length > 0) {
+                console.log('Updates array:', data.updates);
+                console.log('Updates length:', data.updates ? data.updates.length : 'undefined');
+                
+                if (data.updates && Array.isArray(data.updates) && data.updates.length > 0) {
                     container.innerHTML = '';
                     data.updates.forEach(update => {
                         console.log('Adding update:', update);
@@ -119,7 +122,7 @@
                         container.appendChild(updateCard);
                     });
                 } else {
-                    console.log('No updates found');
+                    console.log('No updates found - showing empty message');
                     container.innerHTML = '<p style="text-align: center; padding: 30px; color: #737373;">No updates yet for this project.</p>';
                 }
             })

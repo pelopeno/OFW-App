@@ -15,9 +15,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('landing');
 })->name('landing');
-Route::get('/project', function () {
-    return view('project');
-})->name('project');
 
 // Routes exclusive to OFWs
 Route::middleware([
