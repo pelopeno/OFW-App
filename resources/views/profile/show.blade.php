@@ -1,21 +1,19 @@
 <x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+    @if (auth()->user()->user_type === 'ofw')
+        <x-navbar-ofw />
+    @elseif (auth()->user()->user_type === 'business_owner')
+        <x-navbar-business />
+    @endif
 
-    {{-- Inline CSS for Profile Page --}}
     <style>
-        /* Container for all profile forms */
         .profile-container {
             max-width: 900px;
-            margin: 0 auto;
             padding: 20px;
             background-color: white;
             border: 3.5px solid black;
             border-radius: 25px;
             box-sizing: border-box;
+            margin: 25px auto;
         }
 
         /* Each Livewire section */
@@ -30,7 +28,10 @@
         /* Section headings */
         .profile-section h2,
         .profile-section h3 {
-            font-family: "Varela Round", sans-serif;
+            line-height: 40px;
+            letter-spacing: -3px;
+            font-size: 48px;
+            font-family: "Tilt Warp", sans-serif;
             color: #282828;
             margin-bottom: 15px;
         }
@@ -65,27 +66,27 @@
 
     <div class="profile-container">
         @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-            <div class="profile-section">
-                @livewire('profile.update-profile-information-form')
-            </div>
+        <div class="profile-section">
+            @livewire('profile.update-profile-information-form')
+        </div>
 
-            <x-section-border />
+        <x-section-border />
         @endif
 
         @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
-            <div class="profile-section">
-                @livewire('profile.update-password-form')
-            </div>
+        <div class="profile-section">
+            @livewire('profile.update-password-form')
+        </div>
 
-            <x-section-border />
+        <x-section-border />
         @endif
 
         @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
-            <div class="profile-section">
-                @livewire('profile.two-factor-authentication-form')
-            </div>
+        <div class="profile-section">
+            @livewire('profile.two-factor-authentication-form')
+        </div>
 
-            <x-section-border />
+        <x-section-border />
         @endif
 
         <div class="profile-section">
@@ -93,11 +94,11 @@
         </div>
 
         @if (Laravel\Jetstream\Jetstream::hasAccountDeletionFeatures())
-            <x-section-border />
+        <x-section-border />
 
-            <div class="profile-section">
-                @livewire('profile.delete-user-form')
-            </div>
+        <div class="profile-section">
+            @livewire('profile.delete-user-form')
+        </div>
         @endif
     </div>
 </x-app-layout>

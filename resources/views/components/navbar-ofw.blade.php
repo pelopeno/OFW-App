@@ -9,6 +9,9 @@
         <a href="{{ route('history') }}">Transactions</a>
     </div>
     <div class="navbar-ofw-buttons">
+        <button type="button" class="logout-btn" onclick="goToProfile()">
+            <img src="/assets/db-ofw-navbar-settings.png">
+        </button>
         <button type="button" class="logout-btn" onclick="confirmLogout()">
             <img src="/assets/db-ofw-navbar-logout.png">
         </button>
@@ -108,5 +111,9 @@
                 document.getElementById('logoutForm').submit();
             }
         });
+    }
+
+    function goToProfile() {
+        window.location.href = '/user/profile';
     }
 </script>

@@ -178,7 +178,7 @@
                     e.preventDefault();
                     const goalId = btn.dataset.goalId;
                     const goalName = btn.dataset.goalName;
-                    document.getElementById('allocateGoalName').textContent = `Allocate Funds to: ${goalName}`;
+                    document.getElementById('allocateGoalName').textContent = `Allocate Funds`;
                     document.getElementById('allocateFundsForm').action = `/goals/${goalId}/allocateFunds`;
                     allocateFundsModal.classList.add('show');
                     document.body.style.overflow = 'hidden';
@@ -197,7 +197,7 @@
                     const goalId = btn.dataset.goalId;
                     const goalName = btn.dataset.goalName;
                     const currentAmount = btn.dataset.currentAmount;
-                    document.getElementById('withdrawGoalName').textContent = `Withdraw Funds from: ${goalName}`;
+                    document.getElementById('withdrawGoalName').textContent = `Withdraw Funds`;
                     document.getElementById('withdrawAvailable').textContent = `Available: ₱${parseFloat(currentAmount).toLocaleString('en-US', {minimumFractionDigits: 2, maximumFractionDigits: 2})}`;
                     document.getElementById('withdrawFundsForm').action = `/goals/${goalId}/withdrawFunds`;
                     withdrawFundsModal.classList.add('show');

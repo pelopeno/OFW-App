@@ -7,6 +7,9 @@
         <a href="{{ route('contributions') }}">Captial Contributions</a>
     </div>
     <div class="navbar-bus-buttons">
+        <button type="button" class="logout-btn" onclick="goToProfile()">
+            <img src="/assets/bus-navbar-settings.png">
+        </button>
        <button type="button" class="logout-btn" onclick="confirmLogout()">
             <img src="/assets/bus-navbar-logout.png">
         </button>
@@ -106,5 +109,9 @@
                 document.getElementById('logoutForm').submit();
             }
         });
+    }
+
+    function goToProfile() {
+        window.location.href = '/user/profile';
     }
 </script>

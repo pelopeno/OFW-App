@@ -146,8 +146,8 @@
 
         </div>
 
-        <div class="goals-ofw-img-cont">
-            <img src="/assets/sg-ofw-img.png" />
+        <div class="trans-ofw-img-cont">
+            <img src="/assets/tr-ofw-img.png" />
         </div>
     </div>
 

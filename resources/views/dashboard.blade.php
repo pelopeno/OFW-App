@@ -30,7 +30,7 @@
                 <div class="dashboard-ofw-wallet-card-content">
                     <h3>Wallet Balance</h3>
                     <h4>P{{ number_format(auth()->user()->wallet->balance, 2) }}</h4>
-                    <a href="#" id="addFundsBtn">Add Funds</a>
+                    <a href="#" id="addFundsBtn" style="margin-top: 12px;">Add Funds</a>
                     <a href="#" id="withdrawWalletBtn">Withdraw Funds</a>
                 </div>
             </div>
@@ -134,7 +134,7 @@
                 @csrf
 
                 <label class="input-label">Available Balance</label>
-                <div style="background-color: #f0f0f0; padding: 15px; border-radius: 10px; margin-bottom: 20px; font-family: 'Varela Round', sans-serif; font-size: 18px; font-weight: 600; color: #282828;">
+                <div style="background-color: #f0f0f0; padding: 15px; border-radius: 10px; font-family: 'Varela Round', sans-serif; font-size: 18px; font-weight: 600; color: #282828;">
                     ₱{{ number_format(auth()->user()->wallet->balance, 2) }}
                 </div>
 

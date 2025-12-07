@@ -9,7 +9,7 @@
     to {
         opacity: 1;
     }
-}
+}       
 
 @keyframes fadeOut {
     from {
@@ -213,7 +213,7 @@ h5 {
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    padding-top: 7.5%;
+    padding-top: 7.5%
 }
 
 .signup-main {
@@ -424,17 +424,18 @@ h5 {
     font-weight: 200;
     color: white;
     letter-spacing: -2px;
-    line-height: 56px;
+    line-height: 48px;
 }
 
 .dashboard-ofw-wallet-card-content a {
     width: 60%;
+    height: -5px;
     background-color: white;
-    margin-top: 15px;
-    border: 2px solid black;
+    margin-top: 7.5px;
+    border: 2px solid #2f2f2f;
     border-radius: 10px;
     font-family: "Varela Round", sans-serif;
-    font-size: 24px;
+    font-size: 20px;
     letter-spacing: -1px;
     cursor: pointer;
     display: inline-block;
@@ -521,7 +522,7 @@ h5 {
     font-weight: 200;
     color: #282828;
     letter-spacing: -3px;
-    line-height: 56px;
+    line-height: 48px;
 }
 
 .dashboard-ofw-goals-card-content h5,
@@ -583,7 +584,7 @@ h5 {
 
 .goals-ofw-img-cont,
 .invh-ofw-img-cont,
-.market-ofw-img-cont {
+.market-ofw-img-cont, .trans-ofw-img-cont {
     width: 45%;
     height: 100%;
     overflow: hidden;
@@ -599,7 +600,14 @@ h5 {
 
 .market-ofw-img-cont img {
     width: auto;
-    height: 97%;
+    height: 90%;
+    margin-top: 20px;
+}
+
+.trans-ofw-img-cont img{
+    width: auto;
+    height: 80%;
+    margin-top: 50px;
 }
 
 /*-------------Business Dashboard-------------*/
@@ -783,44 +791,41 @@ h5 {
 }
 
 .donate-form {
-    width: 80%;
     height: fit-content;
     background-color: white;
-    border: 3px solid black;
+    border: 2px solid #cccccc;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
     padding: 25px;
-    margin: 30px;
+    margin: 30px 0;
     margin-top: 0px;
     gap: 20px;
 }
 
 /* Hiniwalay ko to Daryl. Ginawa ko kasing modal */
 .goal-form {
-    width:80%;
     height: fit-content;
     background-color: white;
-    border: 3px solid black;
+    border: 2px solid #ccc;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
     padding: 25px;
-    margin: 30px;
+    margin: 30px 0;
     margin-top: 0px;
     gap: 20px;
 }
 
 .add-funds-form {
-    width:80%;
     height: fit-content;
     background-color: white;
-    border: 3px solid black;
+    border: 2px solid #ccc;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
     padding: 25px;
-    margin: 30px;
+    margin: 30px 0;
     margin-top: 0px;
     gap: 20px;
 }
@@ -927,20 +932,22 @@ h5 {
 .allocate-goal-btn,
 .withdraw-goal-btn,
 .add-funds-btn {
-    width: 30%;
     background-color: #ab3f4c;
     border: none;
-    border-radius: 15px;
+    border-radius: 10px;
     font-family: "Varela Round", sans-serif;
-    font-size: 18px;
+    font-size: 1rem;
     color: white;
-    display: flex;
+    display: inline-flex;
     align-items: center;
     justify-content: center;
     cursor: pointer;
     align-self: flex-end;
-    padding-bottom: 5px;
-    padding-top: 5px;
+    border: 2px solid transparent;
+    padding: 5px 12px;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.5px;
 }
 
 
@@ -1171,11 +1178,10 @@ h5 {
 }
 
 .progress-container {
-    height: 10px;
+    height: 20px;
     background-color: #e0e0e0;
-    border-radius: 5px;
+    border-radius: 15px;
     overflow: hidden;
-    margin-bottom: 15px;
 }
 
 .progress-bar {
@@ -1208,7 +1214,7 @@ h5 {
 }
 
 .modal-content {
-    background-color: white;
+    background-image: url('/public/assets/db-bg.png');
     border-radius: 25px;
     border: 3px solid black;
     padding: 40px;

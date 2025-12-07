@@ -65,6 +65,7 @@
         align-items: center;
         gap: 10px;
         margin-bottom: 5px;
+        line-height: 36px;
     }
 
     .goals-card-content h2 {
@@ -111,11 +112,12 @@
 
     .goals-card-button a {
         width: 100%;
-        background-color: white;
-        border: 2px solid black;
+        background-color: #eeeeee;
+        border: 2px solid #cccccc;
         border-radius: 10px;
         font-family: "Varela Round", sans-serif;
-        font-size: 24px;
+        font-size: 20px;
+        font-weight: 600;
         cursor: pointer;
         text-align: center;
         text-decoration: none;
