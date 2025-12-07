@@ -6,6 +6,7 @@ use App\Models\BusinessUpdate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\ActivityLogger;
 
 class BusinessUpdateController extends Controller
 {
@@ -40,6 +41,17 @@ class BusinessUpdateController extends Controller
                 'created_at' => $update->created_at->diffForHumans(),
             ]
         ]);
+
+        ActivityLogger::log(
+            module: 'BUSINESS_UPDATE',
+            action: 'create_update',
+            referenceId: $update->id,
+            details: "Created business update for project ID: {$request->project_id}",
+            data: [
+                'update_id' => $update->id,
+                'project_id' => $request->project_id,
+            ]
+        );
     }
 
     public function destroy($id)
@@ -59,5 +71,15 @@ class BusinessUpdateController extends Controller
             'success' => true,
             'message' => 'Update deleted successfully!'
         ]);
+
+        ActivityLogger::log(
+            module: 'BUSINESS_UPDATE',
+            action: 'delete_update',
+            referenceId: $id,
+            details: "Deleted business update ID: {$id}",
+            data: [
+                'update_id' => $id,
+            ]
+        );
     }
 }

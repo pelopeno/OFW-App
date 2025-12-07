@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Goal;
+use App\Helpers\ActivityLogger;
 
 class GoalController extends Controller
 {
@@ -56,12 +57,23 @@ class GoalController extends Controller
             'target_amount' => $request->target_amount,
             'current_amount' => $request->current_amount ?? 0,
         ]);
-        
+
         $wallet->transactions()->create([
             'type' => 'deduct',
             'amount' => $request->current_amount ?? 0,
             'description' => 'Initial amount allocated to new saving goal: ' . $request->name,
         ]);
+
+        ActivityLogger::log(
+            module: 'GOALS',
+            action: 'create_goal',
+            details: "Created new saving goal: {$request->name}",
+            data: [
+                'goal_name' => $request->name,
+                'target_amount' => $request->target_amount,
+                'initial_amount' => $request->current_amount ?? 0,
+            ]
+        );
 
         return redirect()->route('saving-goals')->with('success', 'Saving goal created!');
     }
@@ -139,6 +151,18 @@ class GoalController extends Controller
             'amount' => $amount,
             'description' => 'Allocated funds to saving goal: ' . $goal->name,
         ]);
+
+        ActivityLogger::log(
+            module: 'GOALS',
+            action: 'allocate_funds',
+            referenceId: $goal->id,
+            details: "Allocated ₱{$request->amount} to goal {$goal->name}",
+            data: [
+                'amount' => $request->amount,
+                'goal_name' => $goal->name,
+            ]
+        );
+
 
         return redirect()
             ->route('saving-goals')

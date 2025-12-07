@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 
 class ProjectApprovalController extends Controller
 {
@@ -21,6 +21,17 @@ class ProjectApprovalController extends Controller
         $project = Project::findOrFail($id);
         $project->update(['status' => 'approved']);
 
+        ActivityLogger::log(
+            module: 'PROJECT_APPROVAL',
+            action: 'approve_project',
+            referenceId: $project->id,
+            details: "Approved project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
+
         return redirect()->back()->with('success', 'Project approved successfully!');
     }
 
@@ -28,6 +39,17 @@ class ProjectApprovalController extends Controller
     {
         $project = Project::findOrFail($id);
         $project->update(['status' => 'declined']);
+
+        ActivityLogger::log(
+            module: 'PROJECT_APPROVAL',
+            action: 'decline_project',
+            referenceId: $project->id,
+            details: "Declined project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
 
         return redirect()->back()->with('success', 'Project declined successfully!');
     }

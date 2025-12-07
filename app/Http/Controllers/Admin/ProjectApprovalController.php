@@ -3,15 +3,15 @@
 namespace App\Http\Controllers;
 
 use App\Models\Project;
-use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 
 class ProjectApprovalController extends Controller
 {
     public function index()
     {
-        $projects = Project::where('status', 'pending')->get(); // Pending projects for table
-        $activeProjects = Project::where('status', 'approved')->count(); // Count of active/approved projects
-        $pendingProjects = $projects->count(); // Count of pending projects
+        $projects = Project::where('status', 'pending')->get();
+        $activeProjects = Project::where('status', 'approved')->count(); 
+        $pendingProjects = $projects->count(); 
 
         return view('admin.project-approval', compact('projects', 'activeProjects', 'pendingProjects'));
     }
@@ -21,6 +21,17 @@ class ProjectApprovalController extends Controller
         $project = Project::findOrFail($id);
         $project->update(['status' => 'approved']);
 
+        ActivityLogger::log(
+            module: 'PROJECT_APPROVAL',
+            action: 'approve_project',
+            referenceId: $project->id,
+            details: "Approved project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
+
         return redirect()->back()->with('success', 'Project approved successfully!');
     }
 
@@ -28,6 +39,17 @@ class ProjectApprovalController extends Controller
     {
         $project = Project::findOrFail($id);
         $project->update(['status' => 'declined']);
+
+        ActivityLogger::log(
+            module: 'PROJECT_APPROVAL',
+            action: 'decline_project',
+            referenceId: $project->id,
+            details: "Declined project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
 
         return redirect()->back()->with('success', 'Project declined successfully!');
     }
