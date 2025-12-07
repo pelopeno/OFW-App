@@ -91,6 +91,7 @@ class WalletController extends Controller
         ActivityLogger::log(
             module: 'WALLET',
             action: 'withdraw_funds',
+            referenceId: $user->id,
             details: "Withdrew ₱{$request->amount} from wallet",
             data: [
                 'amount' => $request->amount,
