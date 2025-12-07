@@ -17,6 +17,11 @@
         <span id="successMessage"></span>
     </div>
 
+    <!-- Error Message Toast -->
+    <div id="errorToast" class="error-toast">
+        <span id="errorMessage"></span>
+    </div>
+
     <div class="goals-ofw-main">
         <div class="goals-ofw-content-cont">
             <h2>Saving Goals</h2>
@@ -50,14 +55,23 @@
             <form class="goal-form" method="POST" action="{{ route('store-goal') }}">
                 @csrf
                 <label class="input-label">Name</label>
-                <input type="text" name="name" placeholder="e.g. Travel Savings" class="goal-title-input" required />
+                <input type="text" name="name" placeholder="e.g. Travel Savings" class="goal-title-input" value="{{ old('name') }}" required />
+                @error('name')
+                    <small class="error-text">{{ $message }}</small>
+                @enderror
 
                 <label class="input-label">Target Saving Amount</label>
-                <input type="number" name="target_amount" placeholder="Enter amount (₱)" class="goal-target-input" required />
+                <input type="number" name="target_amount" placeholder="Enter amount (₱)" class="goal-target-input" value="{{ old('target_amount') }}" required />
+                @error('target_amount')
+                    <small class="error-text">{{ $message }}</small>
+                @enderror
 
                 <label class="input-label">Initial Investment</label>
-                <input type="number" name="current_amount" placeholder="Enter amount (₱)" class="goal-target-input" required />
+                <input type="number" name="current_amount" placeholder="Enter amount (₱)" class="goal-target-input" value="{{ old('current_amount') }}" />
                 <small class="goal-target-desc">The entered value will be deducted from your wallet balance.</small>
+                @error('current_amount')
+                    <small class="error-text">{{ $message }}</small>
+                @enderror
 
                 <button type="submit" class="create-goal-btn">Create</button>
             </form>
@@ -76,7 +90,7 @@
             <form class="goal-form" id="allocateFundsForm" method="POST">
                 @csrf
                 <label class="input-label">Amount to Allocate</label>
-                <input type="number" name="amount" placeholder="Enter amount (₱)" class="goal-allocated-input" min="1" step="0.01" required />
+                <input type="number" name="amount" placeholder="Enter amount (₱)" class="goal-allocated-input" min="0.01" step="0.01" required />
                 <small class="goal-allocated-desc">The entered value will be deducted from your wallet balance.</small>
 
                 <button type="submit" class="allocate-goal-btn">Allocate</button>
@@ -96,13 +110,46 @@
             <form class="goal-form" id="withdrawFundsForm" method="POST">
                 @csrf
                 <label class="input-label">Amount to Withdraw</label>
-                <input type="number" name="amount" placeholder="Enter amount (₱)" class="goal-allocated-input" min="1" step="0.01" required />
+                <input type="number" name="amount" placeholder="Enter amount (₱)" class="goal-allocated-input" min="0.01" step="0.01" required />
                 <small class="goal-allocated-desc" id="withdrawAvailable">Available: ₱0.00</small>
 
                 <button type="submit" class="withdraw-goal-btn">Withdraw</button>
             </form>
         </div>
     </div>
+
+    <style>
+        .error-toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #f8d7da;
+            color: #721c24;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 2px solid #f5c6cb;
+            font-family: "Varela Round", sans-serif;
+            font-size: 16px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transform: translateX(400px);
+            transition: transform 0.3s ease;
+            z-index: 10000;
+            max-width: 400px;
+        }
+
+        .error-toast.show {
+            transform: translateX(0);
+        }
+
+        .error-text {
+            display: block;
+            color: #721c24;
+            font-family: "Varela Round", sans-serif;
+            font-size: 14px;
+            margin-top: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -111,6 +158,7 @@
             const allocateFundsModal = document.getElementById('allocateFundsModal');
             const withdrawFundsModal = document.getElementById('withdrawFundsModal');
             const successToast = document.getElementById('successToast');
+            const errorToast = document.getElementById('errorToast');
 
             // Add Goal Modal
             document.getElementById('addGoalBtn').addEventListener('click', (e) => {
@@ -178,7 +226,27 @@
                 successToast.classList.add('show');
                 setTimeout(() => {
                     successToast.classList.remove('show');
-                }, 3000);
+                }, 5000);
+            @endif
+
+            // Show error messages if exist
+            @if($errors->any())
+                const errorMessages = [
+                    @foreach($errors->all() as $error)
+                        '{{ $error }}',
+                    @endforeach
+                ];
+                errorToast.querySelector('#errorMessage').textContent = errorMessages.join(' ');
+                errorToast.classList.add('show');
+                setTimeout(() => {
+                    errorToast.classList.remove('show');
+                }, 5000);
+
+                // Reopen the modal if there were errors in form submission
+                @if(old('name') || old('target_amount') || old('current_amount'))
+                    addGoalModal.classList.add('show');
+                    document.body.style.overflow = 'hidden';
+                @endif
             @endif
         });
     </script>

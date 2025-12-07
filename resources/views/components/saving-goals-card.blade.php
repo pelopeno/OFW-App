@@ -1,11 +1,23 @@
 @props(['goal'])
 
-<div class="goals-card">
+@php
+    $percentage = $goal->target_amount > 0 ? ($goal->current_amount / $goal->target_amount) * 100 : 0;
+    $isCompleted = $percentage >= 100;
+@endphp
+
+<div class="goals-card {{ $isCompleted ? 'completed' : '' }}">
     <div class="goals-card-content">
-        <h2>{{ $goal->name }}</h2>
+        <div class="goals-header">
+            <h2>{{ $goal->name }}</h2>
+            @if($isCompleted)
+                <span class="status-badge completed">✓ Completed</span>
+            @else
+                <span class="status-badge in-progress">{{ number_format($percentage, 0) }}%</span>
+            @endif
+        </div>
         <p>₱{{ number_format($goal->current_amount, 2) }} of ₱{{ number_format($goal->target_amount, 2) }}</p>
         <div class="progress-container">
-            <div class="progress-bar" style="width: {{ $goal->target_amount > 0 ? ($goal->current_amount / $goal->target_amount) * 100 : 0 }}%"></div>
+            <div class="progress-bar {{ $isCompleted ? 'completed' : '' }}" style="width: {{ min($percentage, 100) }}%"></div>
         </div>
     </div>
     <div class="goals-card-button">
@@ -30,6 +42,11 @@
         border: 3px solid black;
         border-radius: 25px;
         margin-bottom: 15px;
+        transition: border-color 0.3s ease;
+    }
+
+    .goals-card.completed {
+        border-color: #4caf50;
     }
 
     .goals-card-content {
@@ -43,8 +60,35 @@
         margin-left: 30px;
     }
 
+    .goals-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 5px;
+    }
+
     .goals-card-content h2 {
-        margin-bottom: 0;
+        margin: 0;
+    }
+
+    .status-badge {
+        padding: 4px 12px;
+        border-radius: 12px;
+        font-family: "Varela Round", sans-serif;
+        font-size: 14px;
+        font-weight: bold;
+        white-space: nowrap;
+    }
+
+    .status-badge.completed {
+        background-color: #4caf50;
+        color: white;
+    }
+
+    .status-badge.in-progress {
+        background-color: #f0f0f0;
+        color: #666;
+        border: 1px solid #ddd;
     }
 
     .goals-card-content p {
@@ -103,5 +147,9 @@
         height: 100%;
         background-color: #4caf50;
         transition: width 0.3s ease;
+    }
+
+    .progress-bar.completed {
+        background-color: #2e7d32;
     }
 </style>

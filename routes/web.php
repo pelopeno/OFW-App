@@ -34,12 +34,9 @@ Route::middleware([
     Route::get('/investment_history', [InvestmentHistoryController::class, 'index'])->name('investment-history');
     Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace');
     Route::post('/store_goal', [GoalController::class, 'store'])->name('store-goal');
-    Route::get('/goals/{id}/allocate', [GoalController::class, 'showAllocateForm'])->name('allocate-funds');
     Route::post('/goals/{id}/allocateFunds', [GoalController::class, 'allocateFunds'])->name('allocate-funds.post');
-    Route::get('/goals/{id}/withdraw', [GoalController::class, 'withdrawForm'])->name('withdraw-funds');
     Route::post('/goals/{id}/withdrawFunds', [GoalController::class, 'withdrawFunds'])->name('withdraw-funds.post');
     Route::post('/project/{id}/donate', [ProjectController::class, 'donate'])->name('donate-project.post');
-    Route::get('/add_funds', [WalletController::class, 'showAddFunds'])->name('add-funds');
     Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
     Route::post('/withdraw_wallet', [WalletController::class, 'withdrawWallet'])->name('wallet.withdraw-funds');
     Route::get('/transaction_history', [WalletController::class, 'transactionHistory'])->name('history');
