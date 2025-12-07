@@ -13,7 +13,7 @@ public function index()
 {
     
     $totalUsers = User::count();
-    $activeProjects = Project::where('status', 'active')->count();
+    $activeProjects = Project::where('status', 'approved')->count();
     $pendingProjects = Project::where('status', 'pending')->count();
 
     // Get all projects for the table (optional: order by latest)
@@ -35,5 +35,14 @@ public function index()
         $project->save();
 
         return redirect()->back()->with('message', 'Project disabled successfully');
+    }
+
+    public function enableProject($id)
+    {
+        $project = Project::findOrFail($id);
+        $project->status = 'approved';
+        $project->save();
+
+        return redirect()->back()->with('message', 'Project enabled successfully');
     }
 }

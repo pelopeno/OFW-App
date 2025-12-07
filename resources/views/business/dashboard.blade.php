@@ -22,6 +22,12 @@
         <span id="successMessage"></span>
     </div>
 
+    <!-- Error Message Toast -->
+    <div id="errorToast" class="error-toast">
+        <span id="errorMessage"></span>
+    </div>
+
+
     <div class="bus-main">
         <div class="bus-profile-card-cont">
             <x-business-profile-card
@@ -51,7 +57,7 @@
                 @forelse($projects as $project)
                 <div class="project-card-wrapper">
                     <x-business-project-card
-                        project_name="{{ $project->title }}" 
+                        project_name="{{ $project->title }}"
                         project_current_raised_amt="{{ $project->current_amount }}"
                         project_target_raised_amt="{{ $project->target_amount }}"
                         project_status="{{ $project->status }}"
@@ -142,7 +148,7 @@
                 <select name="project_id" id="updateProjectSelect" class="project-title-input" required>
                     <option value="">Choose a project...</option>
                     @foreach($projects as $project)
-                        <option value="{{ $project->id }}">{{ $project->title }}</option>
+                    <option value="{{ $project->id }}">{{ $project->title }}</option>
                     @endforeach
                 </select>
 
@@ -158,8 +164,8 @@
                 <label class="input-label">Update Message</label>
                 <textarea id="updateContentModal" name="content" class="project-desc-input"
                     placeholder="Share an update with your supporters..."
-                    oninput="autoResize(this)" 
-                    maxlength="1000" 
+                    oninput="autoResize(this)"
+                    maxlength="1000"
                     required></textarea>
 
                 <button type="submit" class="create-project-btn">Post Update</button>

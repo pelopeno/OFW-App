@@ -21,10 +21,10 @@
         </a>
         <div class="project-card-actions">
             <a href="{{ route('project.edit', $project_id) }}" class="project-edit-btn">Edit</a>
-            <form action="{{ route('project.destroy', $project_id) }}" method="POST" style="display: inline;" onsubmit="return confirm('Are you sure you want to delete this project?');">
+            <form id="deleteForm-{{ $project_id }}" action="{{ route('project.destroy', $project_id) }}" method="POST" style="display: inline;">
                 @csrf
                 @method('DELETE')
-                <button type="submit" class="project-delete-btn">Delete</button>
+                <button type="button" class="project-delete-btn" onclick="confirmDelete({{ $project_id }}, '{{ $project_name }}')">Delete</button>
             </form>
         </div>
     @else
@@ -53,6 +53,9 @@
     @endif
 </div>
 
+<!-- SweetAlert2 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
     .project-card {
@@ -238,3 +241,22 @@
         }
     }
 </style>
+
+<script>
+    function confirmDelete(projectId, projectName) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Delete Project?',
+            text: `Are you sure you want to delete "${projectName}"? This action cannot be undone.`,
+            showCancelButton: true,
+            confirmButtonColor: '#D32F2F',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`deleteForm-${projectId}`).submit();
+            }
+        });
+    }
+</script>
