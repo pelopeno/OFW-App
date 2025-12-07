@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use App\Helpers\ActivityLogger;
 
 class BusinessProfileController extends Controller
 {
@@ -23,6 +24,15 @@ class BusinessProfileController extends Controller
             'message' => 'Profile updated successfully!',
             'business_description' => $user->business_description
         ]);
+
+        ActivityLogger::log(
+            module: 'BUSINESS_PROFILE',
+            action: 'update_profile',
+            details: "Updated business profile description",
+            data: [
+                'business_description' => $user->business_description,
+            ]
+        );
     }
 
     public function uploadProfilePicture(Request $request)

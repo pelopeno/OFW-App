@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Helpers\ActivityLogger;
 use App\Http\Controllers\Controller;
 use App\Models\User;
-use Illuminate\Http\Request;
 
 class UserManagementController extends Controller
 {
@@ -23,6 +23,17 @@ class UserManagementController extends Controller
         $user->status = 'Disabled';
         $user->save();
 
+        ActivityLogger::log(
+            module: 'USER_MANAGEMENT',
+            action: 'disable_user',
+            referenceId: $user->id,
+            details: "Disabled user: {$user->name}",
+            data: [
+                'user_id' => $user->id,
+                'name' => $user->name,
+            ]
+        );
+
         return back()->with('success', 'User disabled successfully');
     }
 
@@ -32,6 +43,17 @@ class UserManagementController extends Controller
         $user = User::findOrFail($id);
         $user->status = 'Active';
         $user->save();
+
+        ActivityLogger::log(
+            module: 'USER_MANAGEMENT',
+            action: 'activate_user',
+            referenceId: $user->id,
+            details: "Activated user: {$user->name}",
+            data: [
+                'user_id' => $user->id,
+                'name' => $user->name,
+            ]
+        );
 
         return back()->with('success', 'User activated successfully');
     }
@@ -43,6 +65,16 @@ class UserManagementController extends Controller
         $user->status = 'Archived';
         $user->save();
 
+        ActivityLogger::log(
+            module: 'USER_MANAGEMENT',
+            action: 'archive_user',
+            referenceId: $user->id,
+            details: "Archived user: {$user->name}",
+            data: [
+                'user_id' => $user->id,
+                'name' => $user->name,
+            ]
+        );
         return back()->with('success', 'User archived successfully');
     }
 }

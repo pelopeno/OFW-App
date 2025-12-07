@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Helpers\ActivityLogger;
 
 class WalletController extends Controller
 {
@@ -86,6 +87,15 @@ class WalletController extends Controller
             'amount' => $request->amount,
             'description' => 'User withdrew funds.',
         ]);
+
+        ActivityLogger::log(
+            module: 'WALLET',
+            action: 'withdraw_funds',
+            details: "Withdrew ₱{$request->amount} from wallet",
+            data: [
+                'amount' => $request->amount,
+            ]
+        );
 
         return redirect()->route('dashboard')->with('success', 'Funds withdrawn successfully!');
     }

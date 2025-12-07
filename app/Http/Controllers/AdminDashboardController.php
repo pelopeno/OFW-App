@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\ActivityLogger;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Models\Project;
@@ -34,6 +35,17 @@ public function index()
         $project->status = 'disabled';
         $project->save();
 
+        ActivityLogger::log(
+            module: 'PROJECT_MANAGEMENT',
+            action: 'disable_project',
+            referenceId: $project->id,
+            details: "Disabled project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
+
         return redirect()->back()->with('message', 'Project disabled successfully');
     }
 
@@ -42,6 +54,17 @@ public function index()
         $project = Project::findOrFail($id);
         $project->status = 'approved';
         $project->save();
+
+        ActivityLogger::log(
+            module: 'PROJECT_MANAGEMENT',
+            action: 'enable_project',
+            referenceId: $project->id,
+            details: "Enabled project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
 
         return redirect()->back()->with('message', 'Project enabled successfully');
     }
