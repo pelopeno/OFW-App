@@ -29,7 +29,7 @@ Route::middleware([
     'role:ofw',
 ])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->name('dashboard');
+        ->name('dashboard');
     Route::get('/saving_goals', [GoalController::class, 'showGoals'])->name('saving-goals');
     Route::get('/investment_history', [InvestmentHistoryController::class, 'index'])->name('investment-history');
     Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace');
@@ -102,20 +102,27 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
         return view('admin.user-management');
     })->name('admin-user-management');
 
-    Route::get('/admin/user_management', 
-    [UserManagementController::class, 'index']
-)->name('admin-user-management');
+    Route::get(
+        '/admin/user_management',
+        [UserManagementController::class, 'index']
+    )->name('admin-user-management');
 
-    Route::post('/admin/user/{id}/disable', 
-        [UserManagementController::class, 'disable'])->name('admin.disable');
+    Route::post(
+        '/admin/user/{id}/disable',
+        [UserManagementController::class, 'disable']
+    )->name('admin.disable');
 
-    Route::post('/admin/user/{id}/activate', 
-        [UserManagementController::class, 'activate'])->name('admin.activate');
+    Route::post(
+        '/admin/user/{id}/activate',
+        [UserManagementController::class, 'activate']
+    )->name('admin.activate');
 
-    Route::post('/admin/user/{id}/archive', 
-        [UserManagementController::class, 'archive'])->name('admin.archive');
-        
-         Route::get('/admin/project_approval', [ProjectApprovalController::class, 'index'])
+    Route::post(
+        '/admin/user/{id}/archive',
+        [UserManagementController::class, 'archive']
+    )->name('admin.archive');
+
+    Route::get('/admin/project_approval', [ProjectApprovalController::class, 'index'])
         ->name('admin.project-approval');
 
     // Approve a project
@@ -126,7 +133,8 @@ Route::middleware(['auth', 'role:admin'])->group(function () {
     Route::post('/admin/project/{id}/decline', [ProjectApprovalController::class, 'decline'])
         ->name('admin.project.decline');
 
-   Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
+    Route::get('/admin', [AdminDashboardController::class, 'index'])->name('admin-dashboard');
     Route::post('/admin/project/{id}/disable', [AdminDashboardController::class, 'disableProject'])->name('admin.project.disable');
-     Route::get('/admin/monitoring', [MonitoringController::class, 'index'])->name('admin-monitoring');
+    Route::post('/admin/project/{id}/enable', [AdminDashboardController::class, 'enableProject'])->name('admin.project.enable');
+    Route::get('/admin/monitoring', [MonitoringController::class, 'index'])->name('admin-monitoring');
 });

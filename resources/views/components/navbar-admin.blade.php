@@ -7,18 +7,22 @@
         
         <a href="{{ route('admin.project-approval') }}">Project Approval</a>
 
-
         <a href="{{ route('admin-user-management') }}">User Management</a>
     </div>
     <div class="navbar-admin-buttons">
-        <form method="POST" action="{{ route('logout') }}">
-            @csrf
-            <button type="submit" class="logout-btn">
-                <img src="/assets/admin-navbar-logout.png">
-            </button>
-        </form>
+        <button type="button" class="logout-btn" onclick="confirmLogout()">
+            <img src="/assets/admin-navbar-logout.png">
+        </button>
     </div>
 </div>
+
+<form id="logoutForm" method="POST" action="{{ route('logout') }}" style="display: none;">
+    @csrf
+</form>
+
+<!-- SweetAlert2 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
     .navbar-admin {
@@ -70,9 +74,40 @@
         gap: 50px;
     }
 
-    .navbar-admin-buttons a img {
+    .logout-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+    }
+
+    .logout-btn img {
         width: 40px;
         height: auto;
         display: block;
+        transition: transform 0.2s;
+    }
+
+    .logout-btn:hover img {
+        transform: scale(1.1);
     }
 </style>
+
+<script>
+    function confirmLogout() {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Logout?',
+            text: 'Are you sure you want to logout?',
+            showCancelButton: true,
+            confirmButtonColor: '#A68749',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, logout',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById('logoutForm').submit();
+            }
+        });
+    }
+</script>

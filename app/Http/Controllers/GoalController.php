@@ -25,6 +25,17 @@ class GoalController extends Controller
             'current_amount' => 'nullable|numeric|min:0',
         ]);
 
+        // Check for duplicate goal name
+        $existingGoal = Auth::user()->goals()
+            ->where('name', $request->name)
+            ->first();
+
+        if ($existingGoal) {
+            return redirect()->back()
+                ->withErrors(['name' => 'You already have a goal with this name. Please choose a different name.'])
+                ->withInput();
+        }
+
         if ($request->current_amount && $request->current_amount > $wallet->balance) {
             return redirect()->back()->withErrors(['current_amount' => 'Insufficient wallet balance. Your balance is ₱' . number_format($wallet->balance, 2)])->withInput();
         }
