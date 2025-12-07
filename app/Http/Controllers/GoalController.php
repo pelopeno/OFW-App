@@ -8,23 +8,11 @@ use App\Models\Goal;
 
 class GoalController extends Controller
 {
-    public function index()
-    {
-        $goals = Auth::user()->goals;
-
-        return view('goals.index', compact('goals'));
-    }
-
     public function showGoals()
     {
         $goals = Auth::user()->goals;
 
         return view('saving-goals', compact('goals'));
-    }
-
-    public function create()
-    {
-        return view('add-goal');
     }
 
     public function store(Request $request)

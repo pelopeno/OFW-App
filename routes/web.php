@@ -33,7 +33,6 @@ Route::middleware([
     Route::get('/saving_goals', [GoalController::class, 'showGoals'])->name('saving-goals');
     Route::get('/investment_history', [InvestmentHistoryController::class, 'index'])->name('investment-history');
     Route::get('/marketplace', [MarketplaceController::class, 'index'])->name('marketplace');
-    Route::get('/add_goal', [GoalController::class, 'create'])->name('add-goal');
     Route::post('/store_goal', [GoalController::class, 'store'])->name('store-goal');
     Route::get('/goals/{id}/allocate', [GoalController::class, 'showAllocateForm'])->name('allocate-funds');
     Route::post('/goals/{id}/allocateFunds', [GoalController::class, 'allocateFunds'])->name('allocate-funds.post');
