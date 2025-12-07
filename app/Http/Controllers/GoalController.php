@@ -29,11 +29,27 @@ class GoalController extends Controller
 
     public function store(Request $request)
     {
+        $wallet = Auth::user()->wallet;
+
         $request->validate([
-            'name' => 'required|string|max:255',
+            'name' => 'required|string|min:1|max:20',
             'target_amount' => 'required|numeric|min:1',
             'current_amount' => 'nullable|numeric|min:0',
         ]);
+        
+        if ($request->current_amount && $request->current_amount > $wallet->balance) {
+            return redirect()->back()->withErrors(['current_amount' => 'Insufficient wallet balance. Your balance is ₱' . number_format($wallet->balance, 2)])->withInput();
+        }
+
+        if($request->current_amount > $request->target_amount) {
+            return redirect()->back()->withErrors(['current_amount' => 'Current amount cannot exceed target amount.'])->withInput();
+        }
+
+        if ($request->current_amount) {
+            // Deduct from wallet if initial amount is provided
+            $wallet->balance -= $request->current_amount;
+            $wallet->save();
+        }
 
         Goal::create([
             'user_id' => Auth::id(),

@@ -12,6 +12,7 @@ use App\Http\Controllers\Admin\UserManagementController;
 use App\Http\Controllers\ProjectApprovalController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Admin\MonitoringController;
+use App\Http\Controllers\InvestmentHistoryController;
 
 use Illuminate\Support\Facades\Route;
 
