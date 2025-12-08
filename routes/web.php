@@ -13,6 +13,7 @@ use App\Http\Controllers\ProjectApprovalController;
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\Admin\MonitoringController;
 use App\Http\Controllers\InvestmentHistoryController;
+use App\Http\Controllers\ConvertCurrency;
 
 use Illuminate\Support\Facades\Route;
 
@@ -40,6 +41,8 @@ Route::middleware([
     Route::post('/add_funds', [WalletController::class, 'addFunds'])->name('wallet.add-funds');
     Route::post('/withdraw_wallet', [WalletController::class, 'withdrawWallet'])->name('wallet.withdraw-funds');
     Route::get('/transaction_history', [WalletController::class, 'transactionHistory'])->name('history');
+    Route::get('/convert_currency', [ConvertCurrency::class, 'showCurrency'])->name('convert-currency');
+    Route::post('/convert_currency', [ConvertCurrency::class, 'convertCurrency'])->name('convert-currency.post');
 });
 
 // Routes exclusive to Business Users

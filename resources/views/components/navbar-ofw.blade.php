@@ -7,6 +7,7 @@
         <a href="{{ route('investment-history') }}">Investments</a>
         <a href="{{ route('marketplace') }}">Marketplace</a>
         <a href="{{ route('history') }}">Transactions</a>
+        <a href="{{ route('convert-currency') }}">Converter</a>
     </div>
     <div class="navbar-ofw-buttons">
         <button type="button" class="logout-btn" onclick="confirmLogout()">
