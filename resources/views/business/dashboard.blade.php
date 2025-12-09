@@ -62,6 +62,7 @@
                         project_target_raised_amt="{{ $project->target_amount }}"
                         project_status="{{ $project->status }}"
                         project_id="{{ $project->id }}"
+                        archive_requested="{{ $project->archive_requested }}"
                         is_business_dashboard="true" />
                 </div>
                 @empty

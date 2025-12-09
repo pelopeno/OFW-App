@@ -11,9 +11,10 @@ class ProjectApprovalController extends Controller
     {
         $projects = Project::where('status', 'pending')->get();
         $activeProjects = Project::where('status', 'approved')->count(); 
-        $pendingProjects = $projects->count(); 
+        $pendingProjects = $projects->count();
+        $archiveRequests = Project::where('archive_requested', true)->count();
 
-        return view('admin.project-approval', compact('projects', 'activeProjects', 'pendingProjects'));
+        return view('admin.project-approval', compact('projects', 'activeProjects', 'pendingProjects', 'archiveRequests'));
     }
 
     public function approve($id)

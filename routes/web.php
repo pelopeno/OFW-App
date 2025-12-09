@@ -68,6 +68,22 @@ Route::middleware(['auth', 'role:business_owner'])->group(function () {
     Route::delete('/business/project/{id}', [ProjectController::class, 'destroy'])
         ->name('project.destroy');
 
+    // Archive routes
+    Route::post('/business/project/{id}/request-archive', [ProjectController::class, 'requestArchive'])
+        ->name('project.request-archive');
+
+    Route::post('/business/project/{id}/archive', [ProjectController::class, 'archive'])
+        ->name('project.archive');
+
+    Route::get('/business/archived-projects', [ProjectController::class, 'viewArchived'])
+        ->name('project.archived');
+
+    Route::post('/business/project/{id}/restore', [ProjectController::class, 'restore'])
+        ->name('project.restore');
+
+    Route::delete('/business/project/{id}/permanent-delete', [ProjectController::class, 'permanentDelete'])
+        ->name('project.permanent-delete');
+
     // Profile routes
     Route::post('/business/profile/update', [BusinessProfileController::class, 'update'])
         ->name('business.profile.update');

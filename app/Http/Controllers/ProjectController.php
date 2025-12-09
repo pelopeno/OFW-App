@@ -43,6 +43,7 @@ class ProjectController extends Controller
 
         Project::create([
             'user_id' => Auth::id(),
+            'project_name' => $request->title, // Added this line to set project_name. Temporary lang.
             'title' => $request->title,
             'description' => $request->description,
             'image' => $imagePath,
@@ -157,6 +158,130 @@ class ProjectController extends Controller
         );
 
         return redirect()->route('business-dashboard')->with('success', 'Project deleted successfully!');
+    }
+
+    public function requestArchive($id)
+    {
+        $project = Project::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        // Check if already requested
+        if ($project->archive_requested) {
+            return back()->with('error', 'Archive already requested for this project.');
+        }
+
+        $project->update([
+            'archive_requested' => true,
+            'archive_requested_at' => now(),
+        ]);
+
+        ActivityLogger::log(
+            module: 'PROJECT',
+            action: 'request_archive',
+            referenceId: $project->id,
+            details: "Requested archive for project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
+
+        return back()->with('success', 'Archive request submitted! Waiting for admin to disable the project.');
+    }
+
+    public function archive($id)
+    {
+        $project = Project::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        // Check if archive was requested and project is disabled
+        if (!$project->archive_requested || $project->status !== 'disabled') {
+            return back()->with('error', 'Project cannot be archived. Please request archive first.');
+        }
+
+        // Soft delete the project
+        $project->delete();
+
+        ActivityLogger::log(
+            module: 'PROJECT',
+            action: 'archive_project',
+            referenceId: $project->id,
+            details: "Archived project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
+
+        return redirect()->route('business-dashboard')->with('success', 'Project archived successfully!');
+    }
+
+    public function viewArchived()
+    {
+        $archivedProjects = Project::onlyTrashed()
+            ->where('user_id', Auth::id())
+            ->latest('deleted_at')
+            ->get();
+
+        return view('business.archived-projects', compact('archivedProjects'));
+    }
+
+    public function permanentDelete($id)
+    {
+        $project = Project::onlyTrashed()
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        // Delete project image
+        if ($project->image) {
+            Storage::disk('public')->delete($project->image);
+        }
+
+        $projectTitle = $project->title;
+        $project->forceDelete();
+
+        ActivityLogger::log(
+            module: 'PROJECT',
+            action: 'permanent_delete_project',
+            referenceId: $id,
+            details: "Permanently deleted project: {$projectTitle}",
+            data: [
+                'project_id' => $id,
+                'title' => $projectTitle,
+            ]
+        );
+
+        return back()->with('success', 'Project permanently deleted!');
+    }
+
+    public function restore($id)
+    {
+        $project = Project::onlyTrashed()
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        $project->restore();
+        $project->update([
+            'archive_requested' => false,
+            'archive_requested_at' => null,
+        ]);
+
+        ActivityLogger::log(
+            module: 'PROJECT',
+            action: 'restore_project',
+            referenceId: $project->id,
+            details: "Restored project: {$project->title}",
+            data: [
+                'project_id' => $project->id,
+                'title' => $project->title,
+            ]
+        );
+
+        return back()->with('success', 'Project restored successfully!');
     }
 
     public function donate(Request $request, $id)
