@@ -30,14 +30,19 @@
 
     .bus-pfp {
         width: 30%;
-        display: flex;
         align-items: flex-end;
+        aspect-ratio: 1 / 1;
+        display: block;
+        overflow: hidden;
     }
 
     .bus-pfp img {
         width: 100%;
+        height: 100%;
         border: 3px solid black;
         border-radius: 15px;
+        object-fit: cover;
+        box-sizing: border-box;
     }
 
     .bus-name {

@@ -66,6 +66,11 @@
         color: #B4D1FF;
     }
 
+    .navbar-admin-links a:hover {
+        color: white;
+        transition: 0.2s;
+    }
+
     .navbar-admin-buttons {
         width: 25%;
         display: flex;

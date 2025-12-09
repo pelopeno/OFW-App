@@ -82,11 +82,6 @@
         flex: 1;
     }
 
-    .project-card-clickable:hover .project-card-content h2 {
-        color: #A93D3D;
-        transition: color 0.3s ease;
-    }
-
     .project-card-content {
         width: 90%;
         display: flex;

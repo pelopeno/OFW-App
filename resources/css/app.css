@@ -73,7 +73,7 @@ h5 {
 .signup-bus-button-cont button:hover,
 .add-post-image:hover,
 .ofw-add-goal-btn:hover,
-.bus-add-project-btn:hover {
+.bus-add-project-btn:hover, .navbar-ofw-logo a img:hover, .navbar-bus-logo a img:hover, .navbar-admin-logo a img:hover {
     transform: scale(1.025);
     transition: .2s;
 }
@@ -88,11 +88,6 @@ h5 {
 .project-link:hover .project-card {
     transform: scale(1.025);
     transition: .2s;
-}
-
-.project-link:hover .project-card h2 {
-    color: #A93D3D;
-    transition: color 0.3s ease;
 }
 
 .logout-btn {
@@ -682,7 +677,7 @@ h5 {
 
 .bus-add-project-btn,
 .ofw-add-goal-btn {
-    height: 100px;
+    height: 80px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1397,6 +1392,10 @@ h5 {
 .delete-update-btn:hover {
     color: #ff4444;
     transform: rotate(90deg) scale(1.2);
+}
+
+.add-project-modal {
+    margin-top: 100px;
 }
 
 /* Business Project Card with Edit/Delete */

@@ -8,6 +8,10 @@
     <title>Transaction History - Pundar</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
+        table {
+            border: 3px solid black;
+        }
+
         .pagination {
             display: flex;
             justify-content: center;
@@ -72,15 +76,15 @@
                 <table class="transactions-table" style="width:100%; border-collapse: collapse; font-family: 'Varela Round', sans-serif;">
                     <thead>
                         <tr style="background-color: #f0f0f0;">
-                            <th style="padding: 12px; border: 1px solid #ccc; text-align: left;">Date</th>
-                            <th style="padding: 12px; border: 1px solid #ccc; text-align: left;">Type</th>
-                            <th style="padding: 12px; border: 1px solid #ccc; text-align: right;">Amount (₱)</th>
-                            <th style="padding: 12px; border: 1px solid #ccc; text-align: left;">Description</th>
+                            <th style="padding: 12px; border: 1px solid #ccc; text-align: center;">Date</th>
+                            <th style="padding: 12px; border: 1px solid #ccc; text-align: center;">Type</th>
+                            <th style="padding: 12px; border: 1px solid #ccc; text-align: center;">Amount (₱)</th>
+                            <th style="padding: 12px; border: 1px solid #ccc; text-align: center;">Description</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($transactions as $transaction)
-                        <tr style="hover: background-color: #f9f9f9;">
+                        <tr style="background-color: #f9f9f9;">
                             <td style="padding: 12px; border: 1px solid #ccc;">{{ $transaction->created_at->format('M d, Y H:i') }}</td>
                             <td style="padding: 12px; border: 1px solid #ccc;">
                                 <span style="padding: 5px 10px; border-radius: 5px; font-size: 12px; font-weight: 600; 

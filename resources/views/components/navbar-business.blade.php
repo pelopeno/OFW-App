@@ -4,7 +4,7 @@
     </div>
     <div class="navbar-bus-links">
         <!--If may lalagay kayo na redirect links, lagay nalang dito similar sa ofw navbar-->
-        <a href="{{ route('contributions') }}">Captial Contributions</a>
+        <a href="{{ route('contributions') }}">Capital Contributions</a>
     </div>
     <div class="navbar-bus-buttons">
         <button type="button" class="logout-btn" onclick="goToProfile()">
@@ -57,13 +57,19 @@
         width: 50%;
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: left;
     }
 
     .navbar-bus-links a {
         font-family: "Tilt Warp", sans-serif;
         font-size: 20px;
-        color: #FFEBBD;
+        color: #ffbdbd;
+        text-decoration: none;
+    }
+
+    .navbar-bus-links a:hover {
+        color: white;
+        transition: 0.2s;
     }
 
     .navbar-bus-buttons {

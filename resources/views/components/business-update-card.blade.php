@@ -102,8 +102,5 @@
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
 
-    .update-card-clickable:hover h3 {
-        color: #A93D3D;
-        transition: color 0.3s ease;
-    }
+    
 </style>

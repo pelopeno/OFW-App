@@ -60,13 +60,19 @@
         width: 50%;
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: space-between;
     }
 
     .navbar-ofw-links a {
         font-family: "Tilt Warp", sans-serif;
         font-size: 20px;
         color: #FFEBBD;
+        text-decoration: none;
+    }
+
+    .navbar-ofw-links a:hover {
+        color: white;
+        transition: 0.2s;
     }
 
     .navbar-ofw-buttons {

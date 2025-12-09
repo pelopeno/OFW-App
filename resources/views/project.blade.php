@@ -268,7 +268,7 @@
 <style>
     .project-view-main {
         width: 100%;
-        height: 100%;
+        height: fit-content;
         position: absolute;
         background-color: rgba(0, 0, 0, 0.50);
         z-index: 5;
@@ -276,7 +276,15 @@
         justify-content: center;
         align-items: center;
         overflow-y: hidden;
+        opacity: 0;
+        animation: fadeIn 0.25s forwards;
     }
+
+    @keyframes fadeIn {
+            to {
+                opacity: 1;
+            }
+        }
 
     .project-view-card {
         width: 40%;
@@ -494,19 +502,14 @@
     }
 
     .project-view-image {
-        width: 100%;
+        display: block;
         max-width: 100%;
         height: auto;
         border: 3px solid black;
         border-radius: 15px;
         margin-bottom: 10px;
         transition: transform 0.3s ease, box-shadow 0.3s ease;
-        cursor: pointer;
-    }
-
-    .project-view-image:hover {
-        transform: scale(1.02);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        box-sizing: border-box;
     }
 
     .project-view-raised-amount {
@@ -520,12 +523,13 @@
 
     .donate-btn {
         display: block;
+        width: 100%;
         padding: 15px;
         margin-top: 15px;
         background-color: #A68749;
         color: white;
         border: transparent;
-        border-radius: 12px;
+        border-radius: 10px;
         font-family: "Varela Round", sans-serif;
         font-size: 18px;
         font-weight: 600;
@@ -533,6 +537,8 @@
         transition: all 0.3s ease;
         text-align: center;
         text-decoration: none;
+        text-transform: uppercase;
+        letter-spacing: 1.5px;
     }
 
     .donate-btn:hover {

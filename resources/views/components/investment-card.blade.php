@@ -1,10 +1,10 @@
 @props(['project_name', 'invested_amt', 'image' => '/assets/default-project-pic.png'])
 
 @php
-    $image = $image ? (str_starts_with($image, 'http') || str_starts_with($image, '/') 
-        ? $image 
-        : asset($image)) 
-        : asset('/assets/default-project-pic.png');
+$image = $image ? (str_starts_with($image, 'http') || str_starts_with($image, '/')
+? $image
+: asset($image))
+: asset('/assets/default-project-pic.png');
 @endphp
 
 <div class="investment-card">
@@ -33,13 +33,18 @@
     .investment-card-pfp {
         width: 20%;
         padding: 10px;
+        aspect-ratio: 1 / 1;
+        display: block;
+        overflow: hidden;
     }
 
     .investment-card-pfp img {
         border: 2px solid black;
         border-radius: 15px;
         width: 100%;
-        height: auto;
+        height: 100%;
+        object-fit: cover;
+        box-sizing: border-box;
     }
 
 

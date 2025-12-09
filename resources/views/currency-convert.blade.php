@@ -1,10 +1,10 @@
 @php
-    $converted = $converted ?? null;
-    $rate = $rate ?? null;
-    $error = $error ?? null;
-    $amount = $amount ?? '';
-    $from = $from ?? '';
-    $to = $to ?? '';
+$converted = $converted ?? null;
+$rate = $rate ?? null;
+$error = $error ?? null;
+$amount = $amount ?? '';
+$from = $from ?? '';
+$to = $to ?? '';
 @endphp
 
 <!DOCTYPE html>
@@ -41,20 +41,20 @@
                     <select id="from" name="from" required>
                         <option value="">Select currency</option>
                         <option value="PHP" {{ old('from', $from ?? '') === 'PHP' ? 'selected' : '' }}>PHP - Philippine
-                        Peso
+                            Peso
                         </option>
                         <option value="USD" {{ old('from', $from ?? '') === 'USD' ? 'selected' : '' }}>USD - US Dollar
                         </option>
                         <option value="EUR" {{ old('from', $from ?? '') === 'EUR' ? 'selected' : '' }}>EUR - Euro
                         </option>
                         <option value="GBP" {{ old('from', $from ?? '') === 'GBP' ? 'selected' : '' }}>GBP - British
-                        Pound
+                            Pound
                         </option>
                         <option value="JPY" {{ old('from', $from ?? '') === 'JPY' ? 'selected' : '' }}>JPY - Japanese
-                        Yen
+                            Yen
                         </option>
                         <option value="AUD" {{ old('from', $from ?? '') === 'AUD' ? 'selected' : '' }}>AUD - Australian
-                        Dollar
+                            Dollar
                         </option>
                     </select>
                     @error('from')
@@ -73,13 +73,13 @@
                         <option value="EUR" {{ old('to', $to ?? '') === 'EUR' ? 'selected' : '' }}>EUR - Euro
                         </option>
                         <option value="GBP" {{ old('to', $to ?? '') === 'GBP' ? 'selected' : '' }}>GBP - British
-                        Pound
+                            Pound
                         </option>
                         <option value="JPY" {{ old('to', $to ?? '') === 'JPY' ? 'selected' : '' }}>JPY - Japanese
-                        Yen
+                            Yen
                         </option>
                         <option value="AUD" {{ old('to', $to ?? '') === 'AUD' ? 'selected' : '' }}>AUD - Australian
-                        Dollar
+                            Dollar
                         </option>
                     </select>
                     @error('to')
@@ -114,17 +114,19 @@
             margin: 30px auto;
             padding: 30px;
             background: white;
-            border-radius: 15px;
+            border: 3px solid black;
+            border-radius: 25px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
         }
 
         .currency-converter h1 {
             text-align: center;
-            color: #A68749;
+            color: black;
             margin-bottom: 30px;
             font-family: "Tilt Warp", sans-serif;
-            font-size: 32px;
+            font-size: 48px;
             font-weight: 200;
+            letter-spacing: -1.5px;
         }
 
         .converter-form {
@@ -178,12 +180,14 @@
             background-color: #A68749;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
             font-family: "Varela Round", sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
         }
 
         .convert-btn:hover {
@@ -245,4 +249,5 @@
         }
     </style>
 </body>
+
 </html>
