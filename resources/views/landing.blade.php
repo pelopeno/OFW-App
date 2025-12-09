@@ -119,6 +119,14 @@
 
 </html>
 
+<style>
+    .swal2-container, .swal2-popup {
+        font-family: "Varela Round";
+        background-color: transparent;
+        z-index: 999;
+    }
+</style>
+
 <script>
     var login = document.getElementById('login');
     var loginVisibility = 1;
@@ -198,7 +206,7 @@
                 icon: 'error',
                 title: 'Name Required',
                 text: 'Please enter your name.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -208,7 +216,7 @@
                 icon: 'error',
                 title: 'Name Too Short',
                 text: 'Name must be at least 3 characters long.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -220,7 +228,7 @@
                 icon: 'error',
                 title: 'Email Required',
                 text: 'Please enter your email address.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -230,7 +238,7 @@
                 icon: 'error',
                 title: 'Invalid Email',
                 text: 'Please enter a valid email address.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -241,7 +249,7 @@
                 icon: 'error',
                 title: 'Password Required',
                 text: 'Please enter a password.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -251,7 +259,7 @@
                 icon: 'error',
                 title: 'Password Too Short',
                 text: 'Password must be at least 8 characters long.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -262,7 +270,7 @@
                 icon: 'error',
                 title: 'Passwords Do Not Match',
                 text: 'Password and confirmation password must match.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -273,7 +281,7 @@
                 icon: 'error',
                 title: 'User Type Required',
                 text: 'Please select whether you are an OFW or Business Owner.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -283,7 +291,7 @@
             icon: 'info',
             title: 'Creating Account',
             text: 'Please wait...',
-            confirmButtonColor: '#A68749',
+            confirmButtonColor: '#282828',
             allowOutsideClick: false,
             allowEscapeKey: false,
             didOpen: () => {
@@ -308,7 +316,7 @@
                 icon: 'error',
                 title: 'Email Required',
                 text: 'Please enter your email address.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -318,7 +326,7 @@
                 icon: 'error',
                 title: 'Invalid Email',
                 text: 'Please enter a valid email address.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -329,7 +337,7 @@
                 icon: 'error',
                 title: 'Password Required',
                 text: 'Please enter your password.',
-                confirmButtonColor: '#A68749',
+                confirmButtonColor: '#282828',
             });
             return;
         }
@@ -339,7 +347,7 @@
             icon: 'info',
             title: 'Logging In',
             text: 'Please wait...',
-            confirmButtonColor: '#A68749',
+            confirmButtonColor: '#282828',
             allowOutsideClick: false,
             allowEscapeKey: false,
             didOpen: () => {
@@ -366,7 +374,7 @@
                     icon: 'error',
                     title: 'Validation Error',
                     html: errorMessages,
-                    confirmButtonColor: '#A68749',
+                    confirmButtonColor: '#282828',
                 });
 
                 signup.style.display = 'flex';
@@ -389,10 +397,69 @@
             icon: 'error',
             title: 'Login Failed',
             text: '{!! session('error') !!}',
-            confirmButtonColor: '#A68749',
+            confirmButtonColor: '#282828',
         }).then(() => {
             login.style.display = 'flex';
             login.classList.add('fade-in');
         });
     }
 </script>
+
+<style>
+    /* Fix Defect where SweetAlert messes up page layout */
+    
+    /* Override any container issues */
+    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+        overflow: hidden !important;
+    }
+    
+    body.swal2-height-auto {
+        height: 100% !important;
+    }
+    
+    /* Force proper container positioning */
+    .swal2-container {
+        z-index: 999999 !important;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.625em !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        background-color: transparent !important;
+    }
+    
+    .swal2-popup {
+        font-family: "Varela Round", sans-serif !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+        z-index: 999999 !important;
+        margin: auto !important;
+        color: white;
+    }
+
+    .swal2-title {
+        font-family: "Tilt Warp", sans-serif;
+        font-weight: 200;
+    }
+
+    .swal2-confirm {
+        border: 3px solid white;
+    }
+    
+    /* Ensure backdrop appears */
+    .swal2-container.swal2-backdrop-show {
+        background: rgba(0, 0, 0, 0.75) !important;
+    }
+    
+    /* Fix for any body positioning conflicts */
+    .landing-body {
+        position: relative !important;
+    }
+</style>

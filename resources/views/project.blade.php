@@ -268,15 +268,17 @@
 <style>
     .project-view-main {
         width: 100%;
-        height: fit-content;
+        height: 100%;
         position: absolute;
         background-color: rgba(0, 0, 0, 0.50);
+        background-size: cover;
+        background-attachment: fixed;
         z-index: 5;
         display: flex;
         justify-content: center;
-        align-items: center;
-        overflow-y: hidden;
+        align-items: flex-start;
         opacity: 0;
+        overflow-y: auto;
         animation: fadeIn 0.25s forwards;
     }
 
@@ -288,8 +290,6 @@
 
     .project-view-card {
         width: 40%;
-        max-height: 90vh;
-        height: fit-content;
         background-color: white;
         border: 3px solid black;
         border-radius: 25px;
@@ -301,6 +301,7 @@
         scrollbar-width: none; /* Firefox */
         -ms-overflow-style: none; /* IE and Edge */
         scroll-behavior: smooth;
+        box-sizing: border-box;
     }
 
     .project-view-card::-webkit-scrollbar {
@@ -352,8 +353,8 @@
 
     .project-view-x-btn {
         position: absolute;
-        right: 27%;
-        top: 0;
+        right: 28%;
+        top: 1%;
         z-index: 6;
         transition: transform 0.3s ease, filter 0.3s ease;
     }
@@ -389,6 +390,10 @@
         margin-bottom: 25px;
     }
 
+    #projectUpdatesContainer p {
+    font-family: "Varela Round", sans-serif !important;
+    }
+
     .project-tabs {
         display: flex;
         gap: 10px;
@@ -419,7 +424,6 @@
         transform: translateX(-50%) scaleX(0);
         width: 100%;
         height: 3px;
-        background: #A68749;
         transition: transform 0.3s ease;
     }
 
@@ -429,7 +433,7 @@
 
     .project-tab-btn.active {
         color: #282828;
-        border-bottom-color: #A68749;
+        border-bottom-color: #282828 !important;
     }
 
     .project-tab-btn.active::after {
@@ -526,7 +530,7 @@
         width: 100%;
         padding: 15px;
         margin-top: 15px;
-        background-color: #A68749;
+        background-color: #282828;
         color: white;
         border: transparent;
         border-radius: 10px;

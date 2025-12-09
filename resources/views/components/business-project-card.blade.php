@@ -21,7 +21,7 @@
         </a>
         <div class="project-card-actions">
             <a href="{{ route('project.edit', $project_id) }}" class="project-edit-btn">Edit</a>
-            <form id="deleteForm-{{ $project_id }}" action="{{ route('project.destroy', $project_id) }}" method="POST" style="display: inline;">
+            <form id="deleteForm-{{ $project_id }}" action="{{ route('project.destroy', $project_id) }}" method="POST" style="width: 100%;">
                 @csrf
                 @method('DELETE')
                 <button type="button" class="project-delete-btn" onclick="confirmDelete({{ $project_id }}, '{{ $project_name }}')">Delete</button>
@@ -66,6 +66,11 @@
         border-radius: 25px;
         margin-bottom: 15px;
         position: relative;
+    }
+
+    .project-card:hover {
+        transform: scale(1.025);
+        transition: .2s;
     }
 
     .project-card-clickable {
@@ -179,39 +184,21 @@
         display: flex;
         gap: 10px;
         padding: 0 30px 20px 30px;
-        justify-content: flex-start;
+        justify-content: space-between;
     }
 
     .project-edit-btn, .project-delete-btn {
-        padding: 8px 20px;
+        width: 85%;
+        background-color: #eeeeee;
+        border: 2px solid #cccccc;
         border-radius: 10px;
         font-family: "Varela Round", sans-serif;
-        font-size: 16px;
-        border: 2px solid #282828;
+        font-size: 20px;
+        font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .project-edit-btn {
-        background-color: #D4A574;
-        color: #282828;
+        text-align: center;
         text-decoration: none;
-        display: inline-block;
-    }
-
-    .project-edit-btn:hover {
-        background-color: #C89456;
-        transform: scale(1.05);
-    }
-
-    .project-delete-btn {
-        background-color: #E57373;
-        color: white;
-    }
-
-    .project-delete-btn:hover {
-        background-color: #D32F2F;
-        transform: scale(1.05);
+        color: #282828;
     }
 
     /* Responsive */
