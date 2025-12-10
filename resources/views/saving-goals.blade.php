@@ -22,26 +22,144 @@
         <span id="errorMessage"></span>
     </div>
 
-    <div class="goals-ofw-main">
-        <div class="goals-ofw-content-cont">
-            <h2>Saving Goals</h2>
-            <a href="#" id="addGoalBtn">
-                <div class="ofw-add-goal-btn">
-                    <img src="/assets/plus.png">
-                </div>
-            </a>
-            
-            @forelse($goals as $goal)
-                <x-saving-goals-card :goal="$goal"/>
-            @empty
-                <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">No saving goals yet. Create your first goal!</p>
-            @endforelse
-        </div>
+  <div class="goals-ofw-main">
+    <!-- Left: Goals List -->
+    <div class="goals-ofw-content-cont">
+        <h2>Saving Goals</h2>
+        <a href="#" id="addGoalBtn">
+            <div class="ofw-add-goal-btn">
+                <img src="/assets/plus.png">
+            </div>
+        </a>
 
-        <div class="goals-ofw-img-cont">
-            <img src="/assets/sg-ofw-img.png"/>
+        @forelse($goals as $goal)
+            <x-saving-goals-card :goal="$goal"/>
+        @empty
+            <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">
+                No saving goals yet. Create your first goal!
+            </p>
+        @endforelse
+
+        <!-- Pagination -->
+        @if ($goals->hasPages())
+        <div style="margin-top: 20px;">
+            <div class="pagination-wrapper">
+                <nav class="pagination-nav select-none">
+                    {{-- Previous Button --}}
+                    @if ($goals->onFirstPage())
+                        <span class="pg-btn disabled">‹</span>
+                    @else
+                        <a href="{{ $goals->previousPageUrl() }}" class="pg-btn active">‹</a>
+                    @endif
+
+                    {{-- Page Numbers --}}
+                    @foreach ($goals->getUrlRange(1, $goals->lastPage()) as $page => $url)
+                        @if ($page == $goals->currentPage())
+                            <span class="pg-page current">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="pg-page">{{ $page }}</a>
+                        @endif
+                    @endforeach
+
+                    {{-- Next Button --}}
+                    @if ($goals->hasMorePages())
+                        <a href="{{ $goals->nextPageUrl() }}" class="pg-btn active">›</a>
+                    @else
+                        <span class="pg-btn disabled">›</span>
+                    @endif
+                </nav>
+            </div>
         </div>
+        @endif
     </div>
+ <style>
+        /* Layout Fix */
+        .goals-ofw-main {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+            flex-wrap: wrap; /* For smaller screens */
+        }
+
+        .goals-ofw-content-cont {
+            flex: 1;
+            min-width: 300px; /* Prevent collapsing on smaller screens */
+        }
+
+        .goals-ofw-img-cont {
+            flex-shrink: 0;
+        }
+
+        .goals-ofw-img-cont img {
+            max-width: 900px;
+            height: auto;
+        }
+
+        /* Pagination styles (kept from your code) */
+        .pagination-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+
+        .pagination-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        .pg-btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #e6e6e6;
+            color: #9e9e9e;
+            cursor: not-allowed;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            transition: 0.2s ease;
+        }
+
+        .pg-btn.active {
+            background: #A68749;
+            color: white;
+            cursor: pointer;
+        }
+
+        .pg-btn.active:hover {
+            background: #A68749;
+            transform: translateY(-2px);
+        }
+
+        .pg-page {
+            padding: 8px 14px;
+            font-size: 16px;
+            background: #f7f7f7;
+            color: #555;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            transition: 0.2s ease;
+        }
+
+        .pg-page:hover {
+            background: #e6e6e6;
+            transform: translateY(-2px);
+        }
+
+        .pg-page.current {
+            background: #A68749;
+            color: white;
+            font-weight: bold;
+            cursor: default;
+            transform: scale(1.05);
+        }
+    </style>
+    <!-- Right: Image -->
+    <div class="goals-ofw-img-cont" style="flex: 0 0 500px;">
+        <img src="/assets/sg-ofw-img.png" style="width: 100%; height: auto;">
+    </div>
+</div>
 
     <!-- Add Goal Modal -->
     <div id="addGoalModal" class="modal-overlay">
@@ -150,6 +268,8 @@
             margin-bottom: 10px;
         }
     </style>
+
+    
 
     <script>
         document.addEventListener('DOMContentLoaded', function() {

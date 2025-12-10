@@ -11,7 +11,11 @@ class InvestmentHistoryController extends Controller
     //
     public function index()
     {
-        $investments = Investment::where('user_id', Auth::id())->with('project')->latest()->get();
+                $investments = Investment::where('user_id', Auth::id())
+                        ->with('project')
+                        ->latest()
+                        ->paginate(2);
+
         return view('investment-history', compact('investments'));
     }
     }

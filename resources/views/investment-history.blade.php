@@ -46,6 +46,75 @@ $isInvestmentPage = true;
             </div>
             @endforelse
         </div>
+        <!-- Pagination -->
+@if ($investments->hasPages())
+    <div class="pagination-wrapper" style="margin-top: 20px; display: flex; justify-content: center;">
+        <nav class="pagination-nav select-none">
+            {{-- Previous --}}
+            @if ($investments->onFirstPage())
+                <span class="pg-btn disabled">‹</span>
+            @else
+                <a href="{{ $investments->previousPageUrl() }}" class="pg-btn active">‹</a>
+            @endif
+
+            {{-- Page Numbers --}}
+            @foreach ($investments->getUrlRange(1, $investments->lastPage()) as $page => $url)
+                @if ($page == $investments->currentPage())
+                    <span class="pg-page current">{{ $page }}</span>
+                @else
+                    <a href="{{ $url }}" class="pg-page">{{ $page }}</a>
+                @endif
+            @endforeach
+
+            {{-- Next --}}
+            @if ($investments->hasMorePages())
+                <a href="{{ $investments->nextPageUrl() }}" class="pg-btn active">›</a>
+            @else
+                <span class="pg-btn disabled">›</span>
+            @endif
+        </nav>
+    </div>
+@endif
+<style>
+    .pg-btn {
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    background: #e6e6e6;
+    color: #9e9e9e;
+    cursor: not-allowed;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.pg-btn.active {
+    background: #A68749;
+    color: white;
+    cursor: pointer;
+}
+
+.pg-btn.active:hover {
+    transform: translateY(-2px);
+}
+
+.pg-page {
+    padding: 8px 14px;
+    font-size: 16px;
+    background: #f7f7f7;
+    color: #555;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.pg-page.current {
+    background: #A68749;
+    color: white;
+    font-weight: bold;
+    cursor: default;
+    transform: scale(1.05);
+}
+</style>
 
         <div class="invh-ofw-img-cont">
             <img src="/assets/ih-ofw-img.png" />

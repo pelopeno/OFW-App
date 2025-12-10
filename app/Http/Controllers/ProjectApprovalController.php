@@ -9,7 +9,7 @@ class ProjectApprovalController extends Controller
 {
     public function index()
     {
-        $projects = Project::where('status', 'pending')->get();
+        $projects = Project::where('status', 'pending')->paginate(2);
         $activeProjects = Project::where('status', 'approved')->count(); 
         $pendingProjects = $projects->count();
         $archiveRequests = Project::where('archive_requested', true)->count();
