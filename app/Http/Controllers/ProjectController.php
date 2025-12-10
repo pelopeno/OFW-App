@@ -331,6 +331,8 @@ class ProjectController extends Controller
             'user_id' => Auth::id(),
             'project_id' => $project->id,
             'amount' => $request->amount,
+            'project_title' => $project->title,
+            'project_image' => $project->image,
         ]);
 
         ActivityLogger::log(

@@ -71,7 +71,7 @@
                     <div class="dashboard-ofw-investments-card-content">
                         @if($latestInvestment)
                         <h3>Recent Investments</h3>
-                        <h4>{{ $latestInvestment->project->title }}</h4>
+                        <h4>{{ $latestInvestment->project_title ?? 'Deleted Project' }}</h4>
                         <h5>₱{{ number_format($latestInvestment->amount, 2) }} Allocated</h5>
                         @else
                         <h3>No Investments Yet</h3>
