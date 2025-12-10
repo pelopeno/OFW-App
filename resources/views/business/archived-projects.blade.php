@@ -61,8 +61,43 @@
                     </div>
                 </div>
                 @empty
-                <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">No archived projects. Archived projects will appear here.</p>
+                <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">
+                    No archived projects. Archived projects will appear here.
+                </p>
                 @endforelse
+            </div>
+
+             <!-- Pagination for Archived Projects -->
+                @if($archivedProjects->hasPages())
+                <div class="pagination-wrapper">
+                    <nav class="pagination-nav select-none">
+
+                        {{-- Previous Button --}}
+                        @if ($archivedProjects->onFirstPage())
+                            <span class="pg-btn disabled">‹</span>
+                        @else
+                            <a href="{{ $archivedProjects->previousPageUrl() }}" class="pg-btn active">‹</a>
+                        @endif
+
+                        {{-- Page Numbers --}}
+                        @foreach ($archivedProjects->getUrlRange(1, $archivedProjects->lastPage()) as $page => $url)
+                            @if ($page == $archivedProjects->currentPage())
+                                <span class="pg-page current">{{ $page }}</span>
+                            @else
+                                <a href="{{ $url }}" class="pg-page">{{ $page }}</a>
+                            @endif
+                        @endforeach
+
+                        {{-- Next Button --}}
+                        @if ($archivedProjects->hasMorePages())
+                            <a href="{{ $archivedProjects->nextPageUrl() }}" class="pg-btn active">›</a>
+                        @else
+                            <span class="pg-btn disabled">›</span>
+                        @endif
+
+                    </nav>
+                </div>
+                @endif
             </div>
         </div>
     </div>
@@ -74,9 +109,7 @@
         const successMessage = document.getElementById('successMessage');
         successMessage.textContent = '{{ session('success') }}';
         successToast.classList.add('show');
-        setTimeout(() => {
-            successToast.classList.remove('show');
-        }, 3000);
+        setTimeout(() => successToast.classList.remove('show'), 3000);
         @endif
 
         @if(session('error'))
@@ -84,9 +117,7 @@
         const errorMessage = document.getElementById('errorMessage');
         errorMessage.textContent = '{{ session('error') }}';
         errorToast.classList.add('show');
-        setTimeout(() => {
-            errorToast.classList.remove('show');
-        }, 3000);
+        setTimeout(() => errorToast.classList.remove('show'), 3000);
         @endif
 
         function confirmRestore(projectId, projectName) {
@@ -99,102 +130,35 @@
                 cancelButtonColor: '#6b7280',
                 confirmButtonText: 'Yes, restore it!'
             }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById(`restoreForm-${projectId}`).submit();
-                }
+                if (result.isConfirmed) document.getElementById(`restoreForm-${projectId}`).submit();
             });
         }
 
         function confirmPermanentDelete(projectId, projectName) {
             Swal.fire({
                 title: 'Permanently Delete?',
-                text: `Delete "${projectName}" permanently? This action cannot be undone! All project data and images will be permanently deleted.`,
+                text: `Delete "${projectName}" permanently? This action cannot be undone!`,
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#dc2626',
                 cancelButtonColor: '#6b7280',
                 confirmButtonText: 'Yes, delete permanently!'
             }).then((result) => {
-                if (result.isConfirmed) {
-                    document.getElementById(`permanentDeleteForm-${projectId}`).submit();
-                }
+                if (result.isConfirmed) document.getElementById(`permanentDeleteForm-${projectId}`).submit();
             });
         }
     </script>
 
     <style>
-        .project-card {
-            display: flex;
-            flex-direction: column;
-            background-color: white;
-            border: 3px solid black;
-            border-radius: 25px;
-            margin-bottom: 15px;
-            position: relative;
-        }
-
-        .project-card-content-archived {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            margin-top: 15px;
-            margin-bottom: 15px;
-            margin-right: 15px;
-            margin-left: 30px;
-            padding-right: 30px;
-        }
-
-        .project-card-header {
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 10px;
-        }
-
-        .project-card-header h2 {
-            font-family: "Tilt Warp", sans-serif;
-            font-size: 32px;
-            color: #282828;
-            margin: 0;
-        }
-
-        .project-status-badge {
-            padding: 8px 16px;
-            border-radius: 12px;
-            font-size: 14px;
-            font-weight: 600;
-            font-family: "Varela Round", sans-serif;
-            color: white;
-        }
-
-        .project-card-content-archived p {
-            font-family: "Varela Round", sans-serif;
-            font-size: 20px;
-            color: #555;
-            margin-bottom: 10px;
-        }
-
-        .progress-container {
-            width: 100%;
-            height: 12px;
-            background-color: #e0e0e0;
-            border-radius: 10px;
-            overflow: hidden;
-            margin-bottom: 5px;
-        }
-
-        .progress-bar {
-            height: 100%;
-            background-color: #D4A574;
-            transition: width 0.3s ease;
+        /* Project Cards and Buttons (same as dashboard) */
+        .project-card-wrapper {
+            margin-bottom: 20px;
         }
 
         .project-card-actions {
             display: flex;
             gap: 10px;
-            padding: 0 30px 20px 30px;
-            justify-content: flex-start;
+            margin-top: 10px;
         }
 
         .project-edit-btn, .project-delete-btn {
@@ -210,8 +174,6 @@
         .project-edit-btn {
             background-color: #D4A574;
             color: #282828;
-            text-decoration: none;
-            display: inline-block;
         }
 
         .project-edit-btn:hover {
@@ -228,8 +190,61 @@
             background-color: #D32F2F;
             transform: scale(1.05);
         }
-    </style>
 
+        /* Pagination */
+        .pagination-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+
+        .pagination-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        .pg-btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #e6e6e6;
+            color: #9e9e9e;
+            cursor: not-allowed;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+        }
+
+        .pg-btn.active {
+            background: #ab3f4c;
+            color: white;
+            cursor: pointer;
+        }
+
+        .pg-btn.active:hover {
+            transform: translateY(-2px);
+        }
+
+        .pg-page {
+            padding: 8px 14px;
+            font-size: 16px;
+            background: #f7f7f7;
+            color: #555;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+        }
+
+        .pg-page.current {
+            background: #ab3f4c;
+            color: white;
+            font-weight: bold;
+            cursor: default;
+            transform: scale(1.05);
+        }
+    </style>
 </body>
 
 </html>

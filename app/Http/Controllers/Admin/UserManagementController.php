@@ -11,7 +11,7 @@ class UserManagementController extends Controller
     // Load the user management page
     public function index()
     {
-        $users = User::all(); // fetch all users
+         $users = User::orderBy('id', 'desc')->paginate(5);
 
         return view('admin.user-management', compact('users'));
     }

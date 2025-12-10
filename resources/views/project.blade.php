@@ -8,39 +8,47 @@
             </svg>
         </div>
         
-        <h2 id="projectTitle">Cafe Kabayan Expansion</h2>
-        <p class="project-view-author" id="projectAuthor">Project by Cafe Kabayan</p>
-
-        <!-- Tabs -->
-        <div class="project-tabs">
-            <button class="project-tab-btn active" data-tab="details">Details</button>
-            <button class="project-tab-btn" data-tab="updates">Updates</button>
+        <!-- Loading Screen -->
+        <div id="projectLoadingScreen" class="project-loading">
+            <div class="loading-spinner"></div>
+            <p class="loading-text">Loading project...</p>
         </div>
 
-        <!-- Details Tab -->
-        <div class="project-tab-content active" id="detailsTab">
-            <img src="/assets/cafe-img-sample.png" class="project-view-image" id="projectImage" />
-            <p class="project-view-raised-amount" id="projectRaised">P50000 of P200000 Raised</p>
-            <div class="progress-container" style="width: 100%;">
-                <div class="progress-bar" id="projectProgress"></div>
+        <!-- Project Content (hidden until loaded) -->
+        <div id="projectContent" style="display: none;">
+            <h2 id="projectTitle"></h2>
+            <p class="project-view-author" id="projectAuthor"></p>
+
+            <!-- Tabs -->
+            <div class="project-tabs">
+                <button class="project-tab-btn active" data-tab="details">Details</button>
+                <button class="project-tab-btn" data-tab="updates">Updates</button>
             </div>
 
-            @if(auth()->check() && auth()->user()->user_type === 'ofw' && empty($isInvestmentPage))
-            <button class="donate-btn" id="openDonateModal">Donate</button>
-            @endif
+            <!-- Details Tab -->
+            <div class="project-tab-content active" id="detailsTab">
+                <img src="" class="project-view-image" id="projectImage" />
+                <p class="project-view-raised-amount" id="projectRaised"></p>
+                <div class="progress-container" style="width: 100%;">
+                    <div class="progress-bar" id="projectProgress"></div>
+                </div>
 
-            <hr class="dotted-hr" />
-            <p class="project-view-desc" id="projectDescription">Café Kabayan has grown into a popular spot for students and professionals in Quezon City, thanks to its affordable meals and cozy atmosphere. However, due to limited seating and outdated equipment, the café struggles to accommodate peak-hour demand. Through this expansion project, we aim to renovate our space to add 20 more seats, upgrade our coffee machines to improve service efficiency, and launch an online ordering and delivery platform to reach customers beyond our immediate community. This expansion will not only increase revenue but also create new local job opportunities for baristas, kitchen staff, and delivery personnel.</p>
-        </div>
+                @if(auth()->check() && auth()->user()->user_type === 'ofw' && empty($isInvestmentPage))
+                <button class="donate-btn" id="openDonateModal">Donate</button>
+                @endif
 
-        <!-- Updates Tab -->
-        <div class="project-tab-content" id="updatesTab" style="display: none;">
-            <div id="projectUpdatesContainer">
-                <p style="text-align: center; padding: 30px; color: #737373;">Loading updates...</p>
+                <hr class="dotted-hr" />
+                <p class="project-view-desc" id="projectDescription"></p>
+            </div>
+
+            <!-- Updates Tab -->
+            <div class="project-tab-content" id="updatesTab" style="display: none;">
+                <div id="projectUpdatesContainer">
+                    <p style="text-align: center; padding: 30px; color: #737373;">Loading updates...</p>
+                </div>
             </div>
         </div>
     </div>
-
 </div>
 
 <script>
@@ -52,10 +60,19 @@
         currentProjectId = projectId;
         console.log('Loading project data for ID:', projectId);
 
+        // Show loading screen
+        document.getElementById('projectLoadingScreen').style.display = 'flex';
+        document.getElementById('projectContent').style.display = 'none';
+
         fetch(`/api/project/${projectId}`)
             .then(response => response.json())
             .then(data => {
                 console.log('Project data loaded:', data);
+                
+                // Hide loading screen and show content
+                document.getElementById('projectLoadingScreen').style.display = 'none';
+                document.getElementById('projectContent').style.display = 'block';
+                
                 const titleElement = document.getElementById('projectTitle');
                 titleElement.textContent = data.title;
                 titleElement.setAttribute('data-project-id', data.id);
@@ -94,7 +111,13 @@
                 detailsTab.classList.add('active');
                 detailsTab.style.display = 'block';
             })
-            .catch(error => console.error('Error loading project:', error));
+            .catch(error => {
+                console.error('Error loading project:', error);
+                // Hide loading screen on error
+                document.getElementById('projectLoadingScreen').style.display = 'none';
+                document.getElementById('projectContent').innerHTML = '<p style="text-align: center; padding: 30px; color: #737373;">Failed to load project.</p>';
+                document.getElementById('projectContent').style.display = 'block';
+            });
     };
 
     // Function to load project updates
@@ -283,10 +306,10 @@
     }
 
     @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
+        to {
+            opacity: 1;
         }
+    }
 
     .project-view-card {
         width: 40%;
@@ -298,14 +321,51 @@
         padding: 25px;
         margin: 30px;
         overflow-y: auto;
-        scrollbar-width: none; /* Firefox */
-        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: none;
+        -ms-overflow-style: none;
         scroll-behavior: smooth;
         box-sizing: border-box;
     }
 
     .project-view-card::-webkit-scrollbar {
-        display: none; /* Chrome, Safari, Opera */
+        display: none;
+    }
+
+    /* Loading Screen Styles */
+    .project-loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 400px;
+        width: 100%;
+    }
+
+    .loading-spinner {
+        width: 60px;
+        height: 60px;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #282828;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
+    .loading-text {
+        font-family: "Varela Round", sans-serif;
+        font-size: 18px;
+        color: #737373;
+        margin-top: 20px;
+        animation: pulse 1.5s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+        0%, 100% { opacity: 1; }
+        50% { opacity: 0.5; }
     }
 
     /* Scroll hint indicator */
@@ -391,7 +451,7 @@
     }
 
     #projectUpdatesContainer p {
-    font-family: "Varela Round", sans-serif !important;
+        font-family: "Varela Round", sans-serif !important;
     }
 
     .project-tabs {
@@ -456,16 +516,6 @@
 
     .project-tab-content.active {
         display: block !important;
-    }
-
-    @keyframes fadeIn {
-        from {
-            opacity: 0;
-        }
-
-        to {
-            opacity: 1;
-        }
     }
 
     .project-update-item {

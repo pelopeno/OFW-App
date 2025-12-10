@@ -11,8 +11,7 @@ class GoalController extends Controller
 {
     public function showGoals()
     {
-        $goals = Auth::user()->goals;
-
+       $goals = Auth::user()->goals()->orderBy('created_at', 'desc')->paginate(2);
         return view('saving-goals', compact('goals'));
     }
 
