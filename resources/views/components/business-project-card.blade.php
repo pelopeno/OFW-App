@@ -205,8 +205,19 @@
         display: flex;
         gap: 10px;
         padding: 0 30px 20px 30px;
-        justify-content: space-between;
+        justify-content: flex-start;
     }
+
+    .project-delete-btn {
+            background-color: #ab3f4c;
+            color: white !important;
+        }
+
+        .project-delete-btn:hover {
+            background-color: #d32f2f;
+            transform: scale(1.05);
+        }
+        
 
     .project-edit-btn, .project-delete-btn, .project-archive-btn, .project-request-archive-btn {
         padding: 8px 20px;
