@@ -55,11 +55,11 @@
 
     .bus-name h2 {
         font-family: "Tilt Warp", sans-serif;
-        font-size: 42px;
+        font-size: 56px;
         font-weight: 200;
         color: white;
         letter-spacing: -1.5px;
-        line-height: 38px;
+        line-height: 48px;
     }
 
     .bus-name button {

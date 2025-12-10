@@ -89,6 +89,11 @@
         position: relative;
     }
 
+    .project-card:hover {
+        transform: scale(1.025);
+        transition: .2s;
+    }
+
     .project-card-clickable {
         display: flex;
         flex-direction: row;
@@ -200,39 +205,19 @@
         display: flex;
         gap: 10px;
         padding: 0 30px 20px 30px;
-        justify-content: flex-start;
+        justify-content: space-between;
     }
 
     .project-edit-btn, .project-delete-btn, .project-archive-btn, .project-request-archive-btn {
         padding: 8px 20px;
         border-radius: 10px;
         font-family: "Varela Round", sans-serif;
-        font-size: 16px;
-        border: 2px solid #282828;
+        font-size: 20px;
+        font-weight: 600;
         cursor: pointer;
-        transition: all 0.3s ease;
-    }
-
-    .project-edit-btn {
-        background-color: #D4A574;
-        color: #282828;
+        text-align: center;
         text-decoration: none;
-        display: inline-block;
-    }
-
-    .project-edit-btn:hover {
-        background-color: #C89456;
-        transform: scale(1.05);
-    }
-
-    .project-delete-btn {
-        background-color: #E57373;
-        color: white;
-    }
-
-    .project-delete-btn:hover {
-        background-color: #D32F2F;
-        transform: scale(1.05);
+        color: #282828;
     }
 
     .project-archive-btn {

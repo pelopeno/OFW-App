@@ -73,7 +73,7 @@ h5 {
 .signup-bus-button-cont button:hover,
 .add-post-image:hover,
 .ofw-add-goal-btn:hover,
-.bus-add-project-btn:hover, .navbar-ofw-logo a img:hover, .navbar-bus-logo a img:hover, .navbar-admin-logo a img:hover {
+.bus-add-project-btn:hover, .navbar-ofw-logo a img:hover, .navbar-bus-logo a img:hover, .navbar-admin-logo a img:hover, .project-edit-btn:hover, .project-delete-btn:hover {
     transform: scale(1.025);
     transition: .2s;
 }
@@ -420,11 +420,12 @@ h5 {
     color: white;
     letter-spacing: -2px;
     line-height: 48px;
+    margin-bottom: 5px;
 }
 
 .dashboard-ofw-wallet-card-content a {
     width: 60%;
-    height: -5px;
+    height: 30px;
     background-color: white;
     margin-top: 7.5px;
     border: 2px solid #2f2f2f;
@@ -437,6 +438,7 @@ h5 {
     text-decoration: none;
     text-align: center;
     color: black;
+    padding-top: 3px;
 }
 
 /*-↓↓-Goals and Investments Cards-↓↓-*/
@@ -1187,7 +1189,6 @@ h5 {
 
 .progress-bar {
     height: 100%;
-    background-color: #A68749;
     transition: width 0.3s ease;
 }
 
@@ -1277,7 +1278,7 @@ h5 {
 }
 
 .upload-btn {
-    background-color: #A68749;
+    background-color: #ab3f4c;
     color: white;
     border: none;
     border-radius: 10px;
@@ -1285,12 +1286,10 @@ h5 {
     font-family: "Varela Round", sans-serif;
     font-size: 16px;
     cursor: pointer;
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 1.5px;
     transition: transform 0.2s ease, background-color 0.2s ease;
-}
-
-.upload-btn:hover {
-    transform: scale(1.05);
-    background-color: #8f7440;
 }
 
 /* Success Toast */
@@ -1408,7 +1407,7 @@ h5 {
 .project-card-actions {
     display: flex;
     gap: 10px;
-    margin-top: 10px;
+
 }
 
 .project-edit-btn,
@@ -1422,26 +1421,6 @@ h5 {
     transition: transform 0.2s ease, background-color 0.2s ease;
 }
 
-.project-edit-btn {
-    background-color: #A68749;
-    color: white;
-}
-
-.project-edit-btn:hover {
-    transform: scale(1.05);
-    background-color: #8f7440;
-}
-
-.project-delete-btn {
-    background-color: white;
-    color: #ff4444;
-}
-
-.project-delete-btn:hover {
-    transform: scale(1.05);
-    background-color: #ff4444;
-    color: white;
-}
 
 .transactions-table th {
     text-align: left;
@@ -1455,3 +1434,60 @@ h5 {
     background-color: #f1f1f1;
 }
 
+
+/***** SweetAlert2 Custom *****/
+    
+    /* Override any container issues */
+    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+        overflow: hidden !important;
+    }
+    
+    body.swal2-height-auto {
+        height: 100% !important;
+    }
+    
+    /* Force proper container positioning */
+    .swal2-container {
+        z-index: 999999 !important;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.625em !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        background-color: transparent !important;
+    }
+    
+    .swal2-popup {
+        font-family: "Varela Round", sans-serif !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+        z-index: 999999 !important;
+        margin: auto !important;
+        color: white;
+    }
+
+    .swal2-title {
+        font-family: "Tilt Warp", sans-serif;
+        font-weight: 200;
+    }
+
+    .swal2-confirm {
+        border: 3px solid white;
+    }
+    
+    /* Ensure backdrop appears */
+    .swal2-container.swal2-backdrop-show {
+        background: rgba(0, 0, 0, 0.75) !important;
+    }
+    
+    /* Fix for any body positioning conflicts */
+    .landing-body {
+        position: relative !important;
+    }

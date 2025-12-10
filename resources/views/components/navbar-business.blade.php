@@ -99,6 +99,75 @@
     .logout-btn:hover img {
         transform: scale(1.1);
     }
+
+    /* Override any container issues */
+    body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
+        overflow: hidden !important;
+    }
+    
+    body.swal2-height-auto {
+        height: 100% !important;
+    }
+    
+    /* Force proper container positioning */
+    .swal2-container {
+        z-index: 999999 !important;
+        position: fixed !important;
+        top: 0 !important;
+        right: 0 !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        justify-content: center !important;
+        padding: 0.625em !important;
+        overflow-x: hidden !important;
+        overflow-y: auto !important;
+        background-color: transparent !important;
+    }
+    
+    .swal2-popup {
+        font-family: "Varela Round", sans-serif !important;
+        position: relative !important;
+        box-sizing: border-box !important;
+        z-index: 999999 !important;
+        margin: auto !important;
+        background-color: transparent;
+        color: white;
+    }
+
+    .swal2-title {
+        font-family: "Tilt Warp", sans-serif;
+        font-weight: 200;
+    }
+
+    .swal2-confirm, .swal2-cancel {
+        font-family: "Varela Round";
+        border: 3px solid white;
+    }
+
+    .swal2-confirm {
+        background-color: #AB3F4C !important;
+        color: white;
+    }
+
+    div:where(.swal2-icon).swal2-warning {
+        border-color: #ffbdbd !important;
+        color: #ffbdbd !important;
+    }
+    
+    /* Ensure backdrop appears */
+    .swal2-container.swal2-backdrop-show {
+        background: rgba(0, 0, 0, 0.75) !important;
+    }
+    
+    
+    /* Fix for any body positioning conflicts */
+    .landing-body {
+        position: relative !important;
+    }
+
 </style>
 
 <script>
