@@ -14,7 +14,7 @@ class BusinessUpdateController extends Controller
     {
         $request->validate([
             'content' => 'required|string|max:1000',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'project_id' => 'required|exists:projects,id',
         ]);
 
@@ -30,6 +30,17 @@ class BusinessUpdateController extends Controller
             'image' => $imagePath,
         ]);
 
+        ActivityLogger::log(
+            module: 'BUSINESS_UPDATE',
+            action: 'create_update',
+            referenceId: $update->id,
+            details: "Created business update for project ID: {$request->project_id}",
+            data: [
+                'update_id' => $update->id,
+                'project_id' => $request->project_id,
+            ]
+        );
+
         return response()->json([
             'success' => true,
             'message' => 'Update posted successfully!',
@@ -41,19 +52,7 @@ class BusinessUpdateController extends Controller
                 'created_at' => $update->created_at->diffForHumans(),
             ]
         ]);
-
-        ActivityLogger::log(
-            module: 'BUSINESS_UPDATE',
-            action: 'create_update',
-            referenceId: $update->id,
-            details: "Created business update for project ID: {$request->project_id}",
-            data: [
-                'update_id' => $update->id,
-                'project_id' => $request->project_id,
-            ]
-        );
     }
-
     public function destroy($id)
     {
         $update = BusinessUpdate::where('id', $id)
@@ -67,11 +66,6 @@ class BusinessUpdateController extends Controller
 
         $update->delete();
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Update deleted successfully!'
-        ]);
-
         ActivityLogger::log(
             module: 'BUSINESS_UPDATE',
             action: 'delete_update',
@@ -81,5 +75,10 @@ class BusinessUpdateController extends Controller
                 'update_id' => $id,
             ]
         );
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Update deleted successfully!'
+        ]);
     }
 }

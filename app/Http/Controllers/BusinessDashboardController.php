@@ -35,7 +35,7 @@ class BusinessDashboardController extends Controller
         // Get all investments made in this user's projects
         $contributions = Investment::whereHas('project', function ($query) use ($user) {
             $query->where('user_id', $user->id);
-        })->with('project', 'user')->orderBy('created_at', 'desc')->paginate(2);
+        })->with('project', 'user')->orderBy('created_at', 'desc')->paginate(8);
         
 
         return view('business.contributions', compact('contributions'));

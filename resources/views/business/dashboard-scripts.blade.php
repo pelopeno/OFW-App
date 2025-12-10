@@ -231,7 +231,7 @@
             e.preventDefault();
             
             const content = document.getElementById('updateContentModal').value.trim();
-            const imageFile = document.getElementById('updateImage').files[0];
+            const imageFile = document.getElementById('updateImage').files[0]; // Can be null
             const projectId = document.getElementById('updateProjectSelect').value;
             
             if (!projectId) {
@@ -244,10 +244,7 @@
                 return;
             }
             
-            if (!imageFile) {
-                alert('Please choose an image');
-                return;
-            }
+            // Removed image requirement check - image is now optional
 
             const submitBtn = this.querySelector('button[type="submit"]');
             const originalText = submitBtn.textContent;
@@ -257,7 +254,9 @@
 
             const formData = new FormData();
             formData.append('content', content);
-            formData.append('image', imageFile);
+            if (imageFile) {
+                formData.append('image', imageFile); // Only append if image exists
+            }
             formData.append('project_id', projectId);
 
             fetch('{{ route("business.updates.store") }}', {
@@ -280,6 +279,8 @@
                     addUpdateToList(data.update);
                     createUpdateModal.classList.remove('show');
                     document.body.style.overflow = 'auto';
+                } else {
+                    alert('Error: ' + (data.message || 'Failed to post update'));
                 }
                 submitBtn.disabled = false;
                 submitBtn.textContent = originalText;
