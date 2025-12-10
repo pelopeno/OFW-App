@@ -68,16 +68,118 @@
                             <span>{{ $contribution->user->name }}</span>
                         </div>
                     </td>
-                    <td>{{ $contribution->project->title }}</td>
+                    <td>
+                        {{ $contribution->project_title ?? 'Deleted Project' }}
+                        @if(!$contribution->project)
+                            <span style="color: #ff9800; font-size: 12px; margin-left: 8px;">●</span>
+                        @endif
+                    </td>
                     <td style="font-weight: 600; color: #2e7d32;">₱{{ number_format($contribution->amount, 2) }}</td>
                     <td style="color: #737373;">{{ $contribution->created_at->format('M d, Y') }}</td>
                 </tr>
                 @endforeach
             </table>
+                      <!-- Pagination -->
+            @if($contributions->hasPages())
+            <div class="pagination-wrapper">
+                <nav class="pagination-nav select-none">
+                    {{-- Previous --}}
+                    @if ($contributions->onFirstPage())
+                        <span class="pg-btn disabled">‹</span>
+                    @else
+                        <a href="{{ $contributions->previousPageUrl() }}" class="pg-btn active">‹</a>
+                    @endif
+
+                    {{-- Page Numbers --}}
+                    @foreach ($contributions->getUrlRange(1, $contributions->lastPage()) as $page => $url)
+                        @if ($page == $contributions->currentPage())
+                            <span class="pg-page current">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="pg-page">{{ $page }}</a>
+                        @endif
+                    @endforeach
+
+                    {{-- Next --}}
+                    @if ($contributions->hasMorePages())
+                        <a href="{{ $contributions->nextPageUrl() }}" class="pg-btn active">›</a>
+                    @else
+                        <span class="pg-btn disabled">›</span>
+                    @endif
+                </nav>
+            </div>
+            @endif
             @endif
         </div>
     </div>
 
+    <style>
+        .pagination-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+        .pagination-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Varela Round', sans-serif;
+        }
+        .pg-btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #e6e6e6;
+            color: #9e9e9e;
+            cursor: not-allowed;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+        }
+        .pg-btn.active {
+            background: #ab3f4c;
+            color: white;
+            cursor: pointer;
+        }
+        .pg-btn.active:hover {
+            transform: translateY(-2px);
+        }
+        .pg-page {
+            padding: 8px 14px;
+            font-size: 16px;
+            background: #f7f7f7;
+            color: #555;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+        }
+        .pg-page:hover {
+            background: #e6e6e6;
+            transform: translateY(-2px);
+        }
+        .pg-page.current {
+            background: #ab3f4c;
+            color: white;
+            font-weight: bold;
+            cursor: default;
+            transform: scale(1.05);
+        }
+        .bus-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        .bus-table th, .bus-table td {
+            padding: 12px 15px;
+            text-align: left;
+        }
+        .bus-table th {
+            background-color: #f3f3f3;
+        }
+        .bus-table tr:nth-child(even) {
+            background-color: #fafafa;
+        }
+    </style>
 </body>
+
 
 </html>

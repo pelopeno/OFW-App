@@ -10,7 +10,7 @@ class MarketplaceController extends Controller
     //
     public function index()
     {
-        $projects = Project::where('status', 'approved')->with('user')->get();
+      $projects = Project::where('status', 'approved')->with('user')->paginate(3);
         return view('marketplace', compact('projects'));
     }
 }

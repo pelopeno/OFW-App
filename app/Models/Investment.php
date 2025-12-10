@@ -14,6 +14,8 @@ class Investment extends Model
         'user_id',
         'project_id',
         'amount',
+        'project_title',
+        'project_image',
     ];
 
     public function user()
@@ -23,6 +25,6 @@ class Investment extends Model
 
     public function project()
     {
-        return $this->belongsTo(Project::class);
+        return $this->belongsTo(Project::class)->withTrashed();
     }
 }

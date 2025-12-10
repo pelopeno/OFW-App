@@ -22,7 +22,7 @@ public function index()
     // Archive requests first, then by created_at
     $projects = Project::orderByDesc('archive_requested')
         ->orderBy('created_at', 'desc')
-        ->get();
+          ->paginate(5);
 
     return view('admin.dashboard', compact(
         'totalUsers', 

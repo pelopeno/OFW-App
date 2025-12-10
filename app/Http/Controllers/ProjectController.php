@@ -42,8 +42,8 @@ class ProjectController extends Controller
         }
 
         Project::create([
+            'project_name' => $request->title,
             'user_id' => Auth::id(),
-            'project_name' => $request->title, // Added this line to set project_name. Temporary lang.
             'title' => $request->title,
             'description' => $request->description,
             'image' => $imagePath,
@@ -223,7 +223,7 @@ class ProjectController extends Controller
         $archivedProjects = Project::onlyTrashed()
             ->where('user_id', Auth::id())
             ->latest('deleted_at')
-            ->get();
+            ->paginate(6);
 
         return view('business.archived-projects', compact('archivedProjects'));
     }
@@ -331,6 +331,8 @@ class ProjectController extends Controller
             'user_id' => Auth::id(),
             'project_id' => $project->id,
             'amount' => $request->amount,
+            'project_title' => $project->title,
+            'project_image' => $project->image,
         ]);
 
         ActivityLogger::log(

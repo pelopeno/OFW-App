@@ -8,12 +8,6 @@ use App\Helpers\ActivityLogger;
 
 class WalletController extends Controller
 {
-    //wala na 'to since naka modal na
-    public function showAddFunds()
-    {
-        return view('add-funds');
-    }
-
     public function addFunds(Request $request)
     {
         $request->validate([
@@ -39,14 +33,6 @@ class WalletController extends Controller
         ]);
 
         return redirect()->route('dashboard')->with('success', 'Funds added successfully!');
-    }
-
-    //wala na 'to since naka modal na
-    public function showWithdrawFunds()
-    {
-        $wallet = Auth::user()->wallet;
-
-        return view('withdraw-wallet', compact('wallet'));
     }
 
     public function withdrawWallet(Request $request)
@@ -104,7 +90,7 @@ class WalletController extends Controller
     public function transactionHistory()
     {
         $wallet = Auth::user()->wallet;
-        $transactions = $wallet->transactions()->orderBy('created_at', 'desc')->paginate(10);
+        $transactions = $wallet->transactions()->orderBy('created_at', 'desc')->paginate(5);
 
         return view('transaction-history', compact('transactions'));
     }

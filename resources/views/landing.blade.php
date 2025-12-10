@@ -99,8 +99,41 @@
     </div>
     <!---------↑↑↑-Sign Up-↑↑↑--------->
 
+    <!---------↓↓↓-Dev Overlay-↓↓↓--------->
+    <div class="dev-body" id="dev">
+    <img src="/assets/x-btn.png" class="devs-x-btn" onClick="toggleDev()" />
+        <h2>Meet the Dev Team!</h2>
+        <div class="devs-container">
+            <div class="dev-container">
+                <img src="/assets/aba.png"/>
+                <p>Ram Jiro Aba</p>
+                <a href="https://www.linkedin.com/in/ramjiroaba/">ramjiroaba</a>
+            </div>
+
+            <div class="dev-container">
+                <img src="/assets/doc.png"/>
+                <p>Daryl Christien Doctora</p>
+                <a href="https://www.linkedin.com/in/daryl-doctora/">daryl-doctora</a>
+            </div>
+
+            <div class="dev-container">
+                <img src="/assets/erp.png"/>
+                <p>Luis Christian Erpelo</p>
+                <a href="https://www.linkedin.com/in/luis-christian-erpelo-b9a1712b3/">luis-christian-erpelo</a>
+            </div>
+
+            <div class="dev-container">
+                <img src="/assets/man.png"/>
+                <p>Ed Jerome Manalo</p>
+                <a href="https://www.linkedin.com/in/ed-jerome-manalo-6236a8372/">ed-jerome-manalo</a>
+            </div>
+        </div>
+    </div>
+
+    <!---------↑↑↑-Dev Overlay-↑↑↑--------->
+
     <div class="landing-dev-btn-cont">
-        <a href=""><img src="/assets/landing-dev-btn.png" class="landing-dev-btn-img"></a>
+        <button onClick="toggleDev()"><img src="/assets/landing-dev-btn.png" class="landing-dev-btn-img" style="cursor: pointer"></button>
     </div>
     <img src="/assets/landing-logo.png" class="landing-logo" />
     <br>
@@ -157,6 +190,22 @@
             signup.classList.add('fade-in');
         }
     }
+
+    var dev = document.getElementById('dev');
+    var devVisibility = 1;
+
+    function toggleDev() {
+        if (dev.style.display === 'flex') {
+            dev.classList.remove('fade-in');
+            dev.classList.add('fade-out');
+            setTimeout(() => dev.style.display = 'none', 300);
+        } else {
+            dev.style.display = 'flex';
+            dev.classList.remove('fade-out');
+            dev.classList.add('fade-in');
+        }
+    }
+
 
     var chooseType = document.getElementById('chooseType');
 

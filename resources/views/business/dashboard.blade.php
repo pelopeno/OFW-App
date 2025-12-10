@@ -46,30 +46,123 @@
                 </a>
             </div>
 
-            <!---------↓↓↓-Projects Tab-↓↓↓--------->
-            <div class="bus-projects">
-                <a href="#" class="add-project-exclusion-link" id="addProjectBtn">
-                    <div class="bus-add-project-btn">
-                        <img src="/assets/plus.png">
-                    </div>
-                </a>
+           <!---------↓↓↓-Projects Tab-↓↓↓---------> 
+<div class="bus-projects">
+    <a href="#" class="add-project-exclusion-link" id="addProjectBtn">
+        <div class="bus-add-project-btn">
+            <img src="/assets/plus.png">
+        </div>
+    </a>
 
-                @forelse($projects as $project)
-                <div class="project-card-wrapper">
-                    <x-business-project-card
-                        project_name="{{ $project->title }}"
-                        project_current_raised_amt="{{ $project->current_amount }}"
-                        project_target_raised_amt="{{ $project->target_amount }}"
-                        project_status="{{ $project->status }}"
-                        project_id="{{ $project->id }}"
-                        archive_requested="{{ $project->archive_requested }}"
-                        is_business_dashboard="true" />
-                </div>
-                @empty
-                <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">No projects yet. Create your first project!</p>
-                @endforelse
-            </div>
-            <!---------↑↑↑-Projects Tab-↑↑↑--------->
+    @forelse($projects as $project)
+    <div class="project-card-wrapper">
+        <x-business-project-card
+            project_name="{{ $project->title }}"
+            project_current_raised_amt="{{ $project->current_amount }}"
+            project_target_raised_amt="{{ $project->target_amount }}"
+            project_status="{{ $project->status }}"
+            project_id="{{ $project->id }}"
+            archive_requested="{{ $project->archive_requested }}"
+            is_business_dashboard="true" />
+    </div>
+    @empty
+    <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">No projects yet. Create your first project!</p>
+    @endforelse
+
+    <!-- Pagination for Projects -->
+    @if($projects->hasPages())
+    <div class="pagination-wrapper">
+        <nav class="pagination-nav select-none">
+
+            {{-- Previous Button --}}
+            @if ($projects->onFirstPage())
+                <span class="pg-btn disabled">‹</span>
+            @else
+                <a href="{{ $projects->previousPageUrl() }}" class="pg-btn active">‹</a>
+            @endif
+
+            {{-- Page Numbers --}}
+            @foreach ($projects->getUrlRange(1, $projects->lastPage()) as $page => $url)
+                @if ($page == $projects->currentPage())
+                    <span class="pg-page current">{{ $page }}</span>
+                @else
+                    <a href="{{ $url }}" class="pg-page">{{ $page }}</a>
+                @endif
+            @endforeach
+
+            {{-- Next Button --}}
+            @if ($projects->hasMorePages())
+                <a href="{{ $projects->nextPageUrl() }}" class="pg-btn active">›</a>
+            @else
+                <span class="pg-btn disabled">›</span>
+            @endif
+
+        </nav>
+    </div>
+    @endif
+</div>
+<!---------↑↑↑-Projects Tab-↑↑↑--------->
+<style>
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.pagination-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.pg-btn {
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    background: #e6e6e6;
+    color: #9e9e9e;
+    cursor: not-allowed;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.pg-btn.active {
+    background: #ab3f4c;
+    color: white;
+    cursor: pointer;
+}
+
+.pg-btn.active:hover {
+    background: #ab3f4c;
+    transform: translateY(-2px);
+}
+
+.pg-page {
+    padding: 8px 14px;
+    font-size: 16px;
+    background: #f7f7f7;
+    color: #555;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.pg-page:hover {
+    background: #e6e6e6;
+    transform: translateY(-2px);
+}
+
+.pg-page.current {
+    background: #ab3f4c;
+    color: white;
+    font-weight: bold;
+    cursor: default;
+    transform: scale(1.05);
+}
+</style>
+
 
             <!---------↓↓↓-Updates Tab-↓↓↓------->
             <div class="bus-updates" style="display: none;">
@@ -91,11 +184,97 @@
                     <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">No updates yet. Share your first update with your supporters!</p>
                     @endforelse
                 </div>
-            </div>
+                <!-- Pagination for Updates -->
+@if($updates->hasPages())
+<div class="pagination-wrapper">
+    <nav class="pagination-nav select-none">
+
+        {{-- Previous Button --}}
+        @if ($updates->onFirstPage())
+            <span class="pg-btn disabled">‹</span>
+        @else
+            <a href="{{ $updates->previousPageUrl() }}" class="pg-btn active">‹</a>
+        @endif
+
+        {{-- Page Numbers --}}
+        @foreach ($updates->getUrlRange(1, $updates->lastPage()) as $page => $url)
+            @if ($page == $updates->currentPage())
+                <span class="pg-page current">{{ $page }}</span>
+            @else
+                <a href="{{ $url }}" class="pg-page">{{ $page }}</a>
+            @endif
+        @endforeach
+
+        {{-- Next Button --}}
+        @if ($updates->hasMorePages())
+            <a href="{{ $updates->nextPageUrl() }}" class="pg-btn active">›</a>
+        @else
+            <span class="pg-btn disabled">›</span>
+        @endif
+
+    </nav>
+</div>
+@endif
+</div>
+<style>
+.pagination-wrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: 25px;
+    margin-bottom: 20px;
+}
+
+.pagination-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'Varela Round', sans-serif;
+}
+
+.pg-btn {
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 16px;
+    background: #e6e6e6;
+    color: #9e9e9e;
+    cursor: not-allowed;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.pg-btn.active {
+    background: #ab3f4c;
+    color: white;
+    cursor: pointer;
+}
+
+.pg-btn.active:hover {
+    transform: translateY(-2px);
+}
+
+.pg-page {
+    padding: 8px 14px;
+    font-size: 16px;
+    background: #f7f7f7;
+    color: #555;
+    border-radius: 12px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    transition: 0.2s ease;
+}
+
+.pg-page.current {
+    background: #ab3f4c;
+    color: white;
+    font-weight: bold;
+    cursor: default;
+    transform: scale(1.05);
+}
+</style>
             <!---------↑↑↑-Updates Tab-↑↑↑--------->
         </div>
     </div>
 
+    
     <!-- Add Project Modal -->
     <div id="addProjectModal" class="modal-overlay">
         <div class="modal-content add-project-modal">

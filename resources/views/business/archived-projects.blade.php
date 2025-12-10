@@ -63,8 +63,43 @@
                     </div>
                 </div>
                 @empty
-                <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">No archived projects. Archived projects will appear here.</p>
+                <p style="text-align: center; padding: 30px; color: #737373; font-family: 'Varela Round', sans-serif;">
+                    No archived projects. Archived projects will appear here.
+                </p>
                 @endforelse
+            </div>
+
+             <!-- Pagination for Archived Projects -->
+                @if($archivedProjects->hasPages())
+                <div class="pagination-wrapper">
+                    <nav class="pagination-nav select-none">
+
+                        {{-- Previous Button --}}
+                        @if ($archivedProjects->onFirstPage())
+                            <span class="pg-btn disabled">‹</span>
+                        @else
+                            <a href="{{ $archivedProjects->previousPageUrl() }}" class="pg-btn active">‹</a>
+                        @endif
+
+                        {{-- Page Numbers --}}
+                        @foreach ($archivedProjects->getUrlRange(1, $archivedProjects->lastPage()) as $page => $url)
+                            @if ($page == $archivedProjects->currentPage())
+                                <span class="pg-page current">{{ $page }}</span>
+                            @else
+                                <a href="{{ $url }}" class="pg-page">{{ $page }}</a>
+                            @endif
+                        @endforeach
+
+                        {{-- Next Button --}}
+                        @if ($archivedProjects->hasMorePages())
+                            <a href="{{ $archivedProjects->nextPageUrl() }}" class="pg-btn active">›</a>
+                        @else
+                            <span class="pg-btn disabled">›</span>
+                        @endif
+
+                    </nav>
+                </div>
+                @endif
             </div>
         </div>
 
@@ -204,8 +239,7 @@
         .project-card-actions {
             display: flex;
             gap: 10px;
-            padding: 0 30px 20px 30px;
-            justify-content: flex-start;
+            margin-top: 10px;
         }
 
         .project-edit-btn,
@@ -252,5 +286,59 @@
         }
     </style>
 
+        /* Pagination */
+        .pagination-wrapper {
+            display: flex;
+            justify-content: center;
+            margin-top: 25px;
+            margin-bottom: 20px;
+        }
+
+        .pagination-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Varela Round', sans-serif;
+        }
+
+        .pg-btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #e6e6e6;
+            color: #9e9e9e;
+            cursor: not-allowed;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+        }
+
+        .pg-btn.active {
+            background: #ab3f4c;
+            color: white;
+            cursor: pointer;
+        }
+
+        .pg-btn.active:hover {
+            transform: translateY(-2px);
+        }
+
+        .pg-page {
+            padding: 8px 14px;
+            font-size: 16px;
+            background: #f7f7f7;
+            color: #555;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+        }
+
+        .pg-page.current {
+            background: #ab3f4c;
+            color: white;
+            font-weight: bold;
+            cursor: default;
+            transform: scale(1.05);
+        }
+    </style>
 </body>
 </html>
