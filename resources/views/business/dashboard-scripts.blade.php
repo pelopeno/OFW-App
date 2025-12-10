@@ -409,6 +409,30 @@
             }, 3000);
         }
 
+        // Error Toast
+        function showErrorToast(message) {
+            const toast = document.getElementById('errorToast');
+            const messageSpan = document.getElementById('errorMessage');
+            messageSpan.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // Show Laravel validation errors on page load
+        @if(session('success'))
+            showSuccessToast('{{ session('success') }}');
+        @endif
+
+        @if(session('error'))
+            showErrorToast('{{ session('error') }}');
+        @endif
+
+        @if($errors->any())
+            showErrorToast('{{ $errors->first() }}');
+        @endif
+
         // Update overlay logic
         const updateOverlay = document.querySelector(".update-view-main");
         const updateCards = document.querySelectorAll(".update-card-clickable");
