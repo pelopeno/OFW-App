@@ -1,8 +1,8 @@
-@props(['business_name', 'update_date_posted', 'update_content', 'update_id' => null, 'update_image' => null])
+@props(['project_name', 'update_date_posted', 'update_content', 'update_id' => null, 'update_image' => null])
 
 <div class="bus-update-card update-card-clickable" @if($update_id) data-update-id="{{ $update_id }}" data-full-content="{{ $update_content }}" data-update-image="{{ $update_image }}" @endif>
     <div class="bus-update-header">
-        <h3>{{ $business_name }}</h3>
+        <h3>{{ $project_name }}</h3>
         <span>{{ $update_date_posted}}</span>
         @if($update_id)
         <button class="delete-update-btn" onclick="event.stopPropagation(); deleteUpdate({{ $update_id }})">×</button>

@@ -173,8 +173,8 @@
             <form class="donate-form" id="donateForm" method="POST">
                 @csrf
                 <label class="input-label">Amount to Donate</label>
-                <input type="number" name="amount" placeholder="Enter amount (₱)" class="donate-input" min="1" step="0.01" required />
-                <small class="donate-desc">The entered value will be deducted from your wallet balance.</small>
+                <input type="number" name="amount" id="donateAmount" placeholder="Enter amount (₱)" class="donate-input" min="100" step="0.01" required />
+                <small class="donate-desc">Minimum donation is ₱100. The entered value will be deducted from your wallet balance.</small>
 
                 <button type="submit" class="withdraw-goal-btn">Donate</button>
             </form>
@@ -233,6 +233,23 @@
                 document.body.style.overflow = 'auto';
             });
 
+            // Validate donation amount before submit
+            document.getElementById('donateForm').addEventListener('submit', function(e) {
+                const amountInput = document.getElementById('donateAmount');
+                const amount = parseFloat(amountInput.value);
+                
+                if (amount < 100) {
+                    e.preventDefault();
+                    const errorToast = document.querySelector('.error-toast');
+                    errorToast.querySelector('#errorMessage').textContent = 'Minimum donation is ₱100.';
+                    errorToast.classList.add('show');
+                    setTimeout(() => {
+                        errorToast.classList.remove('show');
+                    }, 5000);
+                    return false;
+                }
+            });
+
             // Close modals on outside click
             [addFundsModal, withdrawWalletModal, donateModal].forEach(modal => {
                 modal.addEventListener('click', (e) => {
@@ -262,11 +279,17 @@
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const errorToast = document.querySelector('.error-toast');
-            const withdrawWalletModal = document.getElementById('withdrawWalletModal');
+            const donateModal = document.getElementById('donateModal');
             errorToast.querySelector('#errorMessage').textContent = '{{ $errors->first() }}';
             errorToast.classList.add('show');
-            withdrawWalletModal.classList.add('show');
-            document.body.style.overflow = 'hidden';
+            
+            // Show donate modal if error is related to donation
+            const errorMessage = '{{ $errors->first() }}';
+            if (errorMessage.includes('investment') || errorMessage.includes('donation') || errorMessage.includes('wallet') || errorMessage.includes('amount')) {
+                donateModal.classList.add('show');
+                document.body.style.overflow = 'hidden';
+            }
+            
             setTimeout(() => {
                 errorToast.classList.remove('show');
             }, 5000);

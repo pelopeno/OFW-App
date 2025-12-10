@@ -175,7 +175,7 @@
                 <div id="updatesContainer">
                     @forelse($updates as $update)
                     <x-business-update-card
-                        business_name="{{ Auth::user()->name }}"
+                        project_name="{{ $update->project ? $update->project->title : 'Unknown Project' }}"
                         update_date_posted="{{ $update->created_at->diffForHumans() }}"
                         update_content="{{ $update->content }}"
                         update_id="{{ $update->id }}"
@@ -332,13 +332,13 @@
                     @endforeach
                 </select>
 
-                <label class="input-label">Attachment</label>
+                <label class="input-label">Attachment (Optional)</label>
                 <label class="add-post-image" id="updateImageUploadLabel">
                     <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none">
                         <path d="M13 4H8C6.89543 4 6 4.89543 6 6V18C6 19.1046 6.89543 20 8 20H16C17.1046 20 18 19.1046 18 18V9M13 4L18 9M13 4V8C13 8.55228 13.4477 9 14 9H18" stroke="#282828" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                     </svg>
                     <span id="updateFileName">Choose an image</span>
-                    <input type="file" name="image" id="updateImage" style="display: none;" accept="image/*" required>
+                    <input type="file" name="image" id="updateImage" style="display: none;" accept="image/*">
                 </label>
 
                 <label class="input-label">Update Message</label>

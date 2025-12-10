@@ -284,7 +284,6 @@
                 font-size: 18px;
             }
         }
-    </style>
 
         /* Pagination */
         .pagination-wrapper {
