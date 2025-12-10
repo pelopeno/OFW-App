@@ -32,6 +32,12 @@
                 <h3>Pending Projects</h3>
                 <h4>{{ $pendingProjects }}</h4>
             </div>
+
+            <div class="admin-archive-requests">
+                <img src="/assets/admin-pending2-card.png" />
+                <h3>Archive Requests</h3>
+                <h4>{{ $archiveRequests }}</h4>
+            </div>
         </div>
 
 
@@ -47,8 +53,13 @@
                 </tr>
 
                 @forelse ($projects as $project)
-                <tr>
-                    <td>{{ $project->title }}</td>
+                <tr class="{{ $project->archive_requested ? 'archive-requested-row' : '' }}">
+                    <td>
+                        {{ $project->title }}
+                        @if($project->archive_requested)
+                            <span class="archive-request-badge">📦 Archive Requested</span>
+                        @endif
+                    </td>
                     <td>{{ $project->user->name ?? 'N/A' }}</td>
                     <td>{{ Str::limit($project->description, 150) }}</td>
 
@@ -57,7 +68,7 @@
                         <form method="POST" action="{{ route('admin.project.disable', $project->id) }}">
                             @csrf
                             <button class="dashboard-admin-disable-btn" type="submit">
-                                Disable
+                                {{ $project->archive_requested ? 'Allow Archive' : 'Disable' }}
                             </button>
                         </form>
                         @else
@@ -79,5 +90,12 @@
         </div>
 
 </body>
+
+<style>
+    .archive-requested-row {
+        background-color: #FFF9E6 !important;
+        border-left: 4px solid #FF9800;
+    }
+</style>
 
 </html>

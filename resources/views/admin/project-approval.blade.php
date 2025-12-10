@@ -13,16 +13,22 @@
         <h2>Dashboard</h2>
 
         <div class="admin-overview">
-            <div class="admin-active-projects" style="width: 50%">
+            <div class="admin-active-projects" style="width: 33%">
                 <img src="/assets/admin-active-card.png"/>
                 <h3>Active Projects</h3>
                 <h4>{{ $activeProjects }}</h4>
             </div>
 
-            <div class="admin-pending-projects" style="width: 50%">
+            <div class="admin-pending-projects" style="width: 33%">
                 <img src="/assets/admin-pending2-card.png"/>
                 <h3>Pending Projects</h3>
                 <h4>{{ $pendingProjects }}</h4>
+            </div>
+
+            <div class="admin-archive-requests" style="width: 33%">
+                <img src="/assets/admin-pending1-card.png"/>
+                <h3>Archive Requests</h3>
+                <h4>{{ $archiveRequests }}</h4>
             </div>
         </div>
 

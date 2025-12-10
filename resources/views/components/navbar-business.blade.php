@@ -5,6 +5,7 @@
     <div class="navbar-bus-links">
         <!--If may lalagay kayo na redirect links, lagay nalang dito similar sa ofw navbar-->
         <a href="{{ route('contributions') }}">Capital Contributions</a>
+        <a href="{{ route('project.archived') }}">Archived Projects</a>
     </div>
     <div class="navbar-bus-buttons">
         <button type="button" class="logout-btn" onclick="goToProfile()">
@@ -58,6 +59,7 @@
         display: flex;
         flex-direction: row;
         justify-content: left;
+        gap: 30px;
     }
 
     .navbar-bus-links a {

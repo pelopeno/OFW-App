@@ -1,4 +1,4 @@
-@props(['project_name', 'project_current_raised_amt', 'project_target_raised_amt', 'project_author' => null, 'project_id' => null, 'project_status' => 'active', 'is_business_dashboard' => false])
+@props(['project_name', 'project_current_raised_amt', 'project_target_raised_amt', 'project_author' => null, 'project_id' => null, 'project_status' => 'active', 'archive_requested' => false, 'is_business_dashboard' => false])
 
 <div class="project-card">
     @if($is_business_dashboard)
@@ -21,11 +21,32 @@
         </a>
         <div class="project-card-actions">
             <a href="{{ route('project.edit', $project_id) }}" class="project-edit-btn">Edit</a>
-            <form id="deleteForm-{{ $project_id }}" action="{{ route('project.destroy', $project_id) }}" method="POST" style="width: 100%;">
-                @csrf
-                @method('DELETE')
-                <button type="button" class="project-delete-btn" onclick="confirmDelete({{ $project_id }}, '{{ $project_name }}')">Delete</button>
-            </form>
+            
+            @if($project_status === 'disabled' && $archive_requested)
+                <!-- Show Archive button when project is disabled after archive request -->
+                <form id="archiveForm-{{ $project_id }}" action="{{ route('project.archive', $project_id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="button" class="project-archive-btn" onclick="confirmArchive({{ $project_id }}, '{{ $project_name }}')">Archive</button>
+                </form>
+            @elseif(!$archive_requested && in_array($project_status, ['approved', 'pending']))
+                <!-- Show Request Archive button on active projects -->
+                <form id="requestArchiveForm-{{ $project_id }}" action="{{ route('project.request-archive', $project_id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    <button type="button" class="project-request-archive-btn" onclick="confirmRequestArchive({{ $project_id }}, '{{ $project_name }}')">Request Archive</button>
+                </form>
+            @elseif($archive_requested && $project_status !== 'disabled')
+                <!-- Awaiting admin approval -->
+                <span class="archive-pending-badge">Archive Pending</span>
+            @endif
+
+            @if($project_status !== 'disabled')
+                <!-- Show Delete button for non-disabled projects -->
+                <form id="deleteForm-{{ $project_id }}" action="{{ route('project.destroy', $project_id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="button" class="project-delete-btn" onclick="confirmDelete({{ $project_id }}, '{{ $project_name }}')">Delete</button>
+                </form>
+            @endif
         </div>
     @else
         <div class="project-card-row">
@@ -187,10 +208,8 @@
         justify-content: space-between;
     }
 
-    .project-edit-btn, .project-delete-btn {
-        width: 85%;
-        background-color: #eeeeee;
-        border: 2px solid #cccccc;
+    .project-edit-btn, .project-delete-btn, .project-archive-btn, .project-request-archive-btn {
+        padding: 8px 20px;
         border-radius: 10px;
         font-family: "Varela Round", sans-serif;
         font-size: 20px;
@@ -199,6 +218,37 @@
         text-align: center;
         text-decoration: none;
         color: #282828;
+    }
+
+    .project-archive-btn {
+        background-color: #90CAF9;
+        color: #282828;
+    }
+
+    .project-archive-btn:hover {
+        background-color: #64B5F6;
+        transform: scale(1.05);
+    }
+
+    .project-request-archive-btn {
+        background-color: #FFB74D;
+        color: #282828;
+    }
+
+    .project-request-archive-btn:hover {
+        background-color: #FFA726;
+        transform: scale(1.05);
+    }
+
+    .archive-pending-badge {
+        display: inline-block;
+        padding: 8px 20px;
+        border-radius: 10px;
+        font-family: "Varela Round", sans-serif;
+        font-size: 16px;
+        background-color: #FFF9C4;
+        color: #F57F17;
+        border: 2px solid #F57F17;
     }
 
     /* Responsive */
@@ -238,6 +288,40 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 document.getElementById(`deleteForm-${projectId}`).submit();
+            }
+        });
+    }
+
+    function confirmRequestArchive(projectId, projectName) {
+        Swal.fire({
+            icon: 'question',
+            title: 'Request Archive?',
+            text: `Request to archive "${projectName}"? Once approved, you can move this project to your archive.`,
+            showCancelButton: true,
+            confirmButtonColor: '#FF9800',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, request archive',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`requestArchiveForm-${projectId}`).submit();
+            }
+        });
+    }
+
+    function confirmArchive(projectId, projectName) {
+        Swal.fire({
+            icon: 'info',
+            title: 'Archive Project?',
+            text: `Archive "${projectName}"? You can restore it later from the Archived Projects page.`,
+            showCancelButton: true,
+            confirmButtonColor: '#2196F3',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, archive it',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`archiveForm-${projectId}`).submit();
             }
         });
     }

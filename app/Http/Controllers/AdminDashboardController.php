@@ -16,15 +16,20 @@ public function index()
     $totalUsers = User::count();
     $activeProjects = Project::where('status', 'approved')->count();
     $pendingProjects = Project::where('status', 'pending')->count();
+    $archiveRequests = Project::where('archive_requested', true)->count();
 
     // Get all projects for the table (optional: order by latest)
-    $projects = Project::orderBy('created_at', 'desc')->get();
+    // Archive requests first, then by created_at
+    $projects = Project::orderByDesc('archive_requested')
+        ->orderBy('created_at', 'desc')
+        ->get();
 
     return view('admin.dashboard', compact(
         'totalUsers', 
         'activeProjects', 
-        'pendingProjects', 
-        'projects'  // <-- pass it here
+        'pendingProjects',
+        'archiveRequests',
+        'projects'
     ));
 }
 

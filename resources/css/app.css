@@ -997,7 +997,8 @@ h5 {
 
 .admin-total-users,
 .admin-active-projects,
-.admin-pending-projects {
+.admin-pending-projects,
+.admin-archive-requests {
     width: 33%;
     height: 100%;
     background-color: white;
@@ -1013,27 +1014,32 @@ h5 {
 
 .admin-total-users h3,
 .admin-active-projects h3,
-.admin-pending-projects h3 {
+.admin-pending-projects h3,
+.admin-archive-requests h3 {
     font-family: "Varela Round", sans-serif;
     font-size: 21px;
     font-weight: 200;
     letter-spacing: -1px;
     color: #494949;
+    z-index: 1;
 }
 
 .admin-total-users h4,
 .admin-active-projects h4,
-.admin-pending-projects h4 {
+.admin-pending-projects h4,
+.admin-archive-requests h4 {
     font-family: "Tilt Warp", sans-serif;
     font-size: 54px;
     font-weight: 200;
     letter-spacing: -2px;
     color: #282828;
+    z-index: 1;
 }
 
 .admin-total-users img,
 .admin-active-projects img,
-.admin-pending-projects img {
+.admin-pending-projects img,
+.admin-archive-requests img {
     height: 100%;
     position: absolute;
     left: 0;
