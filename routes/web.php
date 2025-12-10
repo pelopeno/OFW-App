@@ -41,6 +41,7 @@ Route::middleware([
     Route::post('/store_goal', [GoalController::class, 'store'])->name('store-goal');
     Route::post('/goals/{id}/allocateFunds', [GoalController::class, 'allocateFunds'])->name('allocate-funds.post');
     Route::post('/goals/{id}/withdrawFunds', [GoalController::class, 'withdrawFunds'])->name('withdraw-funds.post');
+    Route::delete('/goals/{id}/delete', [GoalController::class, 'deleteGoal'])->name('delete-goal');
 
     // Investment Management
     Route::get('/investment_history', [InvestmentHistoryController::class, 'index'])->name('investment-history');

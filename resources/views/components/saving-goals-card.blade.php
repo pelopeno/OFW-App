@@ -30,9 +30,27 @@
            data-current-amount="{{ $goal->current_amount }}">Withdraw Funds</a>
     </div>
     <div class="goals-card-kebab">
-        <a href=""><img src="/assets/kebab.png"></a>
+        <div class="kebab-menu">
+            <button class="kebab-btn" onclick="toggleKebabMenu(event)">
+                <img src="/assets/kebab.png">
+            </button>
+            <div class="kebab-dropdown" style="display: none;">
+                <button class="kebab-option delete-option" onclick="deleteGoal({{ $goal->id }}, '{{ $goal->name }}')">
+                    Delete Goal
+                </button>
+            </div>
+        </div>
     </div>
 </div>
+
+<form id="deleteGoalForm-{{ $goal->id }}" action="{{ route('delete-goal', $goal->id) }}" method="POST" style="display: none;">
+    @csrf
+    @method('DELETE')
+</form>
+
+<!-- SweetAlert2 CDN -->
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <style>
     .goals-card {
@@ -43,6 +61,7 @@
         border-radius: 25px;
         margin-bottom: 15px;
         transition: border-color 0.3s ease;
+        position: relative;
     }
 
     .goals-card.completed {
@@ -122,6 +141,13 @@
         text-align: center;
         text-decoration: none;
         color: #282828;
+        padding: 8px 0;
+        transition: all 0.3s ease;
+    }
+
+    .goals-card-button a:hover {
+        background-color: #d4d4d4;
+        transform: translateY(-2px);
     }
 
     .goals-card-kebab {
@@ -129,12 +155,79 @@
         display: flex;
         align-items: center;
         justify-content: center;
+        position: relative;
     }
 
-    .goals-card-kebab img {
+    .kebab-menu {
+        position: relative;
+    }
+
+    .kebab-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: transform 0.3s ease;
+    }
+
+    .kebab-btn:hover {
+        transform: scale(1.1);
+    }
+
+    .kebab-btn img {
         height: 25px;
         width: auto;
         transform: rotate(90deg);
+    }
+
+    .kebab-dropdown {
+        position: absolute;
+        top: 100%;
+        right: -10px;
+        background: white;
+        border: 2px solid #282828;
+        border-radius: 10px;
+        min-width: 150px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        z-index: 1000;
+        margin-top: 5px;
+    }
+
+    .kebab-option {
+        display: block;
+        width: 100%;
+        padding: 12px 16px;
+        border: none;
+        background: none;
+        text-align: left;
+        cursor: pointer;
+        font-family: "Varela Round", sans-serif;
+        font-size: 14px;
+        font-weight: 600;
+        transition: all 0.3s ease;
+    }
+
+    .kebab-option:first-child {
+        border-radius: 8px 8px 0 0;
+    }
+
+    .kebab-option:last-child {
+        border-radius: 0 0 8px 8px;
+    }
+
+    .kebab-option:hover {
+        background-color: #f5f5f5;
+    }
+
+    .kebab-option.delete-option {
+        color: #d32f2f;
+    }
+
+    .kebab-option.delete-option:hover {
+        background-color: #ffebee;
     }
 
     .progress-container {
@@ -155,3 +248,45 @@
         background-color: #2e7d32;
     }
 </style>
+
+<script>
+    function toggleKebabMenu(event) {
+        event.preventDefault();
+        const dropdown = event.target.closest('.kebab-btn').nextElementSibling;
+        const isVisible = dropdown.style.display !== 'none';
+        
+        // Close all other dropdowns
+        document.querySelectorAll('.kebab-dropdown').forEach(menu => {
+            menu.style.display = 'none';
+        });
+        
+        // Toggle current dropdown
+        dropdown.style.display = isVisible ? 'none' : 'block';
+    }
+
+    function deleteGoal(goalId, goalName) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Delete Goal?',
+            text: `Are you sure you want to delete "${goalName}"? This action cannot be undone.`,
+            showCancelButton: true,
+            confirmButtonColor: '#d32f2f',
+            cancelButtonColor: '#6c757d',
+            confirmButtonText: 'Yes, delete it',
+            cancelButtonText: 'Cancel'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                document.getElementById(`deleteGoalForm-${goalId}`).submit();
+            }
+        });
+    }
+
+    // Close kebab menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (!event.target.closest('.kebab-menu')) {
+            document.querySelectorAll('.kebab-dropdown').forEach(menu => {
+                menu.style.display = 'none';
+            });
+        }
+    });
+</script>

@@ -77,6 +77,40 @@ class GoalController extends Controller
         return redirect()->route('saving-goals')->with('success', 'Saving goal created!');
     }
 
+    public function deleteGoal($id)
+    {
+        $goal = Goal::where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+
+        // Optionally, refund the current amount back to the wallet
+        $wallet = Auth::user()->wallet;
+        if ($goal->current_amount > 0) {
+            $wallet->balance += $goal->current_amount;
+            $wallet->save();
+
+            $wallet->transactions()->create([
+                'type' => 'add',
+                'amount' => $goal->current_amount,
+                'description' => 'Refund from deleted saving goal: ' . $goal->name,
+            ]);
+        }
+
+        $goal->delete();
+
+        ActivityLogger::log(
+            module: 'GOALS',
+            action: 'delete_goal',
+            referenceId: $goal->id,
+            details: "Deleted saving goal: {$goal->name}",
+            data: [
+                'goal_name' => $goal->name,
+            ]
+        );
+
+        return redirect()->route('saving-goals')->with('success', 'Saving goal deleted successfully!');
+    }
+
     public function showAllocateForm($id)
     {
         $goal = Goal::findOrFail($id);
