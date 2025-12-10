@@ -18,7 +18,7 @@ class DashboardController extends Controller
         // Latest saving goal
         $latestGoal = $user->goals()->latest()->first();
 
-        $projects = Project::latest()->first();
+        $projects = Project::where('status', 'approved')->latest()->first();
 
         $latestInvestment = $user->investments()->with('project')->latest()->first();
 
