@@ -68,7 +68,12 @@
                             <span>{{ $contribution->user->name }}</span>
                         </div>
                     </td>
-                    <td>{{ $contribution->project->title }}</td>
+                    <td>
+                        {{ $contribution->project_title ?? 'Deleted Project' }}
+                        @if(!$contribution->project)
+                            <span style="color: #ff9800; font-size: 12px; margin-left: 8px;">●</span>
+                        @endif
+                    </td>
                     <td style="font-weight: 600; color: #2e7d32;">₱{{ number_format($contribution->amount, 2) }}</td>
                     <td style="color: #737373;">{{ $contribution->created_at->format('M d, Y') }}</td>
                 </tr>

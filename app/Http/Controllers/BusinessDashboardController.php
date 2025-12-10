@@ -21,6 +21,7 @@ class BusinessDashboardController extends Controller
 
         // Get all business updates ordered by newest first
         $updates = BusinessUpdate::where('user_id', $user->id)
+            ->with('project')
             ->orderBy('created_at', 'desc')
             ->paginate(2);
 

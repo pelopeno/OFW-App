@@ -12,45 +12,77 @@
             border: 3px solid black;
         }
 
-        .pagination {
+        .pagination-wrapper {
             display: flex;
             justify-content: center;
-            gap: 5px;
-            margin-top: 30px;
-            flex-wrap: wrap;
+            margin-top: 25px;
+            margin-bottom: 20px;
         }
 
-        .pagination a,
-        .pagination span {
-            padding: 10px 15px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            text-decoration: none;
-            color: #282828;
+        .pagination-nav {
+            display: flex;
+            align-items: center;
+            gap: 8px;
             font-family: 'Varela Round', sans-serif;
-            font-size: 14px;
-            transition: all 0.3s ease;
         }
 
-        .pagination a:hover {
-            background-color: #A68749;
+        .pg-btn {
+            padding: 8px 14px;
+            border-radius: 12px;
+            font-size: 16px;
+            background: #e6e6e6;
+            color: #9e9e9e;
+            cursor: not-allowed;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+            text-decoration: none;
+            border: none;
+        }
+
+        .pg-btn.active {
+            background: #A68749;
             color: white;
-            border-color: #A68749;
+            cursor: pointer;
         }
 
-        .pagination .active span {
-            background-color: #A68749;
-            color: white;
-            border-color: #A68749;
+        .pg-btn.active:hover {
+            background: #8a6d3a;
+            transform: translateY(-2px);
         }
 
-        .pagination .disabled span {
-            color: #ccc;
+        .pg-btn.disabled {
+            background: #e6e6e6;
+            color: #9e9e9e;
             cursor: not-allowed;
         }
 
-        .pagination .disabled:hover {
-            background-color: transparent;
+        .pg-page {
+            padding: 8px 14px;
+            font-size: 16px;
+            background: #f7f7f7;
+            color: #555;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+            transition: 0.2s ease;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .pg-page:hover {
+            background: #e0e0e0;
+            transform: translateY(-2px);
+        }
+
+        .pg-page.current {
+            background: #A68749;
+            color: white;
+            font-weight: bold;
+            cursor: default;
+            transform: scale(1.05);
+        }
+
+        .select-none {
+            user-select: none;
         }
     </style>
 </head>
@@ -115,35 +147,31 @@
 
             <!-- Pagination links -->
             @if($transactions->hasPages())
-            <div class="pagination">
-                {{-- Previous Page Link --}}
-                @if ($transactions->onFirstPage())
-                    <span class="disabled">
-                        <span>← Previous</span>
-                    </span>
-                @else
-                    <a href="{{ $transactions->previousPageUrl() }}" rel="prev">← Previous</a>
-                @endif
-
-                {{-- Pagination Elements --}}
-                @foreach ($transactions->getUrlRange(1, $transactions->lastPage()) as $page => $url)
-                    @if ($page == $transactions->currentPage())
-                        <span class="active">
-                            <span>{{ $page }}</span>
-                        </span>
+            <div class="pagination-wrapper">
+                <nav class="pagination-nav select-none">
+                    {{-- Previous --}}
+                    @if ($transactions->onFirstPage())
+                        <span class="pg-btn disabled">‹</span>
                     @else
-                        <a href="{{ $url }}">{{ $page }}</a>
+                        <a href="{{ $transactions->previousPageUrl() }}" class="pg-btn active">‹</a>
                     @endif
-                @endforeach
 
-                {{-- Next Page Link --}}
-                @if ($transactions->hasMorePages())
-                    <a href="{{ $transactions->nextPageUrl() }}" rel="next">Next →</a>
-                @else
-                    <span class="disabled">
-                        <span>Next →</span>
-                    </span>
-                @endif
+                    {{-- Page Numbers --}}
+                    @foreach ($transactions->getUrlRange(1, $transactions->lastPage()) as $page => $url)
+                        @if ($page == $transactions->currentPage())
+                            <span class="pg-page current">{{ $page }}</span>
+                        @else
+                            <a href="{{ $url }}" class="pg-page">{{ $page }}</a>
+                        @endif
+                    @endforeach
+
+                    {{-- Next --}}
+                    @if ($transactions->hasMorePages())
+                        <a href="{{ $transactions->nextPageUrl() }}" class="pg-btn active">›</a>
+                    @else
+                        <span class="pg-btn disabled">›</span>
+                    @endif
+                </nav>
             </div>
             @endif
             @endif

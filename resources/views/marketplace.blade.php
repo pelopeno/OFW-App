@@ -95,8 +95,8 @@
             <form class="donate-form" id="donateForm" method="POST">
                 @csrf
                 <label class="input-label">Amount to Invest</label>
-                <input type="number" name="amount" placeholder="Enter amount (₱)" class="donate-input" min="1" step="0.01" required />
-                <small class="donate-desc">The entered value will be deducted from your wallet balance.</small>
+                <input type="number" name="amount" id="donateAmount" placeholder="Enter amount (₱)" class="donate-input" min="100" step="0.01" required />
+                <small class="donate-desc">Minimum investment is ₱100. The entered value will be deducted from your wallet balance.</small>
 
                 <button type="submit" class="withdraw-goal-btn">Invest</button>
             </form>
@@ -193,6 +193,22 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('closeDonateModal').addEventListener('click', () => {
         donateModal.classList.remove('show');
         document.body.style.overflow = 'auto';
+    });
+
+    // Validate donation amount before submit
+    document.getElementById('donateForm').addEventListener('submit', function(e) {
+        const amountInput = document.getElementById('donateAmount');
+        const amount = parseFloat(amountInput.value);
+        
+        if (amount < 100) {
+            e.preventDefault();
+            errorToast.querySelector('#errorMessage').textContent = 'Minimum investment is ₱100.';
+            errorToast.classList.add('show');
+            setTimeout(() => {
+                errorToast.classList.remove('show');
+            }, 5000);
+            return false;
+        }
     });
 
     donateModal.addEventListener('click', (e) => {

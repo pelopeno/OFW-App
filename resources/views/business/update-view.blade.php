@@ -3,7 +3,7 @@
     <div class="update-view-card">
         <h2 id="updateViewBusinessName">Business Name</h2>
         <p class="update-view-date" id="updateViewDate">Posted 2 days ago</p>
-        <img src="/assets/cafe-img-sample.png" class="update-view-image" id="updateViewImage" />
+        <img src="/assets/cafe-img-sample.png" class="update-view-image" id="updateViewImage" onerror="this.onerror=null; this.src='/assets/pfp-default.png'" />
         <hr class="dotted-hr" />
         <p class="update-view-content" id="updateViewContent">Update content goes here...</p>
         

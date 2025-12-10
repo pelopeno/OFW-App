@@ -481,7 +481,7 @@ h5 {
 .goals-ofw-main h2,
 .invh-ofw-main h2,
 .market-ofw-main h2,
-.admin-main h2 {
+.admin-main h2, .bus-posts-cont h2 {
     width: 100%;
     margin-bottom: 10px;
     font-family: "Tilt Warp", sans-serif;
@@ -688,7 +688,7 @@ h5 {
 
 .goals-ofw-content-cont,
 .invh-ofw-content-cont,
-.market-ofw-content-cont {
+.market-ofw-content-cont, .bus-posts-cont {
     width: 55%;
     height: 100%;
     overflow-y: auto;
@@ -700,8 +700,7 @@ h5 {
 
 .goals-ofw-img-cont,
 .invh-ofw-img-cont,
-.market-ofw-img-cont,
-.trans-ofw-img-cont {
+.market-ofw-img-cont, .trans-ofw-img-cont, .bus-arch-img-cont {
     width: 45%;
     height: 100%;
     overflow: hidden;
@@ -725,6 +724,12 @@ h5 {
     width: auto;
     height: 80%;
     margin-top: 50px;
+}
+
+.bus-arch-img-cont img {
+    width: auto;
+    height: 60%;
+    margin-top: 100px;
 }
 
 /*-------------Business Dashboard-------------*/
@@ -760,9 +765,8 @@ h5 {
 .bus-posts-cont {
     width: 55%;
     height: 100%;
-    padding-right: 25px;
-
-
+    padding-right: 50px;
+    padding-left: 15px;
 }
 
 .bus-tabs {
@@ -1527,7 +1531,7 @@ h5 {
 .project-card-actions {
     display: flex;
     gap: 10px;
-
+    margin-left: 30px;
 }
 
 .project-edit-btn,

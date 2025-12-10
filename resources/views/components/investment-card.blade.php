@@ -4,12 +4,14 @@
 $image = $image ? (str_starts_with($image, 'http') || str_starts_with($image, '/')
 ? $image
 : asset($image))
-: asset('/assets/default-project-pic.png');
+: asset('/assets/pfp-default.png');
 @endphp
 
 <div class="investment-card">
     <div class="investment-card-pfp">
-        <img src="{{ asset($image) }}" alt="{{ $project_name }} image" />
+        <img src="{{ asset($image) }}" 
+             alt="{{ $project_name }} image" 
+             onerror="this.onerror=null; this.src='/assets/pfp-default.png';" />
     </div>
     <div class="investment-card-content">
         <h2>{{ $project_name }}</h2>
