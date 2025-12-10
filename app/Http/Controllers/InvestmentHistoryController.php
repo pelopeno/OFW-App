@@ -14,7 +14,7 @@ class InvestmentHistoryController extends Controller
                 $investments = Investment::where('user_id', Auth::id())
                         ->with('project')
                         ->latest()
-                        ->paginate(2);
+                        ->paginate(3);
 
         return view('investment-history', compact('investments'));
     }

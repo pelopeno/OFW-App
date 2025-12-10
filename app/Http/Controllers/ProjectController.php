@@ -43,7 +43,6 @@ class ProjectController extends Controller
 
         Project::create([
             'user_id' => Auth::id(),
-            'project_name' => $request->title, // Added this line to set project_name. Temporary lang.
             'title' => $request->title,
             'description' => $request->description,
             'image' => $imagePath,

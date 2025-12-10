@@ -40,11 +40,11 @@
         </div>
 
         <div class="admin-table-cont">
-            <p>Active Projects</p>
+            <p>Projects</p>
 
             <table>
                 <tr class="admin-th-row">
-                    <th>PROJECT NAME</th>
+                    <th>PROJECT TITLE</th>
                     <th>OWNER</th>
                     <th>DESCRIPTION</th>
                     <th>ACTIONS</th>

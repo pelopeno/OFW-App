@@ -43,8 +43,8 @@
             <table>
                 <thead>
                     <tr class="admin-th-row">
-                        <th>PROJECT NAME</th>
-                        <th>TITLE</th>
+                        <th>OWNER</th>
+                        <th>PROJECT TITLE</th>
                         <th>DESCRIPTION</th>
                         <th>ACTIONS</th>
                     </tr>
@@ -52,7 +52,7 @@
                 <tbody>
                 @foreach($projects as $project)
                     <tr>
-                        <td>{{ $project->project_name }}</td>
+                        <td>{{ $project->user->name }}</td>
                         <td>{{ $project->title }}</td>
                         <td>{{ $project->description }}</td>
                         <td>
