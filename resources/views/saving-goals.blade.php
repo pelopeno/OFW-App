@@ -93,6 +93,7 @@
         .goals-ofw-img-cont img {
             max-width: 900px;
             height: auto;
+            margin-bottom: 50px;
         }
 
         /* Pagination styles (kept from your code) */
@@ -156,7 +157,7 @@
         }
     </style>
     <!-- Right: Image -->
-    <div class="goals-ofw-img-cont" style="flex: 0 0 500px;">
+    <div class="goals-ofw-img-cont">
         <img src="/assets/sg-ofw-img.png" style="width: 100%; height: auto;">
     </div>
 </div>
